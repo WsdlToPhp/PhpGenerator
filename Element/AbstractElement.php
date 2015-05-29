@@ -42,4 +42,25 @@ abstract class AbstractElement implements GeneratableInterface
     {
         return preg_match('/[a-zA-Z]/', $name) === 1;
     }
+    /**
+     * @return string
+     */
+    public function toString()
+    {
+
+    }
+    /**
+     * @return string
+     */
+    final public function getPhpName()
+    {
+        return sprintf('$%s', $this->getName());
+    }
+    /**
+     * @return string
+     */
+    protected function getPhpDeclaration()
+    {
+        return $this->getPhpName();
+    }
 }

@@ -57,4 +57,18 @@ class PhpClass extends AbstractElement
     {
         return $type === null || in_array($type, self::getTypes(), true);
     }
+    /**
+     * @return string
+     */
+    protected function getPhpType()
+    {
+        return $this->getType() === null ? '' : sprintf(' %s', $this->getType());
+    }
+    /**
+     * @return string
+     */
+    protected function getPhpDeclaration()
+    {
+        return sprintf('%s%s', $this->getPhpType(), parent::getPhpDeclaration());
+    }
 }

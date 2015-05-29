@@ -59,4 +59,18 @@ abstract class AbstractAccessRestrictedElement extends AbstractElement
     {
         return $access === null || in_array($access, self::getAccesses(), true);
     }
+    /**
+     * @return string
+     */
+    protected function getPhpAccess()
+    {
+        return $this->getAccess() === null ? '' : sprintf(' %s', $this->getAccess());
+    }
+    /**
+     * @return string
+     */
+    protected function getPhpDeclaration()
+    {
+        return sprintf('%s%s', $this->getPhpAccess(), parent::getPhpDeclaration());
+    }
 }
