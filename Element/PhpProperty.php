@@ -46,7 +46,7 @@ class PhpProperty extends AbstractAccessRestrictedElement
      */
     protected function getPhpDeclaration()
     {
-        return sprintf('%s%s', $this->getPhpDefaultValue(), parent::getPhpDeclaration());
+        return sprintf('%s%s', parent::getPhpDeclaration(), $this->getPhpDefaultValue());
     }
     /**
      * @return bool
@@ -54,5 +54,12 @@ class PhpProperty extends AbstractAccessRestrictedElement
     public function hasSemicolon()
     {
         return true;
+    }
+    /**
+     * @return bool
+     */
+    public function canBeAlone()
+    {
+        return false;
     }
 }

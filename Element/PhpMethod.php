@@ -11,4 +11,11 @@ class PhpMethod extends AbstractAccessRestrictedElement
     {
         return false;
     }
+    /**
+     * @return bool
+     */
+    public function canBeAlone()
+    {
+        return false;
+    }
 }

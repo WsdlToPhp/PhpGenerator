@@ -2,7 +2,7 @@
 
 namespace WsdlTophp\PhpGenerator\Element;
 
-abstract class AbstractElement implements GeneratableInterface, SemicolonableInterface
+abstract class AbstractElement implements GeneratableInterface, SemicolonableInterface, FileableInterface
 {
     /**
      * @var string
@@ -61,5 +61,12 @@ abstract class AbstractElement implements GeneratableInterface, SemicolonableInt
     protected function getPhpDeclaration()
     {
         return $this->getPhpName();
+    }
+    /**
+     * @return string
+     */
+    protected function getPhpEndDeclaration()
+    {
+        return $this->hasSemicolon() ? ';' : '';
     }
 }
