@@ -2,7 +2,7 @@
 
 namespace WsdlTophp\PhpGenerator\Element;
 
-abstract class AbstractElement
+abstract class AbstractElement implements GeneratableInterface
 {
     /**
      * @var string
