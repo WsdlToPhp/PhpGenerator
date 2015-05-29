@@ -71,4 +71,11 @@ class PhpClass extends AbstractElement
     {
         return sprintf('%s%s', $this->getPhpType(), parent::getPhpDeclaration());
     }
+    /**
+     * @return bool
+     */
+    public function hasSemicolon()
+    {
+        return false;
+    }
 }

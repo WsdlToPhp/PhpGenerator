@@ -2,7 +2,7 @@
 
 namespace WsdlTophp\PhpGenerator\Element;
 
-abstract class AbstractElement implements GeneratableInterface
+abstract class AbstractElement implements GeneratableInterface, SemicolonableInterface
 {
     /**
      * @var string
@@ -47,7 +47,6 @@ abstract class AbstractElement implements GeneratableInterface
      */
     public function toString()
     {
-
     }
     /**
      * @return string

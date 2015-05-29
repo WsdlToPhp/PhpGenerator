@@ -48,4 +48,11 @@ class PhpProperty extends AbstractAccessRestrictedElement
     {
         return sprintf('%s%s', $this->getPhpDefaultValue(), parent::getPhpDeclaration());
     }
+    /**
+     * @return bool
+     */
+    public function hasSemicolon()
+    {
+        return true;
+    }
 }
