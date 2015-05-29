@@ -1,0 +1,27 @@
+{
+    "name": "wsdltophp/phpgenerator",
+    "description": "Generate php source file",
+    "type": "library",
+    "keywords" : ["php","generator"],
+    "homepage" : "https://github.com/WsdlToPhp/PhpGenerator",
+    "license" : "MIT",
+    "authors" : [
+        {
+            "name": "Mikaël DELSOL",
+            "email": "contact@wsdltophp.com",
+            "role": "Owner"
+        }
+    ],
+    "support" : {
+        "email" : "contact@wsdltophp.com"
+    },
+    "require": {
+        "php" : ">=5.3.3"
+    },
+    "require-dev": {
+        "fabpot/php-cs-fixer": "~1.8"
+    },
+    "autoload": {
+        "psr-4": { "WsdlToPhp\\PhpGenerator\\": "" }
+    }
+}
