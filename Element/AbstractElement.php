@@ -1,8 +1,8 @@
 <?php
 
-namespace WsdlTophp\PhpGenerator\Element;
+namespace WsdlToPhp\PhpGenerator\Element;
 
-abstract class AbstractElement implements GeneratableInterface, SemicolonableInterface, FileableInterface
+abstract class AbstractElement implements GenerableInterface, SemicolonableInterface, FileableInterface
 {
     /**
      * @var string
@@ -51,14 +51,14 @@ abstract class AbstractElement implements GeneratableInterface, SemicolonableInt
     /**
      * @return string
      */
-    final public function getPhpName()
+    protected function getPhpName()
     {
-        return sprintf('$%s', $this->getName());
+        return sprintf('%s', $this->getName());
     }
     /**
      * @return string
      */
-    protected function getPhpDeclaration()
+    public function getPhpDeclaration()
     {
         return $this->getPhpName();
     }

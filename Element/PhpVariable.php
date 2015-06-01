@@ -8,6 +8,9 @@ class PhpVariable extends AbstractElement
      * @var mixed
      */
     protected $value;
+    /**
+     * @param string $name
+     */
     public function __construct($name)
     {
         parent::__construct($name);
@@ -31,9 +34,9 @@ class PhpVariable extends AbstractElement
     /**
      * @return string
      */
-    protected function getPhpDeclaration()
+    public function getPhpDeclaration()
     {
-        return sprintf('%s = %s', parent::getPhpDeclaration(), var_export($this->getValue(), true));
+        return sprintf('$%s = %s', parent::getPhpDeclaration(), var_export($this->getValue(), true));
     }
     /**
      * @return bool

@@ -15,7 +15,7 @@ abstract class AbstractAccessRestrictedElement extends AbstractElement
      * @param string $name
      * @param string $access
      */
-    public function __construct($name, $access)
+    public function __construct($name, $access = self::ACCESS_PUBLIC)
     {
         parent::__construct($name);
         $this->setAccess($access);

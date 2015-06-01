@@ -13,7 +13,7 @@ class PhpProperty extends AbstractAccessRestrictedElement
      * @param string $access
      * @param string $defaultValue
      */
-    public function __construct($name, $access = null, $defaultValue = null)
+    public function __construct($name, $access = parent::ACCESS_PUBLIC, $defaultValue = null)
     {
         parent::__construct($name, $access);
         $this->setDefaultValue($defaultValue);
@@ -44,9 +44,9 @@ class PhpProperty extends AbstractAccessRestrictedElement
     /**
      * @return string
      */
-    protected function getPhpDeclaration()
+    public function getPhpDeclaration()
     {
-        return sprintf('%s%s', parent::getPhpDeclaration(), $this->getPhpDefaultValue());
+        return sprintf('$%s%s', parent::getPhpDeclaration(), $this->getPhpDefaultValue());
     }
     /**
      * @return bool
