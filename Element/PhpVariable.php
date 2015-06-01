@@ -2,58 +2,37 @@
 
 namespace WsdlToPhp\PhpGenerator\Element;
 
-class PhpVariable extends AbstractElement
+class PhpVariable extends AbstractAssignedValueElement
 {
     /**
-     * @var mixed
-     */
-    protected $value;
-    /**
-     * @param string $name
-     * @param mixed $value
-     */
-    public function __construct($name, $value = null)
-    {
-        parent::__construct($name);
-        $this->setValue($value);
-    }
-    /**
-     * @param mixed $value
-     * @return PhpVariable
-     */
-    public function setValue($value)
-    {
-        $this->value = $value;
-        return $this;
-    }
-    /**
-     * @return mixed
-     */
-    public function getValue()
-    {
-        return $this->value;
-    }
-    /**
-     * @return mixed
-     */
-    public function getPhpValue()
-    {
-        if (is_scalar($this->getValue()) && (stripos($this->getValue(), '::') !== false || stripos($this->getValue(), 'new') !== false || stripos($this->getValue(), '(') !== false || stripos($this->getValue(), ')') !== false)) {
-            return $this->getValue();
-        }
-        return var_export($this->getValue(), true);
-    }
-    /**
+     * returns the way the assignment is declared
      * @return string
      */
-    public function getPhpDeclaration()
+    function getAssignmentDeclarator()
     {
-        return sprintf('$%s = %s;', parent::getPhpDeclaration(), $this->getPhpValue());
+        return '$';
     }
     /**
+     * returns the way the value is assigned to the element
+     * @returns string
+    */
+    function getAssignmentSign()
+    {
+        return ' = ';
+    }
+    /**
+     * retutns the way the assignment is finished
+     * @return string
+    */
+    function getAssignmentFinishing()
+    {
+        return '';
+    }
+    /**
+     * indicates if the element accepts non scalar value
      * @return bool
      */
-    public function canBeAlone()
+    function getAcceptNonScalarValue()
     {
         return true;
     }
