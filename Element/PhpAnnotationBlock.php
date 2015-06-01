@@ -63,7 +63,7 @@ class PhpAnnotationBlock extends AbstractElement
     {
         $valid = true;
         foreach ($annotations as $annotation) {
-            $valid &= self::annotationIsVAlid($annotation);
+            $valid &= self::annotationIsValid($annotation);
         }
         return (bool)$valid;
     }
@@ -71,7 +71,7 @@ class PhpAnnotationBlock extends AbstractElement
      * @param string|array|PhpAnnotation $annotation
      * @return bool
      */
-    public static function annotationIsVAlid($annotation)
+    public static function annotationIsValid($annotation)
     {
         return (is_string($annotation) && !empty($annotation)) || (is_array($annotation) && array_key_exists('content', $annotation)) || $annotation instanceof PhpAnnotation;
     }

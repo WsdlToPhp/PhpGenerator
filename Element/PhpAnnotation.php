@@ -60,7 +60,7 @@ class PhpAnnotation extends AbstractElement
         if (strlen($fullContent) > static::MAX_LENGTH) {
             $content = str_split($fullContent, static::MAX_LENGTH);
         }
-        return array_map(function($element){
+        return array_map(function ($element) {
             return sprintf(' %s', $element);
         }, $content);
     }
