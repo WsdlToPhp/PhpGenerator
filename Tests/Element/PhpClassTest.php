@@ -7,35 +7,35 @@ use WsdlToPhp\PhpGenerator\Tests\TestCase;
 
 class PhpClassTest extends TestCase
 {
-    public function testSimpleClass()
+    public function testGetPhpDeclarationSimpleClass()
     {
         $class = new PhpClass('Foo');
 
         $this->assertSame('class Foo', $class->getPhpDeclaration());
     }
 
-    public function testAbstractClass()
+    public function testGetPhpDeclarationAbstractClass()
     {
         $class = new PhpClass('Foo', true);
 
         $this->assertSame('abstract class Foo', $class->getPhpDeclaration());
     }
 
-    public function testSimpleClassExtendsStringBar()
+    public function testGetPhpDeclarationSimpleClassExtendsStringBar()
     {
         $class = new PhpClass('Foo', false, 'Bar');
 
         $this->assertSame('class Foo extends Bar', $class->getPhpDeclaration());
     }
 
-    public function testAbstractClassExtendsStringBar()
+    public function testGetPhpDeclarationAbstractClassExtendsStringBar()
     {
         $class = new PhpClass('Foo', true, 'Bar');
 
         $this->assertSame('abstract class Foo extends Bar', $class->getPhpDeclaration());
     }
 
-    public function testSimpleClassExtendsStringBarImplementsStringDemo()
+    public function testGetPhpDeclarationSimpleClassExtendsStringBarImplementsStringDemo()
     {
         $class = new PhpClass('Foo', false, 'Bar', array(
             'Demo',
@@ -44,7 +44,7 @@ class PhpClassTest extends TestCase
         $this->assertSame('class Foo extends Bar implements Demo', $class->getPhpDeclaration());
     }
 
-    public function testSimpleClassExtendsStringBarImplementsArrayStringDemoSample()
+    public function testGetPhpDeclarationSimpleClassExtendsStringBarImplementsArrayStringDemoSample()
     {
         $class = new PhpClass('Foo', false, 'Bar', array(
             'Demo',
@@ -54,7 +54,7 @@ class PhpClassTest extends TestCase
         $this->assertSame('class Foo extends Bar implements Demo, Sample', $class->getPhpDeclaration());
     }
 
-    public function testAbstractClassExtendsStringBarImplementsStringDemo()
+    public function testGetPhpDeclarationAbstractClassExtendsStringBarImplementsStringDemo()
     {
         $class = new PhpClass('Foo', true, 'Bar', array(
             'Demo',
@@ -63,7 +63,7 @@ class PhpClassTest extends TestCase
         $this->assertSame('abstract class Foo extends Bar implements Demo', $class->getPhpDeclaration());
     }
 
-    public function testAbstractClassExtendsStringBarImplementsArrayStringDemoSample()
+    public function testGetPhpDeclarationAbstractClassExtendsStringBarImplementsArrayStringDemoSample()
     {
         $class = new PhpClass('Foo', true, 'Bar', array(
             'Demo',
@@ -73,7 +73,7 @@ class PhpClassTest extends TestCase
         $this->assertSame('abstract class Foo extends Bar implements Demo, Sample', $class->getPhpDeclaration());
     }
 
-    public function testSimpleClassExtendsStringBarImplementsPhpClassDemo()
+    public function testGetPhpDeclarationSimpleClassExtendsStringBarImplementsPhpClassDemo()
     {
         $class = new PhpClass('Foo', false, 'Bar', array(
             new PhpClass('Demo'),
@@ -82,7 +82,7 @@ class PhpClassTest extends TestCase
         $this->assertSame('class Foo extends Bar implements Demo', $class->getPhpDeclaration());
     }
 
-    public function testSimpleClassExtendsStringBarImplementsArrayPhpClassDemoSample()
+    public function testGetPhpDeclarationSimpleClassExtendsStringBarImplementsArrayPhpClassDemoSample()
     {
         $class = new PhpClass('Foo', false, 'Bar', array(
             new PhpClass('Demo'),
@@ -92,7 +92,7 @@ class PhpClassTest extends TestCase
         $this->assertSame('class Foo extends Bar implements Demo, Sample', $class->getPhpDeclaration());
     }
 
-    public function testAbstractClassExtendsStringBarImplementsPhpClassDemo()
+    public function testGetPhpDeclarationAbstractClassExtendsStringBarImplementsPhpClassDemo()
     {
         $class = new PhpClass('Foo', true, 'Bar', array(
             new PhpClass('Demo'),
@@ -101,7 +101,7 @@ class PhpClassTest extends TestCase
         $this->assertSame('abstract class Foo extends Bar implements Demo', $class->getPhpDeclaration());
     }
 
-    public function testAbstractClassExtendsStringBarImplementsArrayPhpClassDemoSample()
+    public function testGetPhpDeclarationAbstractClassExtendsStringBarImplementsArrayPhpClassDemoSample()
     {
         $class = new PhpClass('Foo', true, 'Bar', array(
             new PhpClass('Demo'),

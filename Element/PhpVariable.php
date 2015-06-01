@@ -10,10 +10,12 @@ class PhpVariable extends AbstractElement
     protected $value;
     /**
      * @param string $name
+     * @param mixed $value
      */
-    public function __construct($name)
+    public function __construct($name, $value = null)
     {
         parent::__construct($name);
+        $this->setValue($value);
     }
     /**
      * @param mixed $value
@@ -32,18 +34,21 @@ class PhpVariable extends AbstractElement
         return $this->value;
     }
     /**
+     * @return mixed
+     */
+    public function getPhpValue()
+    {
+        if (is_scalar($this->getValue()) && (stripos($this->getValue(), '::') !== false || stripos($this->getValue(), 'new') !== false || stripos($this->getValue(), '(') !== false || stripos($this->getValue(), ')') !== false)) {
+            return $this->getValue();
+        }
+        return var_export($this->getValue(), true);
+    }
+    /**
      * @return string
      */
     public function getPhpDeclaration()
     {
-        return sprintf('$%s = %s', parent::getPhpDeclaration(), var_export($this->getValue(), true));
-    }
-    /**
-     * @return bool
-     */
-    public function hasSemicolon()
-    {
-        return true;
+        return sprintf('$%s = %s;', parent::getPhpDeclaration(), $this->getPhpValue());
     }
     /**
      * @return bool

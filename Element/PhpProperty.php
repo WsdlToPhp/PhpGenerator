@@ -51,13 +51,6 @@ class PhpProperty extends AbstractAccessRestrictedElement
     /**
      * @return bool
      */
-    public function hasSemicolon()
-    {
-        return true;
-    }
-    /**
-     * @return bool
-     */
     public function canBeAlone()
     {
         return false;
