@@ -4,8 +4,17 @@ namespace WsdlToPhp\PhpGenerator\Element;
 
 abstract class AbstractAccessRestrictedElement extends AbstractElement
 {
+    /**
+     * @var string
+     */
     const ACCESS_PRIVATE = 'private';
+    /**
+     * @var string
+     */
     const ACCESS_PROTECTED = 'protected';
+    /**
+     * @var string
+     */
     const ACCESS_PUBLIC = 'public';
     /**
      * @var string
