@@ -5,6 +5,11 @@ namespace WsdlToPhp\PhpGenerator\Element;
 abstract class AbstractAssignedValueElement extends AbstractAccessRestrictedElement
 {
     /**
+     * Use this constant as value to ensure element has not assigned value
+     * @var unknown
+     */
+    const NO_VALUE = '##NO_VALUE##';
+    /**
      * @var mixed
      */
     protected $value;
@@ -39,10 +44,20 @@ abstract class AbstractAssignedValueElement extends AbstractAccessRestrictedElem
         return $this->value;
     }
     /**
+     * @return bool
+     */
+    public function hasValue()
+    {
+        return $this->getValue() !== self::NO_VALUE;
+    }
+    /**
      * @return mixed
      */
     public function getPhpValue()
     {
+        if (!$this->hasValue()) {
+            return '';
+        }
         if (is_scalar($this->getValue()) && (stripos($this->getValue(), '::') !== false || stripos($this->getValue(), 'new') !== false || stripos($this->getValue(), '(') !== false || stripos($this->getValue(), ')') !== false)) {
             return $this->getValue();
         }
@@ -53,7 +68,7 @@ abstract class AbstractAssignedValueElement extends AbstractAccessRestrictedElem
      */
     public function getPhpDeclaration()
     {
-        return sprintf('%s%s%s%s%s%s;', $this->getPhpAccess(), $this->getAssignmentDeclarator(), $this->getPhpName(), $this->getAssignmentSign(), $this->getPhpValue(), $this->getAssignmentFinishing());
+        return sprintf('%s%s%s%s%s%s%s', $this->getPhpAccess(), $this->getAssignmentDeclarator(), $this->getPhpName(), $this->getAssignmentSign(), $this->getPhpValue(), $this->getAssignmentFinishing(), $this->endsWithSemicolon() === true ? ';' : '');
     }
     /**
      * returns the way the assignment is declared
@@ -75,6 +90,11 @@ abstract class AbstractAssignedValueElement extends AbstractAccessRestrictedElem
      * @return bool
      */
     abstract public function getAcceptNonScalarValue();
+    /**
+     * indicates if the element finishes with a semicolon or not
+     * @return bool
+     */
+    abstract public function endsWithSemicolon();
     /**
      * @return bool
      */

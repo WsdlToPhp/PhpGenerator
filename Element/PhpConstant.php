@@ -108,6 +108,14 @@ class PhpConstant extends AbstractAssignedValueElement
         return false;
     }
     /**
+     * indicates if the element finishes with a semicolon or not
+     * @return bool
+     */
+    public function endsWithSemicolon()
+    {
+        return true;
+    }
+    /**
      * @return bool
      */
     public function canBeAlone()

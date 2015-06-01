@@ -44,4 +44,12 @@ class PhpVariable extends AbstractAssignedValueElement
     {
         return false;
     }
+    /**
+     * indicates if the element finishes with a semicolon or not
+     * @return bool
+     */
+    public function endsWithSemicolon()
+    {
+        return true;
+    }
 }

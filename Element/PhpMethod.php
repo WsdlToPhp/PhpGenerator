@@ -2,7 +2,7 @@
 
 namespace WsdlToPhp\PhpGenerator\Element;
 
-class PhpMethod extends AbstractAccessRestrictedElement
+class PhpMethod extends PhpFunction
 {
     /**
      * @var bool
@@ -83,6 +83,14 @@ class PhpMethod extends AbstractAccessRestrictedElement
     public function getPhpDeclaration()
     {
         return sprintf('%s%s', $this->getPhpFinal(), parent::getPhpDeclaration());
+    }
+    /**
+     * indicates if the current element has accessibility constraint
+     * @return bool
+     */
+    public function hasAccessibilityConstraint()
+    {
+        return true;
     }
     /**
      * @return bool
