@@ -10,11 +10,10 @@ class PhpAnnotationBlock extends AbstractElement
     protected $annotations;
     /**
      * @param string $name
-     * @param array $annotations
      */
-    public function __construct($name, array $annotations)
+    public function __construct(array $annotations)
     {
-        parent:__construct('_');
+        parent::__construct('_');
         $this->setAnnotations($annotations);
     }
     /**
@@ -37,7 +36,7 @@ class PhpAnnotationBlock extends AbstractElement
     public static function transformAnnotations(array $annotations)
     {
         $finalAnnotations = array();
-        foreach ($annotations as $annotations) {
+        foreach ($annotations as $annotation) {
             $finalAnnotations[] = self::transformAnnotation($annotation);
         }
         return $finalAnnotations;
@@ -74,6 +73,32 @@ class PhpAnnotationBlock extends AbstractElement
     public static function annotationIsValid($annotation)
     {
         return (is_string($annotation) && !empty($annotation)) || (is_array($annotation) && array_key_exists('content', $annotation)) || $annotation instanceof PhpAnnotation;
+    }
+    /**
+     * @return PhpAnnotation[]
+     */
+    public function getAnnotations()
+    {
+        return $this->annotations;
+    }
+    /**
+     * @return string[]
+     */
+    protected function getPhpAnnotations()
+    {
+        $annotations = array();
+        foreach ($this->getAnnotations() as $annotation) {
+            $annotations[] = $annotation->getPhpDeclaration();
+        }
+        return $annotations;
+    }
+    /**
+     * @see \WsdlToPhp\PhpGenerator\Element\AbstractElement::getPhpDeclaration()
+     * @return string
+     */
+    public function getPhpDeclaration()
+    {
+        return sprintf('/**%s%s%s */', self::BREAK_LINE_CHAR, implode(self::BREAK_LINE_CHAR, $this->getPhpAnnotations()), self::BREAK_LINE_CHAR);
     }
     /**
      * @return bool

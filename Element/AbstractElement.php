@@ -40,7 +40,7 @@ abstract class AbstractElement implements GenerableInterface, FileableInterface
      */
     public static function nameIsValid($name)
     {
-        return preg_match('/[a-zA-Z]/', $name) === 1;
+        return preg_match('/[a-zA-Z_]/', $name) === 1;
     }
     /**
      * @return string
