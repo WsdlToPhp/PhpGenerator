@@ -2,7 +2,7 @@
 
 namespace WsdlToPhp\PhpGenerator\Element;
 
-abstract class AbstractAssignedValueElement extends AbstractElement
+abstract class AbstractAssignedValueElement extends AbstractAccessRestrictedElement
 {
     /**
      * @var mixed
@@ -11,10 +11,11 @@ abstract class AbstractAssignedValueElement extends AbstractElement
     /**
      * @param string $name
      * @param mixed $value
+     * @param string $access
      */
-    public function __construct($name, $value = null)
+    public function __construct($name, $value = null, $access = parent::ACCESS_PUBLIC)
     {
-        parent::__construct($name);
+        parent::__construct($name, $access);
         $this->setValue($value);
     }
     /**
@@ -52,7 +53,7 @@ abstract class AbstractAssignedValueElement extends AbstractElement
      */
     public function getPhpDeclaration()
     {
-        return sprintf('%s%s%s%s%s;', $this->getAssignmentDeclarator(), parent::getPhpDeclaration(), $this->getAssignmentSign(), $this->getPhpValue(), $this->getAssignmentFinishing());
+        return sprintf('%s%s%s%s%s%s;', $this->getPhpAccess(), $this->getAssignmentDeclarator(), $this->getPhpName(), $this->getAssignmentSign(), $this->getPhpValue(), $this->getAssignmentFinishing());
     }
     /**
      * returns the way the assignment is declared

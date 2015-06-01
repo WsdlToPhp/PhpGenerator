@@ -9,11 +9,15 @@ class PhpMethod extends AbstractAccessRestrictedElement
      */
     protected $final;
     /**
+     * @var bool
+     */
+    protected $static;
+    /**
      * @param string $name
      * @param string $access
      * @param bool $final
      */
-    public function __construct($name, $access = parent::ACCESS_PUBLIC, $final = false)
+    public function __construct($name, $access = parent::ACCESS_PUBLIC, $static = false, $final = false)
     {
         parent::__construct($name, $access);
         $this->setFinal($final);
@@ -44,6 +48,33 @@ class PhpMethod extends AbstractAccessRestrictedElement
     protected function getPhpFinal()
     {
         return $this->getFinal() === true ? 'final ' : '';
+    }
+    /**
+     * @param bool $static
+     * @throws \InvalidArgumentException
+     * @return PhpMethod
+     */
+    public function setStatic($static)
+    {
+        if (!is_bool($static)) {
+            throw new \InvalidArgumentException(sprintf('Static must be a boolean, "%s" given', gettype($static)));
+        }
+        $this->static = $static;
+        return $this;
+    }
+    /**
+     * @return bool
+     */
+    public function getStatic()
+    {
+        return $this->static;
+    }
+    /**
+     * @return string
+     */
+    protected function getPhpStatic()
+    {
+        return $this->getFinal() === true ? 'static ' : '';
     }
     /**
      * @see \WsdlToPhp\PhpGenerator\Element\AbstractAccessRestrictedElement::getPhpDeclaration()

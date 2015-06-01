@@ -100,6 +100,14 @@ class PhpConstant extends AbstractAssignedValueElement
         return false;
     }
     /**
+     * indicates if the current element has accessibility constraint
+     * @return bool
+     */
+    public function hasAccessibilityConstraint()
+    {
+        return false;
+    }
+    /**
      * @return bool
      */
     public function canBeAlone()

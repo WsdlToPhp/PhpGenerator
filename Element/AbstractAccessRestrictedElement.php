@@ -64,13 +64,14 @@ abstract class AbstractAccessRestrictedElement extends AbstractElement
      */
     protected function getPhpAccess()
     {
-        return $this->getAccess() === null ? '' : sprintf(' %s', $this->getAccess());
+        if ($this->hasAccessibilityConstraint()) {
+            return $this->getAccess() === null ? '' : sprintf('%s ', $this->getAccess());
+        }
+        return '';
     }
     /**
-     * @return string
+     * indicates if the current element has accessibility constraint
+     * @return bool
      */
-    protected function getPhpDeclaration()
-    {
-        return sprintf('%s%s', $this->getPhpAccess(), parent::getPhpDeclaration());
-    }
+    abstract public function hasAccessibilityConstraint();
 }
