@@ -58,15 +58,5 @@ abstract class AbstractElement implements GenerableInterface, FileableInterface
     /**
      * @return string
      */
-    public function getPhpDeclaration()
-    {
-        return $this->getPhpName();
-    }
-    /**
-     * @return string
-     */
-    protected function getPhpEndDeclaration()
-    {
-        return $this->hasSemicolon() ? ';' : '';
-    }
+    abstract function getPhpDeclaration();
 }

@@ -173,7 +173,7 @@ class PhpClass extends AbstractElement
      */
     public function getPhpDeclaration()
     {
-        return trim(sprintf('%s%s %s%s%s', $this->getPhpAbstract(), static::PHP_DECLARATION, parent::getPhpDeclaration(), $this->getPhpExtends(), $this->getPhpInterfaces()));
+        return trim(sprintf('%s%s %s%s%s', $this->getPhpAbstract(), static::PHP_DECLARATION, $this->getPhpName(), $this->getPhpExtends(), $this->getPhpInterfaces()));
     }
     /**
      * @return bool
