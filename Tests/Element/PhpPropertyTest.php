@@ -1,0 +1,80 @@
+<?php
+
+use WsdlToPhp\PhpGenerator\Element\PhpProperty;
+use WsdlToPhp\PhpGenerator\Tests\TestCase;
+
+class PhpPropertyTest extends TestCase
+{
+    public function testPublicGetPhpDeclarationNullValue()
+    {
+        $property = new PhpProperty('foo');
+
+        $this->assertSame('public $foo = NULL;', $property->getPhpDeclaration());
+    }
+
+    public function testPublicGetPhpDeclarationTrueValue()
+    {
+        $property = new PhpProperty('foo', true);
+
+        $this->assertSame('public $foo = true;', $property->getPhpDeclaration());
+    }
+
+    public function testPublicGetPhpDeclarationFalseValue()
+    {
+        $property = new PhpProperty('foo', false);
+
+        $this->assertSame('public $foo = false;', $property->getPhpDeclaration());
+    }
+
+    public function testPublicGetPhpDeclarationStringOneValue()
+    {
+        $property = new PhpProperty('foo', '1');
+
+        $this->assertSame('public $foo = \'1\';', $property->getPhpDeclaration());
+    }
+
+    public function testPublicGetPhpDeclarationNumberOneValue()
+    {
+        $property = new PhpProperty('foo', 1);
+
+        $this->assertSame('public $foo = 1;', $property->getPhpDeclaration());
+    }
+
+    public function testPublicGetPhpDeclarationArray()
+    {
+        $property = new PhpProperty('foo', array(
+            '0',
+            1,
+        ));
+
+        $this->assertSame("public \$foo = array (\n  0 => '0',\n  1 => 1,\n);", $property->getPhpDeclaration());
+    }
+
+    public function testPublicGetPhpDeclarationNewInstance()
+    {
+        $property = new PhpProperty('foo', 'new DOMDocument(\'1.0\', \'utf-8\')');
+
+        $this->assertSame("public \$foo = new DOMDocument('1.0', 'utf-8');", $property->getPhpDeclaration());
+    }
+
+    public function testPublicGetPhpDeclarationFunctoin()
+    {
+        $property = new PhpProperty('foo', 'is_array(1)');
+
+        $this->assertSame("public \$foo = is_array(1);", $property->getPhpDeclaration());
+    }
+
+    public function testPrivateGetPhpDeclarationNullValue()
+    {
+        $property = new PhpProperty('foo', null, PhpProperty::ACCESS_PRIVATE);
+
+        $this->assertSame('private $foo = NULL;', $property->getPhpDeclaration());
+    }
+
+    public function testProtectedGetPhpDeclarationNullValue()
+    {
+        $property = new PhpProperty('foo', null, PhpProperty::ACCESS_PROTECTED);
+
+        $this->assertSame('protected $foo = NULL;', $property->getPhpDeclaration());
+    }
+}
