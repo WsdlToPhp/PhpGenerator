@@ -72,6 +72,10 @@ class PhpAnnotation extends AbstractElement
     {
         return (!empty($this->name) && $this->getName() !== static::NO_NAME) ? sprintf(' @%s', parent::getPhpName()) : '';
     }
+    /**
+     * @see \WsdlToPhp\PhpGenerator\Element\AbstractElement::getPhpDeclaration()
+     * @return string
+     */
     public function getPhpDeclaration()
     {
         return sprintf(' *%s', implode(sprintf('%s *', self::BREAK_LINE_CHAR), $this->getPhpContent()));

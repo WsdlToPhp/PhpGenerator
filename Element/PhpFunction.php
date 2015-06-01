@@ -62,15 +62,19 @@ class PhpFunction extends AbstractAccessRestrictedElement
      */
     public static function parametersAreValid(array $parameters)
     {
-        return true;
+        $valid = true;
+        foreach ($parameters as $parameter) {
+            $valid &= self::parameterIsValid($parameter);
+        }
+        return (bool)$valid;
     }
     /**
-     * @param string|PhpFunctionParameter $parameter
+     * @param string|array|PhpFunctionParameter $parameter
      * @return bool
      */
     public static function parameterIsValid($parameter)
     {
-        return true;
+        return (is_string($parameter) && !empty($parameter)) || (is_array($parameter) && array_key_exists('name', $parameter)) || $parameter instanceof PhpFunctionParameter;
     }
     /**
      * @return string[]|PhpFunctionParameter[]
