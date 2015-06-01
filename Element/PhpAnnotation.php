@@ -7,7 +7,7 @@ class PhpAnnotation extends AbstractElement
     /**
      * @var string
      */
-    const NO_NAME = "##NO_NAME##";
+    const NO_NAME = "__NO_NAME__";
     /**
      * @var int
      */
