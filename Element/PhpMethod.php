@@ -13,25 +13,57 @@ class PhpMethod extends PhpFunction
      */
     protected $static;
     /**
+     * @var bool
+     */
+    protected $abstract;
+    /**
      * @param string $name
      * @param string $access
+     * @param string[]|PhpFunctionParameter[] $parameters
+     * @param bool $abstract
+     * @param bool $static
      * @param bool $final
      */
-    public function __construct($name, $access = parent::ACCESS_PUBLIC, $static = false, $final = false)
+    public function __construct($name, $access = parent::ACCESS_PUBLIC, array $parameters = array(), $abstract = false, $static = false, $final = false)
     {
-        parent::__construct($name, $access);
+        parent::__construct($name, $access, $parameters);
+        $this->setAbstract($abstract);
+        $this->setStatic($static);
         $this->setFinal($final);
     }
     /**
-     * @param bool $final
+     * @param bool $abstract
+     * @throws \InvalidArgumentException
+     * @return PhpMethod
+     */
+    public function setAbstract($abstract)
+    {
+        self::checkBooleanWithException($abstract);
+        $this->abstract = $abstract;
+        return $this;
+    }
+    /**
+     * @return bool
+     */
+    public function getAbstract()
+    {
+        return $this->abstract;
+    }
+    /**
+     * @return string
+     */
+    protected function getPhpAbstract()
+    {
+        return $this->getAbstract() === true ? 'abstract ' : '';
+    }
+    /**
+     * @param bool $abstract
      * @throws \InvalidArgumentException
      * @return PhpMethod
      */
     public function setFinal($final)
     {
-        if (!is_bool($final)) {
-            throw new \InvalidArgumentException(sprintf('Final must be a boolean, "%s" given', gettype($final)));
-        }
+        self::checkBooleanWithException($final);
         $this->final = $final;
         return $this;
     }
@@ -56,9 +88,7 @@ class PhpMethod extends PhpFunction
      */
     public function setStatic($static)
     {
-        if (!is_bool($static)) {
-            throw new \InvalidArgumentException(sprintf('Static must be a boolean, "%s" given', gettype($static)));
-        }
+        self::checkBooleanWithException($static);
         $this->static = $static;
         return $this;
     }
@@ -74,7 +104,7 @@ class PhpMethod extends PhpFunction
      */
     protected function getPhpStatic()
     {
-        return $this->getFinal() === true ? 'static ' : '';
+        return $this->getStatic() === true ? 'static ' : '';
     }
     /**
      * @see \WsdlToPhp\PhpGenerator\Element\AbstractAccessRestrictedElement::getPhpDeclaration()
@@ -82,7 +112,7 @@ class PhpMethod extends PhpFunction
      */
     public function getPhpDeclaration()
     {
-        return sprintf('%s%s', $this->getPhpFinal(), parent::getPhpDeclaration());
+        return sprintf('%s%s%s%sfunction %s(%s)%s', $this->getPhpFinal(), $this->getPhpAbstract(), $this->getPhpAccess(), $this->getPhpStatic(), $this->getPhpName(), $this->getPhpParameters(), $this->getAbstract() === true ? ';' : '');
     }
     /**
      * indicates if the current element has accessibility constraint
@@ -98,5 +128,15 @@ class PhpMethod extends PhpFunction
     public function canBeAlone()
     {
         return false;
+    }
+    /**
+     * @param bool $value
+     * @throws \InvalidArgumentException
+     */
+    public static function checkBooleanWithException($value)
+    {
+        if (!is_bool($value)) {
+            throw new \InvalidArgumentException(sprintf('Static must be a boolean, "%s" given', gettype($value)));
+        }
     }
 }

@@ -11,7 +11,7 @@ class PhpFunction extends AbstractAccessRestrictedElement
     /**
      * @param string $name
      * @param string $access
-     * @param sintr[]|PhpFunctionParameter[] $parameters
+     * @param string[]|PhpFunctionParameter[] $parameters
      */
     public function __construct($name, $access = parent::ACCESS_PUBLIC, array $parameters = array())
     {
@@ -99,7 +99,7 @@ class PhpFunction extends AbstractAccessRestrictedElement
      */
     public function getPhpDeclaration()
     {
-        return sprintf('function %s(%s)', $this->getPhpName(), $this->getPhpParameters());
+        return sprintf('%sfunction %s(%s)', $this->getPhpAccess(), $this->getPhpName(), $this->getPhpParameters());
     }
     /**
      * indicates if the current element has accessibility constraint
