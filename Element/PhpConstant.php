@@ -62,7 +62,7 @@ class PhpConstant extends AbstractAssignedValueElement
      * returns the way the assignment is declared
      * @return string
      */
-    function getAssignmentDeclarator()
+    public function getAssignmentDeclarator()
     {
         if ($this->getClass() instanceof PhpClass) {
             return 'const ';
@@ -71,9 +71,9 @@ class PhpConstant extends AbstractAssignedValueElement
     }
     /**
      * returns the way the value is assigned to the element
-     * @returns string
+     * @return string
     */
-    function getAssignmentSign()
+    public function getAssignmentSign()
     {
         if ($this->getClass() instanceof PhpClass) {
             return ' = ';
@@ -84,7 +84,7 @@ class PhpConstant extends AbstractAssignedValueElement
      * retutns the way the assignment is finished
      * @return string
     */
-    function getAssignmentFinishing()
+    public function getAssignmentFinishing()
     {
         if ($this->getClass() instanceof PhpClass) {
             return '';
@@ -95,7 +95,7 @@ class PhpConstant extends AbstractAssignedValueElement
      * indicates if the element accepts non scalar value
      * @return bool
      */
-    function getAcceptNonScalarValue()
+    public function getAcceptNonScalarValue()
     {
         return false;
     }

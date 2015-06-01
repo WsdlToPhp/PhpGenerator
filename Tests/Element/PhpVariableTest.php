@@ -1,7 +1,6 @@
 <?php
 
 use WsdlToPhp\PhpGenerator\Element\PhpVariable;
-
 use WsdlToPhp\PhpGenerator\Tests\TestCase;
 
 class PhpVariableTest extends TestCase

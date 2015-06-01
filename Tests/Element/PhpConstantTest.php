@@ -1,9 +1,7 @@
 <?php
 
 use WsdlToPhp\PhpGenerator\Element\PhpClass;
-
 use WsdlToPhp\PhpGenerator\Element\PhpConstant;
-
 use WsdlToPhp\PhpGenerator\Tests\TestCase;
 
 class PhpConstantTest extends TestCase

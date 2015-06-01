@@ -58,22 +58,22 @@ abstract class AbstractAssignedValueElement extends AbstractElement
      * returns the way the assignment is declared
      * @return string
      */
-    abstract function getAssignmentDeclarator();
+    abstract public function getAssignmentDeclarator();
     /**
      * returns the way the value is assigned to the element
      * @returns string
      */
-    abstract function getAssignmentSign();
+    abstract public function getAssignmentSign();
     /**
      * returns the way the assignment is finished
      * @return string
      */
-    abstract function getAssignmentFinishing();
+    abstract public function getAssignmentFinishing();
     /**
      * indicates if the element accepts non scalar value
      * @return bool
      */
-    abstract function getAcceptNonScalarValue();
+    abstract public function getAcceptNonScalarValue();
     /**
      * @return bool
      */
