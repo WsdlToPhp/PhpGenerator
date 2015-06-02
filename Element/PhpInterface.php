@@ -42,4 +42,16 @@ class PhpInterface extends PhpClass
             'WsdlToPhp\\PhpGenerator\\Element\\PhpConstant',
         );
     }
+    /**
+     * ensure method has no body
+     * @see \WsdlToPhp\PhpGenerator\Element\AbstractElement::addChild()
+     * @param mixed
+     */
+    public function addChild($child)
+    {
+        if ($child instanceof PhpMethod) {
+            $child->setHasBody(false);
+        }
+        return parent::addChild($child);
+    }
 }
