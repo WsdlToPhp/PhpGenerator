@@ -58,8 +58,19 @@ abstract class AbstractAssignedValueElement extends AbstractAccessRestrictedElem
         if (!$this->hasValue()) {
             return '';
         }
-        if (is_scalar($this->getValue()) && (stripos($this->getValue(), '::') !== false || stripos($this->getValue(), 'new') !== false || stripos($this->getValue(), '(') !== false || stripos($this->getValue(), ')') !== false)) {
-            return $this->getValue();
+        return $this->getFinalValue();
+    }
+    /**
+     * @return string|mixed
+     */
+    protected function getFinalValue()
+    {
+        if (is_scalar($this->getValue())) {
+            if (stripos($this->getValue(), '::') === 0) {
+                return substr($this->getValue(), 2);
+            } elseif (stripos($this->getValue(), '::') !== false || stripos($this->getValue(), 'new') !== false || stripos($this->getValue(), '(') !== false || stripos($this->getValue(), ')') !== false) {
+                return $this->getValue();
+            }
         }
         return var_export($this->getValue(), true);
     }
