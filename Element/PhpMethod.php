@@ -17,19 +17,25 @@ class PhpMethod extends PhpFunction
      */
     protected $abstract;
     /**
+     * @var bool
+     */
+    protected $hasBody;
+    /**
      * @param string $name
      * @param string $access
      * @param string[]|PhpFunctionParameter[] $parameters
      * @param bool $abstract
      * @param bool $static
      * @param bool $final
+     * @param bool $hasBody
      */
-    public function __construct($name, $access = parent::ACCESS_PUBLIC, array $parameters = array(), $abstract = false, $static = false, $final = false)
+    public function __construct($name, $access = parent::ACCESS_PUBLIC, array $parameters = array(), $abstract = false, $static = false, $final = false, $hasBody = true)
     {
         parent::__construct($name, $access, $parameters);
         $this->setAbstract($abstract);
         $this->setStatic($static);
         $this->setFinal($final);
+        $this->setHasBody($hasBody);
     }
     /**
      * @param bool $abstract
@@ -38,7 +44,7 @@ class PhpMethod extends PhpFunction
      */
     public function setAbstract($abstract)
     {
-        self::checkBooleanWithException($abstract);
+        self::checkBooleanWithException('abstract', $abstract);
         $this->abstract = $abstract;
         return $this;
     }
@@ -63,7 +69,7 @@ class PhpMethod extends PhpFunction
      */
     public function setFinal($final)
     {
-        self::checkBooleanWithException($final);
+        self::checkBooleanWithException('final', $final);
         $this->final = $final;
         return $this;
     }
@@ -88,7 +94,7 @@ class PhpMethod extends PhpFunction
      */
     public function setStatic($static)
     {
-        self::checkBooleanWithException($static);
+        self::checkBooleanWithException('static', $static);
         $this->static = $static;
         return $this;
     }
@@ -107,12 +113,37 @@ class PhpMethod extends PhpFunction
         return $this->getStatic() === true ? 'static ' : '';
     }
     /**
+     * @param bool $hasBody
+     * @throws \InvalidArgumentException
+     * @return PhpMethod
+     */
+    public function setHasBody($hasBody)
+    {
+        self::checkBooleanWithException('hasBody', $hasBody);
+        $this->hasBody = $hasBody;
+        return $this;
+    }
+    /**
+     * @return bool
+     */
+    public function getHasBody()
+    {
+        return $this->hasBody;
+    }
+    /**
+     * @return string
+     */
+    protected function getPhpDeclarationEnd()
+    {
+        return ($this->getHasBody() === false || $this->getAbstract() === true) ? ';' : '';
+    }
+    /**
      * @see \WsdlToPhp\PhpGenerator\Element\AbstractAccessRestrictedElement::getPhpDeclaration()
      * @return string
      */
     public function getPhpDeclaration()
     {
-        return sprintf('%s%s%s%sfunction %s(%s)%s', $this->getPhpFinal(), $this->getPhpAbstract(), $this->getPhpAccess(), $this->getPhpStatic(), $this->getPhpName(), $this->getPhpParameters(), $this->getAbstract() === true ? ';' : '');
+        return sprintf('%s%s%s%sfunction %s(%s)%s', $this->getPhpFinal(), $this->getPhpAbstract(), $this->getPhpAccess(), $this->getPhpStatic(), $this->getPhpName(), $this->getPhpParameters(), $this->getPhpDeclarationEnd());
     }
     /**
      * indicates if the current element has accessibility constraint
@@ -130,13 +161,49 @@ class PhpMethod extends PhpFunction
         return false;
     }
     /**
+     * @param string $propertyName
      * @param bool $value
      * @throws \InvalidArgumentException
      */
-    public static function checkBooleanWithException($value)
+    public static function checkBooleanWithException($propertyName, $value)
     {
         if (!is_bool($value)) {
-            throw new \InvalidArgumentException(sprintf('Static must be a boolean, "%s" given', gettype($value)));
+            throw new \InvalidArgumentException(sprintf('%s must be a boolean, "%s" given', $propertyName, gettype($value)));
         }
+    }
+    /**
+     * Allows to generate content before children content is generated
+     * @param int $indentation
+     * @return string
+     */
+    public function getLineBeforeChildren($indentation = null)
+    {
+        if ($this->getHasBody() === true) {
+            return parent::getLineBeforeChildren($indentation);
+        }
+        return '';
+    }
+    /**
+     * Allows to generate content after children content is generated
+     * @param int $indentation
+     * @return string
+     */
+    public function getLineAfterChildren($indentation = null)
+    {
+        if ($this->getHasBody() === true) {
+            return parent::getLineAfterChildren($indentation);
+        }
+        return '';
+    }
+    /**
+     * @see \WsdlToPhp\PhpGenerator\Element\AbstractElement::getChildren()
+     * @return array
+     */
+    public function getChildren()
+    {
+        if ($this->getHasBody() === true) {
+            return parent::getChildren();
+        }
+        return array();
     }
 }
