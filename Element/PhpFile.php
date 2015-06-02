@@ -14,7 +14,7 @@ class PhpFile extends AbstractElement
      */
     public function getPhpDeclaration()
     {
-        return self::START_FILE;;
+        return self::START_FILE;
     }
     /**
      * @see \WsdlToPhp\PhpGenerator\Element\AbstractElement::getChildrenTypes()
