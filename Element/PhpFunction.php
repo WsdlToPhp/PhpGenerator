@@ -131,7 +131,7 @@ class PhpFunction extends AbstractAccessRestrictedElement
     {
         return array(
             'string',
-            'WsdlToPhp\\PhpGenerator\\Element\\PhpAnnotation',
+            'WsdlToPhp\\PhpGenerator\\Element\\PhpAnnotationBlock',
             'WsdlToPhp\\PhpGenerator\\Element\\PhpVariable',
         );
     }
