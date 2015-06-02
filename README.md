@@ -21,9 +21,7 @@ Php Generator eases the creation of a PHP file for any type of content such as:
 $variable = new PhpVariable('bar', 1);
 echo $variable->toString();
 ```
-
 displays
-
 ```php
 $bar = 1;
 ```
@@ -33,9 +31,7 @@ $bar = 1;
 $variable = new PhpVariable('bar', '1');
 echo $variable->toString();
 ```
-
 displays
-
 ```php
 $bar = '1';
 ```
@@ -45,9 +41,7 @@ $bar = '1';
 $variable = new PhpVariable('bar', 'new DOMDocument(\'1.0\', \'utf-8\')');
 echo $variable->toString();
 ```
-
 displays
-
 ```php
 $bar = new DOMDocument('1.0', 'utf-8');
 ```
@@ -57,9 +51,7 @@ $bar = new DOMDocument('1.0', 'utf-8');
 $variable = new PhpVariable('bar', 'is_array($foo)');
 echo $variable->toString();
 ```
-
 displays
-
 ```php
 $bar = is_array($foo);
 ```
@@ -69,9 +61,7 @@ $bar = is_array($foo);
 $variable = new PhpVariable('bar', 'stdClass::FOO');
 echo $variable->toString();
 ```
-
 displays
-
 ```php
 $bar = stdClass::FOO;
 ```
@@ -81,11 +71,31 @@ $bar = stdClass::FOO;
 $variable = new PhpVariable('bar', '::XML_ELEMENT_NODE');
 echo $variable->toString();
 ```
-
 displays
-
 ```php
 $bar = XML_ELEMENT_NODE;
+```
+
+#### Create a constant
+##### As global
+```php
+<?php
+$constant = new PhpConstant('FOO', true);
+echo $constant->toString();
+```
+displays
+```php
+define('FOO', true);
+```
+##### For a class
+```php
+<?php
+$constant = new PhpConstant('foo', true, new PhpClass('Bar'));
+echo $constant->toString();
+```
+displays
+```php
+const FOO = true;
 ```
 
 ### Generate PHP file from simple file to class file.
