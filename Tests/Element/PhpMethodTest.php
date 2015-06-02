@@ -85,6 +85,15 @@ class PhpMethodTest extends TestCase
         $this->assertSame('abstract public function foo($bar);', $method->getPhpDeclaration());
     }
 
+    public function testEmptyBodyPublicGetPhpDeclaration()
+    {
+        $method = new PhpMethod('foo', PhpMethod::ACCESS_PUBLIC, array(
+            'bar',
+        ), false, false, false, false);
+
+        $this->assertSame('public function foo($bar);', $method->getPhpDeclaration());
+    }
+
     /**
      * @expectedException InvalidArgumentException
      */
@@ -111,5 +120,44 @@ class PhpMethodTest extends TestCase
         $method->addChild(new PhpVariable('bar'));
 
         $this->assertCount(1, $method->getChildren());
+    }
+
+    public function testPublicEmptyBodyToString()
+    {
+        $method = new PhpMethod('foo', PhpMethod::ACCESS_PUBLIC, array(
+            'bar',
+            array(
+                'name' => 'demo',
+                'value' => 1,
+            ),
+            array(
+                'name' => 'sample',
+                'value' => null,
+            ),
+            new PhpFunctionParameter('deamon', true),
+        ));
+
+        $this->assertSame("public function foo(\$bar, \$demo = 1, \$sample = NULL, \$deamon = true)\n{\n}", $method->toString());
+    }
+
+    public function testPublicWithBodyToString()
+    {
+        $method = new PhpMethod('foo', PhpMethod::ACCESS_PUBLIC, array(
+            'bar',
+            array(
+                'name' => 'demo',
+                'value' => 1,
+            ),
+            array(
+                'name' => 'sample',
+                'value' => null,
+            ),
+            new PhpFunctionParameter('deamon', true),
+        ));
+
+        $method->addChild(new PhpVariable('bar', 1));
+        $method->addChild('return $bar;');
+
+        $this->assertSame("public function foo(\$bar, \$demo = 1, \$sample = NULL, \$deamon = true)\n{\n    \$bar = 1;\n    return \$bar;\n}", $method->toString());
     }
 }
