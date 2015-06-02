@@ -14,7 +14,7 @@ Php Generator eases the creation of a PHP file for any type of content such as:
 ## Main features
 ### Generate any PHP source code you want using a flexible PHP library.
 
-#### Create a simple variable
+#### Create a variable of any type
 ##### An integer
 ```php
 <?php
@@ -38,6 +38,54 @@ displays
 
 ```php
 $bar = '1';
+```
+##### An object
+```php
+<?php
+$variable = new PhpVariable('bar', 'new DOMDocument(\'1.0\', \'utf-8\')');
+echo $variable->toString();
+```
+
+displays
+
+```php
+$bar = new DOMDocument('1.0', 'utf-8');
+```
+##### The result of a function
+```php
+<?php
+$variable = new PhpVariable('bar', 'is_array($foo)');
+echo $variable->toString();
+```
+
+displays
+
+```php
+$bar = is_array($foo);
+```
+##### A class's constant
+```php
+<?php
+$variable = new PhpVariable('bar', 'stdClass::FOO');
+echo $variable->toString();
+```
+
+displays
+
+```php
+$bar = stdClass::FOO;
+```
+##### A global constant
+```php
+<?php
+$variable = new PhpVariable('bar', '::XML_ELEMENT_NODE');
+echo $variable->toString();
+```
+
+displays
+
+```php
+$bar = XML_ELEMENT_NODE;
 ```
 
 ### Generate PHP file from simple file to class file.
