@@ -15,6 +15,7 @@ Php Generator eases the creation of a PHP file for any type of content such as:
 ### Generate any PHP source code you want using a flexible PHP library.
 
 #### Create a simple variable
+##### An integer
 ```php
 <?php
 $variable = new PhpVariable('bar', 1);
@@ -26,6 +27,7 @@ displays
 ```php
 $bar = 1;
 ```
+##### A string
 ```php
 <?php
 $variable = new PhpVariable('bar', '1');
