@@ -1,5 +1,6 @@
 <?php
 
+use WsdlToPhp\PhpGenerator\Element\PhpVariable;
 use WsdlToPhp\PhpGenerator\Element\PhpProperty;
 use WsdlToPhp\PhpGenerator\Tests\TestCase;
 
@@ -76,5 +77,15 @@ class PhpPropertyTest extends TestCase
         $property = new PhpProperty('foo', null, PhpProperty::ACCESS_PROTECTED);
 
         $this->assertSame('protected $foo = NULL;', $property->getPhpDeclaration());
+    }
+
+    /**
+     * @expectedException InvalidArgumentException
+     */
+    public function testAddChild()
+    {
+        $property = new PhpProperty('Foo');
+
+        $property->addChild(new PhpVariable('Bar'));
     }
 }

@@ -63,4 +63,21 @@ class PhpVariableTest extends TestCase
 
         $this->assertSame("\$foo = is_array(1);", $variable->getPhpDeclaration());
     }
+
+    /**
+     * @expectedException InvalidArgumentException
+     */
+    public function testAddChild()
+    {
+        $variable = new PhpVariable('Foo', 'bar');
+
+        $variable->addChild(new PhpVariable('Bar', 'foo'));
+    }
+
+    public function testToStringNullValue()
+    {
+        $variable = new PhpVariable('foo');
+
+        $this->assertSame('$foo = NULL;', $variable->toString());
+    }
 }

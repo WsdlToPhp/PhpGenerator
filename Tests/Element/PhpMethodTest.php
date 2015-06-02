@@ -2,6 +2,11 @@
 
 namespace WsdlToPhp\PhpGenerator\Tests\Element;
 
+use WsdlToPhp\PhpGenerator\Element\PhpVariable;
+use WsdlToPhp\PhpGenerator\Element\PhpProperty;
+use WsdlToPhp\PhpGenerator\Element\PhpAnnotationBlock;
+use WsdlToPhp\PhpGenerator\Element\PhpConstant;
+use WsdlToPhp\PhpGenerator\Element\PhpInterface;
 use WsdlToPhp\PhpGenerator\Element\PhpFunctionParameter;
 use WsdlToPhp\PhpGenerator\Element\PhpMethod;
 use WsdlToPhp\PhpGenerator\Tests\TestCase;
@@ -78,5 +83,33 @@ class PhpMethodTest extends TestCase
         ), true);
 
         $this->assertSame('abstract public function foo($bar);', $method->getPhpDeclaration());
+    }
+
+    /**
+     * @expectedException InvalidArgumentException
+     */
+    public function testAddChildWithException()
+    {
+        $method = new PhpMethod('Foo');
+
+        $method->addChild(new PhpInterface('Bar'));
+    }
+
+    public function testAddChildString()
+    {
+        $method = new PhpMethod('Foo');
+
+        $method->addChild("\n");
+
+        $this->assertCount(1, $method->getChildren());
+    }
+
+    public function testAddChildVariable()
+    {
+        $method = new PhpMethod('foo', null, array());
+
+        $method->addChild(new PhpVariable('bar'));
+
+        $this->assertCount(1, $method->getChildren());
     }
 }

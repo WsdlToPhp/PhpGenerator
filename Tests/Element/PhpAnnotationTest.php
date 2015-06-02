@@ -40,4 +40,21 @@ class PhpAnnotationTest extends TestCase
                           " * line This sample annotation is on one line This sample annotation is on one line\n" .
                           " *  This sample annotation is on one line", $annotation->getPhpDeclaration());
     }
+
+    /**
+     * @expectedException InvalidArgumentException
+     */
+    public function testAddChildWithException()
+    {
+        $annotation = new PhpAnnotation('date', '2015-06-02');
+
+        $annotation->addChild($annotation);
+    }
+
+    public function testToString()
+    {
+        $annotation = new PhpAnnotation(PhpAnnotation::NO_NAME, 'This sample annotation is on one line');
+
+        $this->assertSame(' * This sample annotation is on one line', $annotation->toString());
+    }
 }

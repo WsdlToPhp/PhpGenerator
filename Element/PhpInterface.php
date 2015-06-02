@@ -29,4 +29,17 @@ class PhpInterface extends PhpClass
     {
         return null;
     }
+    /**
+     * defines authorized children element types
+     * @return string[]
+     */
+    public function getChildrenTypes()
+    {
+        return array(
+            'string',
+            'WsdlToPhp\\PhpGenerator\\Element\\PhpAnnotationBlock',
+            'WsdlToPhp\\PhpGenerator\\Element\\PhpMethod',
+            'WsdlToPhp\\PhpGenerator\\Element\\PhpConstant',
+        );
+    }
 }

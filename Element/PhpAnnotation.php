@@ -78,7 +78,15 @@ class PhpAnnotation extends AbstractElement
      */
     public function getPhpDeclaration()
     {
-        return sprintf(' *%s', implode(sprintf('%s *', self::BREAK_LINE_CHAR), $this->getPhpContent()));
+        return sprintf(' *%s', implode(sprintf('%s *', parent::BREAK_LINE_CHAR), $this->getPhpContent()));
+    }
+    /**
+     * defines authorized children element types
+     * @return string[]
+     */
+    public function getChildrenTypes()
+    {
+        return array();
     }
     /**
      * @return bool

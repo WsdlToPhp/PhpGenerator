@@ -1,5 +1,6 @@
 <?php
 
+use WsdlToPhp\PhpGenerator\Element\PhpVariable;
 use WsdlToPhp\PhpGenerator\Element\PhpClass;
 use WsdlToPhp\PhpGenerator\Element\PhpConstant;
 use WsdlToPhp\PhpGenerator\Tests\TestCase;
@@ -8,37 +9,37 @@ class PhpConstantTest extends TestCase
 {
     public function testGetPhpDeclarationNullValue()
     {
-        $variable = new PhpConstant('foo');
+        $constant = new PhpConstant('foo');
 
-        $this->assertSame('define(\'foo\', NULL);', $variable->getPhpDeclaration());
+        $this->assertSame('define(\'foo\', NULL);', $constant->getPhpDeclaration());
     }
 
     public function testGetPhpDeclarationTrueValue()
     {
-        $variable = new PhpConstant('foo', true);
+        $constant = new PhpConstant('foo', true);
 
-        $this->assertSame('define(\'foo\', true);', $variable->getPhpDeclaration());
+        $this->assertSame('define(\'foo\', true);', $constant->getPhpDeclaration());
     }
 
     public function testGetPhpDeclarationFalseValue()
     {
-        $variable = new PhpConstant('foo', false);
+        $constant = new PhpConstant('foo', false);
 
-        $this->assertSame('define(\'foo\', false);', $variable->getPhpDeclaration());
+        $this->assertSame('define(\'foo\', false);', $constant->getPhpDeclaration());
     }
 
     public function testGetPhpDeclarationStringOneValue()
     {
-        $variable = new PhpConstant('foo', '1');
+        $constant = new PhpConstant('foo', '1');
 
-        $this->assertSame('define(\'foo\', \'1\');', $variable->getPhpDeclaration());
+        $this->assertSame('define(\'foo\', \'1\');', $constant->getPhpDeclaration());
     }
 
     public function testGetPhpDeclarationNumberOneValue()
     {
-        $variable = new PhpConstant('foo', 1);
+        $constant = new PhpConstant('foo', 1);
 
-        $this->assertSame('define(\'foo\', 1);', $variable->getPhpDeclaration());
+        $this->assertSame('define(\'foo\', 1);', $constant->getPhpDeclaration());
     }
 
     /**
@@ -51,36 +52,60 @@ class PhpConstantTest extends TestCase
 
     public function testGetPhpDeclarationNullValueForClass()
     {
-        $variable = new PhpConstant('foo', null, new PhpClass('bar'));
+        $constant = new PhpConstant('foo', null, new PhpClass('bar'));
 
-        $this->assertSame('const FOO = NULL;', $variable->getPhpDeclaration());
+        $this->assertSame('const FOO = NULL;', $constant->getPhpDeclaration());
     }
 
     public function testGetPhpDeclarationTrueValueForClass()
     {
-        $variable = new PhpConstant('foo', true, new PhpClass('Bar'));
+        $constant = new PhpConstant('foo', true, new PhpClass('Bar'));
 
-        $this->assertSame('const FOO = true;', $variable->getPhpDeclaration());
+        $this->assertSame('const FOO = true;', $constant->getPhpDeclaration());
     }
 
     public function testGetPhpDeclarationFalseValueForClass()
     {
-        $variable = new PhpConstant('foo', false, new PhpClass('Bar'));
+        $constant = new PhpConstant('foo', false, new PhpClass('Bar'));
 
-        $this->assertSame('const FOO = false;', $variable->getPhpDeclaration());
+        $this->assertSame('const FOO = false;', $constant->getPhpDeclaration());
     }
 
     public function testGetPhpDeclarationStringOneValueForClass()
     {
-        $variable = new PhpConstant('foo', '1', new PhpClass('Bar'));
+        $constant = new PhpConstant('foo', '1', new PhpClass('Bar'));
 
-        $this->assertSame('const FOO = \'1\';', $variable->getPhpDeclaration());
+        $this->assertSame('const FOO = \'1\';', $constant->getPhpDeclaration());
     }
 
     public function testGetPhpDeclarationNumberOneValueForClass()
     {
-        $variable = new PhpConstant('foo', 1, new PhpClass('Bar'));
+        $constant = new PhpConstant('foo', 1, new PhpClass('Bar'));
 
-        $this->assertSame('const FOO = 1;', $variable->getPhpDeclaration());
+        $this->assertSame('const FOO = 1;', $constant->getPhpDeclaration());
+    }
+
+    /**
+     * @expectedException InvalidArgumentException
+     */
+    public function testAddChild()
+    {
+        $constant = new PhpVariable('Foo', 'bar');
+
+        $constant->addChild(new PhpVariable('Bar', 'foo'));
+    }
+
+    public function testToStringNullValue()
+    {
+        $constant = new PhpConstant('foo');
+
+        $this->assertSame('define(\'foo\', NULL);', $constant->toString());
+    }
+
+    public function testToStringNullValueForClass()
+    {
+        $constant = new PhpConstant('foo', null, new PhpClass('bar'));
+
+        $this->assertSame('const FOO = NULL;', $constant->toString());
     }
 }

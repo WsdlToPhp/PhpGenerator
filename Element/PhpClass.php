@@ -176,6 +176,20 @@ class PhpClass extends AbstractElement
         return trim(sprintf('%s%s %s%s%s', $this->getPhpAbstract(), static::PHP_DECLARATION, $this->getPhpName(), $this->getPhpExtends(), $this->getPhpInterfaces()));
     }
     /**
+     * defines authorized children element types
+     * @return string[]
+     */
+    public function getChildrenTypes()
+    {
+        return array(
+            'string',
+            'WsdlToPhp\\PhpGenerator\\Element\\PhpAnnotationBlock',
+            'WsdlToPhp\\PhpGenerator\\Element\\PhpMethod',
+            'WsdlToPhp\\PhpGenerator\\Element\\PhpConstant',
+            'WsdlToPhp\\PhpGenerator\\Element\\PhpProperty',
+        );
+    }
+    /**
      * @return bool
      */
     public function canBeAlone()

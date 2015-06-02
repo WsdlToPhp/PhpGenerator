@@ -2,6 +2,11 @@
 
 namespace WsdlToPhp\PhpGenerator\Tests\Element;
 
+use WsdlToPhp\PhpGenerator\Element\PhpProperty;
+use WsdlToPhp\PhpGenerator\Element\PhpAnnotationBlock;
+use WsdlToPhp\PhpGenerator\Element\PhpConstant;
+use WsdlToPhp\PhpGenerator\Element\PhpMethod;
+use WsdlToPhp\PhpGenerator\Element\PhpInterface;
 use WsdlToPhp\PhpGenerator\Element\PhpClass;
 use WsdlToPhp\PhpGenerator\Tests\TestCase;
 
@@ -109,5 +114,62 @@ class PhpClassTest extends TestCase
         ));
 
         $this->assertSame('abstract class Foo extends Bar implements Demo, Sample', $class->getPhpDeclaration());
+    }
+
+    /**
+     * @expectedException InvalidArgumentException
+     */
+    public function testAddChildWithException()
+    {
+        $class = new PhpClass('Foo');
+
+        $class->addChild(new PhpInterface('Bar'));
+    }
+
+    public function testAddChildMethod()
+    {
+        $class = new PhpClass('Foo');
+
+        $class->addChild(new PhpMethod('Bar'));
+
+        $this->assertCount(1, $class->getChildren());
+    }
+
+    public function testAddChildConstant()
+    {
+        $class = new PhpClass('Foo');
+
+        $class->addChild(new PhpConstant('Bar'));
+
+        $this->assertCount(1, $class->getChildren());
+    }
+
+    public function testAddChildAnnotationBlock()
+    {
+        $class = new PhpClass('Foo');
+
+        $class->addChild(new PhpAnnotationBlock(array(
+            'Bar',
+        )));
+
+        $this->assertCount(1, $class->getChildren());
+    }
+
+    public function testAddChildProperty()
+    {
+        $class = new PhpClass('Foo');
+
+        $class->addChild(new PhpProperty('Bar'));
+
+        $this->assertCount(1, $class->getChildren());
+    }
+
+    public function testAddChildString()
+    {
+        $class = new PhpClass('Foo');
+
+        $class->addChild("\n");
+
+        $this->assertCount(1, $class->getChildren());
     }
 }

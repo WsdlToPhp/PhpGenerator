@@ -98,7 +98,18 @@ class PhpAnnotationBlock extends AbstractElement
      */
     public function getPhpDeclaration()
     {
-        return sprintf('/**%s%s%s */', self::BREAK_LINE_CHAR, implode(self::BREAK_LINE_CHAR, $this->getPhpAnnotations()), self::BREAK_LINE_CHAR);
+        return sprintf('/**%s%s%s */', parent::BREAK_LINE_CHAR, implode(parent::BREAK_LINE_CHAR, $this->getPhpAnnotations()), parent::BREAK_LINE_CHAR);
+    }
+    /**
+     * defines authorized children element types
+     * @return string[]
+     */
+    public function getChildrenTypes()
+    {
+        return array(
+            'string',
+            'WsdlToPhp\\PhpGenerator\\Element\\PhpAnnotation',
+        );
     }
     /**
      * @return bool

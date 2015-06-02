@@ -45,6 +45,14 @@ class PhpVariable extends AbstractAssignedValueElement
         return false;
     }
     /**
+     * defines authorized children element types
+     * @return string[]
+     */
+    public function getChildrenTypes()
+    {
+        return array();
+    }
+    /**
      * indicates if the element finishes with a semicolon or not
      * @return bool
      */

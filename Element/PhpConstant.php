@@ -116,6 +116,14 @@ class PhpConstant extends AbstractAssignedValueElement
         return true;
     }
     /**
+     * defines authorized children element types
+     * @return string[]
+     */
+    public function getChildrenTypes()
+    {
+        return array();
+    }
+    /**
      * @return bool
      */
     public function canBeAlone()
