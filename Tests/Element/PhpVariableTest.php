@@ -64,6 +64,20 @@ class PhpVariableTest extends TestCase
         $this->assertSame("\$foo = is_array(1);", $variable->getPhpDeclaration());
     }
 
+    public function testGetPhpDeclarationClassConstant()
+    {
+        $variable = new PhpVariable('foo', 'stdClass::BAR');
+
+        $this->assertSame("\$foo = stdClass::BAR;", $variable->getPhpDeclaration());
+    }
+
+    public function testGetPhpDeclarationConstant()
+    {
+        $variable = new PhpVariable('foo', '::XML_ELEMENT_NODE');
+
+        $this->assertSame("\$foo = XML_ELEMENT_NODE;", $variable->getPhpDeclaration());
+    }
+
     /**
      * @expectedException InvalidArgumentException
      */
