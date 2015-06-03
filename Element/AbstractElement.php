@@ -59,9 +59,12 @@ abstract class AbstractElement implements GenerableInterface, FileableInterface
      */
     public function toString($indentation = null)
     {
-        $lines = array(
-            $this->getIndentedString($this->getPhpDeclaration(), $indentation),
-        );
+        $declaration = $this->getPhpDeclaration();
+        if (!empty($declaration)) {
+            $lines = array(
+                $this->getIndentedString($declaration, $indentation),
+            );
+        }
         $before = $this->getContextualLineBeforeChildren($indentation);
         if ($before !== '') {
             $lines[] = $before;
@@ -89,7 +92,7 @@ abstract class AbstractElement implements GenerableInterface, FileableInterface
         } elseif ($child instanceof AbstractElement) {
             $content = $child->toString($indentation === null ? $this->getIndentation() : $indentation);
         } else {
-            throw new \InvalidArgumentException(sprintf('Child\'s content could not be generated for: %s:%s', gettype($child), is_object($child) ? get_class($child) : ''));
+            throw new \InvalidArgumentException(sprintf('Child\'s content could not be generated for: %s:%s', gettype($child), is_object($child) ? get_class($child) : 'not an object'));
         }
         return $content;
     }
@@ -107,7 +110,7 @@ abstract class AbstractElement implements GenerableInterface, FileableInterface
      */
     public function addChild($child)
     {
-        if (!$this->childrendIsValid($child)) {
+        if (!$this->childrenIsValid($child)) {
             $types = $this->getChildrenTypes();
             if (empty($types)) {
                 throw new \InvalidArgumentException('This element does not accept any child element');
@@ -122,7 +125,7 @@ abstract class AbstractElement implements GenerableInterface, FileableInterface
      * @param mixed $child
      * @return bool
      */
-    private function childrendIsValid($child)
+    protected function childrenIsValid($child)
     {
         $valid = false;
         $authorizedTypes = $this->getChildrenTypes();
