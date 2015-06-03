@@ -2,6 +2,7 @@
 
 namespace WsdlToPhp\PhpGenerator\Tests\Element;
 
+use WsdlToPhp\PhpGenerator\Element\PhpVariable;
 use WsdlToPhp\PhpGenerator\Element\PhpProperty;
 use WsdlToPhp\PhpGenerator\Element\PhpAnnotationBlock;
 use WsdlToPhp\PhpGenerator\Element\PhpConstant;
@@ -171,5 +172,54 @@ class PhpClassTest extends TestCase
         $class->addChild("\n");
 
         $this->assertCount(1, $class->getChildren());
+    }
+
+    public function testSimpleClassEmptyBodyToString()
+    {
+        $class = new PhpClass('Foo');
+
+        $this->assertSame("class Foo\n{\n}", $class->toString());
+    }
+
+    public function testSimpleClassEmptyPublicMethodToString()
+    {
+        $class = new PhpClass('Foo');
+
+        $class->addChild(new PhpMethod('bar'));
+
+        $this->assertSame("class Foo\n{\n    public function bar()\n    {\n    }\n}", $class->toString());
+    }
+
+    public function testSimpleClassEmptyProtectedMethodToString()
+    {
+        $class = new PhpClass('Foo');
+
+        $class->addChild(new PhpMethod('bar', PhpMethod::ACCESS_PROTECTED));
+
+        $this->assertSame("class Foo\n{\n    protected function bar()\n    {\n    }\n}", $class->toString());
+    }
+
+    public function testSimpleClassEmptyPrivateMethodToString()
+    {
+        $class = new PhpClass('Foo');
+
+        $class->addChild(new PhpMethod('bar', PhpMethod::ACCESS_PRIVATE));
+
+        $this->assertSame("class Foo\n{\n    private function bar()\n    {\n    }\n}", $class->toString());
+    }
+
+    public function testSimpleClassPublicMethodToString()
+    {
+        $class = new PhpClass('Foo');
+
+        $method = new PhpMethod('bar', PhpMethod::ACCESS_PRIVATE, array(
+            'bar',
+            'foo',
+            'sample',
+        ));
+        $method->addChild(new PhpVariable('foo', 1));
+        $class->addChild($method);
+
+        $this->assertSame("class Foo\n{\n    private function bar(\$bar, \$foo, \$sample)\n    {\n        \$foo = 1;\n    }\n}", $class->toString());
     }
 }
