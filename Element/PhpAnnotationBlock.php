@@ -77,7 +77,7 @@ class PhpAnnotationBlock extends AbstractElement
      */
     public function addChild($child)
     {
-        if(!$this->childrenIsValid($child)) {
+        if (!$this->childrenIsValid($child)) {
             return parent::addChild($child);
         }
         $this->children[] = $this->transformAnnotation($child);
