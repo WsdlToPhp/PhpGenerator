@@ -3,13 +3,15 @@
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/WsdlToPhp/PhpGenerator/badges/quality-score.png)](https://scrutinizer-ci.com/g/WsdlToPhp/PhpGenerator/)
 
 Php Generator eases the creation of a PHP file for any type of content such as:
+
 - simple php file
-- class file: abstract, interface, normal class
+- class file: simple class, abstract, interface
 - method
 - variable
 - function
 - property class
-- etc
+- constant
+- annotation block
 
 ## Main features
 ### Generate any PHP source code you want using a flexible PHP library.
