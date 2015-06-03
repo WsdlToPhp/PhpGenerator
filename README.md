@@ -449,7 +449,97 @@ $class->addChild(new PhpProperty('Bar'));
 ```
 throws an ```\InvaliddArgumentException``` exception.
 
-### Generate PHP file from simple file to class file.
+### Generate a file from a simple file to a class file
+#### Containing one variable
+```php
+<?php
+$file = new PhpFile('foo');
+$file->addChild(new PhpVariable('foo', 1));
+echo $file->toString();
+```
+displays
+```php
+<?php
+$foo = 1;
+```
+#### Containing one constant
+```php
+<?php
+$file = new PhpFile('foo');
+$file->addChild(new PhpConstant('foo', 1));
+echo $file->toString();
+```
+displays
+```php
+<?php
+define('foo', 1);
+```
+#### Containing one function
+```php
+<?php
+$file = new PhpFile('foo');
+$file->addChild(new PhpFunction('foo', array(
+    'foo',
+    'sample',
+    'demo',
+)));
+echo $file->toString();
+```
+displays
+```php
+<?php
+<?php
+function foo($foo, $sample, $demo)
+{
+}
+```
+#### Containing one annotation block
+```php
+<?php
+$file = new PhpFile('foo');
+$file->addChild(new PhpAnnotationBlock(array(
+    'date is the key',
+    'time is the core key',
+)));
+echo $file->toString();
+```
+displays
+```php
+<?php
+<?php
+/**
+ * date is the key
+ * time is the core key
+ */
+```
+#### Containing an annotation block and a class
+```php
+<?php
+$file = new PhpFile('foo');
+$file->addChild(new PhpAnnotationBlock(array(
+    'date is the key',
+    'time is the core key',
+)));
+$class = new PhpClass('Foo');
+$class->addChild(new PhpMethod('Bar'));
+$file->addChild($class);
+echo $file->toString();
+```
+displays
+```php
+<?php
+<?php
+/**
+ * date is the key
+ * time is the core key
+ */
+class Foo
+{
+    public function Bar()
+    {
+    }
+}
+```
 
 ## Main constraints
 Each element must only have access to its sub content, this means a class does not care of its annotations:
