@@ -13,6 +13,16 @@ interface GenerableInterface
      */
     const BREAK_LINE_CHAR = "\n";
     /**
+     * opening a function/class
+     * @var string
+     */
+    const OPEN_BRACKET = '{';
+    /**
+     * closing a function/class
+     * @var string
+     */
+    const CLOSE_BRACKET = '}';
+    /**
      * Must return the strict representation for the current element
      * @param int $indentation
      * @return string
