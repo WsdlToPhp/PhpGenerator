@@ -65,7 +65,7 @@ class PhpFile extends AbstractComponent
      */
     public function addConstantElement(PhpConstantElement $constant)
     {
-        $this->file->addChild($variable);
+        $this->file->addChild($constant);
         return $this;
     }
     /**
@@ -74,7 +74,7 @@ class PhpFile extends AbstractComponent
      */
     public function addAnnotationBlock(PhpAnnotationBlockElement $annotationBlock)
     {
-        $this->file->addChild($variable);
+        $this->file->addChild($annotationBlock);
         return $this;
     }
     /**
