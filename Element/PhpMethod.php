@@ -207,4 +207,16 @@ class PhpMethod extends PhpFunction
         }
         return array();
     }
+    /**
+     * Allows to indicate that children are contained by brackets,
+     * in the case the method returns true, getBracketBeforeChildren
+     * is called instead of getLineBeforeChildren and getBracketAfterChildren
+     * is called instead of getLineAfterChildren, but be aware that these methods
+     * call the two others
+     * @return bool
+     */
+    public function useBracketsForChildren()
+    {
+        return $this->getHasBody();
+    }
 }
