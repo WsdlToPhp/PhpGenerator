@@ -453,6 +453,7 @@ throws an ```\InvaliddArgumentException``` exception.
 
 ## Main constraints
 Each element must only have access to its sub content, this means a class does not care of its annotations:
+
 - a file contains: anything you want
 - a class contains: constants, properties, methods, annotations, empty string lines
 - an interface contains: constants, methods, annotations, empty string lines
