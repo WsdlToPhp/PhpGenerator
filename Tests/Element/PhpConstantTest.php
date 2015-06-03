@@ -11,7 +11,7 @@ class PhpConstantTest extends TestCase
     {
         $constant = new PhpConstant('foo');
 
-        $this->assertSame('define(\'foo\', NULL);', $constant->getPhpDeclaration());
+        $this->assertSame('define(\'foo\', null);', $constant->getPhpDeclaration());
     }
 
     public function testGetPhpDeclarationTrueValue()
@@ -54,7 +54,7 @@ class PhpConstantTest extends TestCase
     {
         $constant = new PhpConstant('foo', null, new PhpClass('bar'));
 
-        $this->assertSame('const FOO = NULL;', $constant->getPhpDeclaration());
+        $this->assertSame('const FOO = null;', $constant->getPhpDeclaration());
     }
 
     public function testGetPhpDeclarationTrueValueForClass()
@@ -99,13 +99,13 @@ class PhpConstantTest extends TestCase
     {
         $constant = new PhpConstant('foo');
 
-        $this->assertSame('define(\'foo\', NULL);', $constant->toString());
+        $this->assertSame('define(\'foo\', null);', $constant->toString());
     }
 
     public function testToStringNullValueForClass()
     {
         $constant = new PhpConstant('foo', null, new PhpClass('bar'));
 
-        $this->assertSame('const FOO = NULL;', $constant->toString());
+        $this->assertSame('const FOO = null;', $constant->toString());
     }
 }

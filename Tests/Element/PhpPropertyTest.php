@@ -10,7 +10,7 @@ class PhpPropertyTest extends TestCase
     {
         $property = new PhpProperty('foo');
 
-        $this->assertSame('public $foo = NULL;', $property->getPhpDeclaration());
+        $this->assertSame('public $foo = null;', $property->getPhpDeclaration());
     }
 
     public function testPublicGetPhpDeclarationTrueValue()
@@ -69,14 +69,14 @@ class PhpPropertyTest extends TestCase
     {
         $property = new PhpProperty('foo', null, PhpProperty::ACCESS_PRIVATE);
 
-        $this->assertSame('private $foo = NULL;', $property->getPhpDeclaration());
+        $this->assertSame('private $foo = null;', $property->getPhpDeclaration());
     }
 
     public function testProtectedGetPhpDeclarationNullValue()
     {
         $property = new PhpProperty('foo', null, PhpProperty::ACCESS_PROTECTED);
 
-        $this->assertSame('protected $foo = NULL;', $property->getPhpDeclaration());
+        $this->assertSame('protected $foo = null;', $property->getPhpDeclaration());
     }
 
     /**

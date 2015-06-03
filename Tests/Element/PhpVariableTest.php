@@ -9,7 +9,7 @@ class PhpVariableTest extends TestCase
     {
         $variable = new PhpVariable('foo');
 
-        $this->assertSame('$foo = NULL;', $variable->getPhpDeclaration());
+        $this->assertSame('$foo = null;', $variable->getPhpDeclaration());
     }
 
     public function testGetPhpDeclarationTrueValue()
@@ -92,6 +92,6 @@ class PhpVariableTest extends TestCase
     {
         $variable = new PhpVariable('foo');
 
-        $this->assertSame('$foo = NULL;', $variable->toString());
+        $this->assertSame('$foo = null;', $variable->toString());
     }
 }

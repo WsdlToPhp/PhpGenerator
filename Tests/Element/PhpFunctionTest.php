@@ -25,7 +25,7 @@ class PhpFunctionTest extends TestCase
             new PhpFunctionParameter('deamon', true),
         ));
 
-        $this->assertSame('function foo($bar, $demo = 1, $sample = NULL, $deamon = true)', $function->getPhpDeclaration());
+        $this->assertSame('function foo($bar, $demo = 1, $sample = null, $deamon = true)', $function->getPhpDeclaration());
     }
 
     /**
@@ -71,7 +71,7 @@ class PhpFunctionTest extends TestCase
             new PhpFunctionParameter('deamon', true),
         ));
 
-        $this->assertSame("function foo(\$bar, \$demo = 1, \$sample = NULL, \$deamon = true)\n{\n}", $function->toString());
+        $this->assertSame("function foo(\$bar, \$demo = 1, \$sample = null, \$deamon = true)\n{\n}", $function->toString());
     }
 
     public function testToStringWithBody()
@@ -93,6 +93,6 @@ class PhpFunctionTest extends TestCase
             ->addChild(new PhpVariable('bar', 1))
             ->addChild('return $bar;');
 
-        $this->assertSame("function foo(\$bar, \$demo = 1, \$sample = NULL, \$deamon = true)\n{\n    \$bar = 1;\n    return \$bar;\n}", $function->toString());
+        $this->assertSame("function foo(\$bar, \$demo = 1, \$sample = null, \$deamon = true)\n{\n    \$bar = 1;\n    return \$bar;\n}", $function->toString());
     }
 }

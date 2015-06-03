@@ -71,6 +71,8 @@ abstract class AbstractAssignedValueElement extends AbstractAccessRestrictedElem
             } elseif (stripos($this->getValue(), '::') !== false || stripos($this->getValue(), 'new') !== false || stripos($this->getValue(), '(') !== false || stripos($this->getValue(), ')') !== false) {
                 return $this->getValue();
             }
+        } elseif (is_null($this->getValue())) {
+            return 'null';
         }
         return var_export($this->getValue(), true);
     }

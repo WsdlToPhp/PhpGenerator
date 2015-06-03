@@ -28,7 +28,7 @@ class PhpMethodTest extends TestCase
             new PhpFunctionParameter('deamon', true),
         ));
 
-        $this->assertSame('public function foo($bar, $demo = 1, $sample = NULL, $deamon = true)', $method->getPhpDeclaration());
+        $this->assertSame('public function foo($bar, $demo = 1, $sample = null, $deamon = true)', $method->getPhpDeclaration());
     }
 
     public function testProtectedGetPhpDeclaration()
@@ -137,7 +137,7 @@ class PhpMethodTest extends TestCase
             new PhpFunctionParameter('deamon', true),
         ));
 
-        $this->assertSame("public function foo(\$bar, \$demo = 1, \$sample = NULL, \$deamon = true)\n{\n}", $method->toString());
+        $this->assertSame("public function foo(\$bar, \$demo = 1, \$sample = null, \$deamon = true)\n{\n}", $method->toString());
     }
 
     public function testPublicWithBodyToString()
@@ -159,6 +159,6 @@ class PhpMethodTest extends TestCase
             ->addChild(new PhpVariable('bar', 1))
             ->addChild('return $bar;');
 
-        $this->assertSame("public function foo(\$bar, \$demo = 1, \$sample = NULL, \$deamon = true)\n{\n    \$bar = 1;\n    return \$bar;\n}", $method->toString());
+        $this->assertSame("public function foo(\$bar, \$demo = 1, \$sample = null, \$deamon = true)\n{\n    \$bar = 1;\n    return \$bar;\n}", $method->toString());
     }
 }
