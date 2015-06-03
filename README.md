@@ -454,12 +454,13 @@ throws an ```\InvaliddArgumentException``` exception.
 ## Main constraints
 Each element must only have access to its sub content, this means a class does not care of its annotations:
 
-- a file contains: anything you want
-- a class contains: constants, properties, methods, annotations, empty string lines
-- an interface contains: constants, methods, annotations, empty string lines
-- an abstract class contains: constants, properties, methods, annotations, empty string lines
-- a method contains: variables, annotations, string code lines, empty string lines
-- a function contains: variables, string code lines, empty line
+- a file contains: constants, variables, annotation blocks, empty string lines, classes, functions, interfaces
+- a class contains/an abstract class: constants, properties, methods, annotation blocks, empty string lines
+- an interface contains: constants, methods, annotation blocks, empty string lines
+- a method contains: variables, annotation blocks, string code lines, empty string lines
+- a function contains: variables, string code lines, empty line, annotation blocks
+- an annotation block contains: annotations
+- variable, property, function parameter, annotation and constant can't contain any element
 
 ## Unit tests
 You can run the unit tests with the following command:
