@@ -173,7 +173,7 @@ $function = new PhpFunction('foo', array(
 
 $function->addChild(new PhpVariable('bar', 1));
 $function->addChild('return $bar;');
-echo $annotationBlock->toString();
+echo $function->toString();
 ```
 displays
 ```php
@@ -182,6 +182,139 @@ function foo($bar, $demo = 1, $sample = NULL, $deamon = true)
     $bar = 1;
     return $bar;
 }
+```
+
+#### Create a method
+##### Simple public method without any body
+```php
+<?php
+$method = new PhpMethod('foo', array(
+    'bar',
+    array(
+        'name' => 'demo',
+        'value' => 1,
+    ),
+    array(
+        'name' => 'sample',
+        'value' => null,
+    ),
+    new PhpFunctionParameter('deamon', true),
+));
+echo $method->toString();
+```
+displays
+```php
+public function foo($bar, $demo = 1, $sample = NULL, $deamon = true)
+{
+}
+```
+##### Simple public method with a body
+```php
+<?php
+$method = new PhpMethod('foo', array(
+    'bar',
+    array(
+        'name' => 'demo',
+        'value' => 1,
+    ),
+    array(
+        'name' => 'sample',
+        'value' => null,
+    ),
+    new PhpFunctionParameter('deamon', true),
+));
+
+$method->addChild(new PhpVariable('bar', 1));
+$method->addChild('return $bar;');
+echo $method->toString();
+```
+displays
+```php
+public function foo($bar, $demo = 1, $sample = NULL, $deamon = true)
+{
+    $bar = 1;
+    return $bar;
+}
+```
+##### Simple protected method without any body
+```php
+<?php
+$method = new PhpMethod('foo', array(
+    'bar',
+), PhpMethod::ACCESS_PROTECTED);
+echo $method->toString();
+```
+displays
+```php
+protected function foo($bar)
+{
+}
+```
+##### Simple private method without any body
+```php
+<?php
+$method = new PhpMethod('foo', array(
+    'bar',
+), PhpMethod::ACCESS_PRIVATE);
+echo $method->toString();
+```
+displays
+```php
+private function foo($bar)
+{
+}
+```
+##### Simple abstract public method without any body
+```php
+<?php
+$method = new PhpMethod('foo', array(
+    'bar',
+), PhpMethod::ACCESS_PUBLIC, true);
+echo $method->toString();
+```
+displays
+```php
+abstract public function foo($bar);
+```
+##### Simple static public method without any body
+```php
+<?php
+$method = new PhpMethod('foo', array(
+    'bar',
+), PhpMethod::ACCESS_PUBLIC, false, true);
+echo $method->toString();
+```
+displays
+```php
+public static function foo($bar)
+{
+}
+```
+##### Simple final public method without any body
+```php
+<?php
+$method = new PhpMethod('foo', array(
+    'bar',
+), PhpMethod::ACCESS_PUBLIC, false, false, true);
+echo $method->toString();
+```
+displays
+```php
+final public function foo($bar)
+{
+}
+```
+##### Simple public method with no body asked
+```php
+<?php
+$method = new PhpMethod('foo', array(
+    'bar',
+), PhpMethod::ACCESS_PUBLIC, false, false, false, false);
+echo $method->toString();
+```
+displays
+```php
+public function foo($bar);
 ```
 
 ### Generate PHP file from simple file to class file.
