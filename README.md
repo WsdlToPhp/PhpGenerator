@@ -17,7 +17,6 @@ Php Generator eases the creation of a PHP file for any type of content such as:
 #### Create a variable of any type
 ##### An integer
 ```php
-<?php
 $variable = new PhpVariable('bar', 1);
 echo $variable->toString();
 ```
@@ -27,7 +26,6 @@ $bar = 1;
 ```
 ##### A string
 ```php
-<?php
 $variable = new PhpVariable('bar', '1');
 echo $variable->toString();
 ```
@@ -37,7 +35,6 @@ $bar = '1';
 ```
 ##### An object
 ```php
-<?php
 $variable = new PhpVariable('bar', 'new DOMDocument(\'1.0\', \'utf-8\')');
 echo $variable->toString();
 ```
@@ -47,7 +44,6 @@ $bar = new DOMDocument('1.0', 'utf-8');
 ```
 ##### The result of a function
 ```php
-<?php
 $variable = new PhpVariable('bar', 'is_array($foo)');
 echo $variable->toString();
 ```
@@ -57,7 +53,6 @@ $bar = is_array($foo);
 ```
 ##### A class's constant
 ```php
-<?php
 $variable = new PhpVariable('bar', 'stdClass::FOO');
 echo $variable->toString();
 ```
@@ -67,7 +62,6 @@ $bar = stdClass::FOO;
 ```
 ##### A global constant
 ```php
-<?php
 $variable = new PhpVariable('bar', '::XML_ELEMENT_NODE');
 echo $variable->toString();
 ```
@@ -79,7 +73,6 @@ $bar = XML_ELEMENT_NODE;
 #### Create a constant
 ##### As global
 ```php
-<?php
 $constant = new PhpConstant('FOO', true);
 echo $constant->toString();
 ```
@@ -89,7 +82,6 @@ define('FOO', true);
 ```
 ##### For a class
 ```php
-<?php
 $constant = new PhpConstant('foo', true, new PhpClass('Bar'));
 echo $constant->toString();
 ```
@@ -101,7 +93,6 @@ const FOO = true;
 #### Create an annotation block
 ##### Simple
 ```php
-<?php
 $annotationBlock = new PhpAnnotationBlock(array(
     'This sample annotation is on one line',
 ));
@@ -115,7 +106,6 @@ displays
 ```
 ##### More complex
 ```php
-<?php
 $annotationBlock = new PhpAnnotationBlock();
 $annotationBlock->addChild(new PhpAnnotation('date', '2015-01-01'));
 $annotationBlock->addChild(new PhpAnnotation('author', 'PhpTeam'));
@@ -134,7 +124,6 @@ displays
 #### Create a function
 ##### Simple function without any body
 ```php
-<?php
 $function = new PhpFunction('foo', array(
     'bar',
     array(
@@ -157,7 +146,6 @@ function foo($bar, $demo = 1, $sample = NULL, $deamon = true)
 ```
 ##### Function with a body
 ```php
-<?php
 $function = new PhpFunction('foo', array(
     'bar',
     array(
@@ -187,7 +175,6 @@ function foo($bar, $demo = 1, $sample = NULL, $deamon = true)
 #### Create a method
 ##### Simple public method without any body
 ```php
-<?php
 $method = new PhpMethod('foo', array(
     'bar',
     array(
@@ -210,7 +197,6 @@ public function foo($bar, $demo = 1, $sample = NULL, $deamon = true)
 ```
 ##### Simple public method with a body
 ```php
-<?php
 $method = new PhpMethod('foo', array(
     'bar',
     array(
@@ -238,7 +224,6 @@ public function foo($bar, $demo = 1, $sample = NULL, $deamon = true)
 ```
 ##### Simple protected method without any body
 ```php
-<?php
 $method = new PhpMethod('foo', array(
     'bar',
 ), PhpMethod::ACCESS_PROTECTED);
@@ -252,7 +237,6 @@ protected function foo($bar)
 ```
 ##### Simple private method without any body
 ```php
-<?php
 $method = new PhpMethod('foo', array(
     'bar',
 ), PhpMethod::ACCESS_PRIVATE);
@@ -266,7 +250,6 @@ private function foo($bar)
 ```
 ##### Simple abstract public method without any body
 ```php
-<?php
 $method = new PhpMethod('foo', array(
     'bar',
 ), PhpMethod::ACCESS_PUBLIC, true);
@@ -278,7 +261,6 @@ abstract public function foo($bar);
 ```
 ##### Simple static public method without any body
 ```php
-<?php
 $method = new PhpMethod('foo', array(
     'bar',
 ), PhpMethod::ACCESS_PUBLIC, false, true);
@@ -292,7 +274,6 @@ public static function foo($bar)
 ```
 ##### Simple final public method without any body
 ```php
-<?php
 $method = new PhpMethod('foo', array(
     'bar',
 ), PhpMethod::ACCESS_PUBLIC, false, false, true);
@@ -306,7 +287,6 @@ final public function foo($bar)
 ```
 ##### Simple public method with no body asked
 ```php
-<?php
 $method = new PhpMethod('foo', array(
     'bar',
 ), PhpMethod::ACCESS_PUBLIC, false, false, false, false);
@@ -320,7 +300,6 @@ public function foo($bar);
 #### Create a class, an abstract class
 ##### Simple class without any method
 ```php
-<?php
 $class = new PhpClass('Foo');
 echo $class->toString();
 ```
@@ -332,7 +311,6 @@ class Foo
 ```
 ##### Simple abstract class without any method
 ```php
-<?php
 $class = new PhpClass('Foo', true);
 echo $class->toString();
 ```
@@ -344,7 +322,6 @@ abstract class Foo
 ```
 ##### Simple class without any method with inheritance
 ```php
-<?php
 $class = new PhpClass('Foo', false, 'Bar');
 echo $class->toString();
 ```
@@ -356,7 +333,6 @@ class Foo extends Bar
 ```
 ##### Simple class without any method with implementation
 ```php
-<?php
 $class = new PhpClass('Foo', false, 'Bar', array(
     'Demo',
     'Sample',
@@ -376,7 +352,6 @@ class Foo extends Bar implements Demo, Sample
 ```
 ##### Class with one empty method
 ```php
-<?php
 $class = new PhpClass('Foo');
 $class->addChild(new PhpMethod('bar'));
 echo $class->toString();
@@ -392,7 +367,6 @@ class Foo
 ```
 ##### Class with one method
 ```php
-<?php
 $class = new PhpClass('Foo');
 $method = new PhpMethod('bar', array(
     'bar',
@@ -417,7 +391,6 @@ class Foo
 #### Create an interface
 ##### Simple class without any method
 ```php
-<?php
 $interface = new PhpInterface('Foo');
 echo $interface->toString();
 ```
@@ -429,7 +402,6 @@ interface Foo
 ```
 ##### Simple class with one method
 ```php
-<?php
 $interface = new PhpInterface('Foo');
 $interface->addChild(new PhpMethod('bar'));
 echo $interface->toString();
@@ -443,7 +415,6 @@ interface Foo
 ```
 ##### Interface does not accept any property
 ```php
-<?php
 $interface = new PhpInterface('Foo');
 $class->addChild(new PhpProperty('Bar'));
 ```
@@ -452,7 +423,6 @@ throws an ```\InvaliddArgumentException``` exception.
 ### Generate a file from a simple file to a class file
 #### Containing one variable
 ```php
-<?php
 $file = new PhpFile('foo');
 $file->addChild(new PhpVariable('foo', 1));
 echo $file->toString();
@@ -464,7 +434,6 @@ $foo = 1;
 ```
 #### Containing one constant
 ```php
-<?php
 $file = new PhpFile('foo');
 $file->addChild(new PhpConstant('foo', 1));
 echo $file->toString();
@@ -476,7 +445,6 @@ define('foo', 1);
 ```
 #### Containing one function
 ```php
-<?php
 $file = new PhpFile('foo');
 $file->addChild(new PhpFunction('foo', array(
     'foo',
@@ -488,14 +456,12 @@ echo $file->toString();
 displays
 ```php
 <?php
-<?php
 function foo($foo, $sample, $demo)
 {
 }
 ```
 #### Containing one annotation block
 ```php
-<?php
 $file = new PhpFile('foo');
 $file->addChild(new PhpAnnotationBlock(array(
     'date is the key',
@@ -506,7 +472,6 @@ echo $file->toString();
 displays
 ```php
 <?php
-<?php
 /**
  * date is the key
  * time is the core key
@@ -514,7 +479,6 @@ displays
 ```
 #### Containing an annotation block and a class
 ```php
-<?php
 $file = new PhpFile('foo');
 $file->addChild(new PhpAnnotationBlock(array(
     'date is the key',
@@ -527,7 +491,6 @@ echo $file->toString();
 ```
 displays
 ```php
-<?php
 <?php
 /**
  * date is the key
