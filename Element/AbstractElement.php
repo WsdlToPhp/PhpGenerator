@@ -66,14 +66,14 @@ abstract class AbstractElement implements GenerableInterface
             );
         }
         $before = $this->getContextualLineBeforeChildren($indentation);
-        if ($before !== '') {
+        if (!empty($before)) {
             $lines[] = $before;
         }
         foreach ($this->getChildren() as $child) {
             $lines[] = $this->getChildContent($child, $indentation + ($this->useBracketsForChildren() ? 1 : 0));
         }
         $after = $this->getContextualLineAfterChildren($indentation);
-        if ($after !== '') {
+        if (!empty($after)) {
             $lines[] = $after;
         }
         return implode(self::BREAK_LINE_CHAR, $lines);
