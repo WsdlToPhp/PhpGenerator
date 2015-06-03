@@ -110,7 +110,7 @@ class PhpAnnotationBlock extends AbstractElement
      */
     public function getLineBeforeChildren($indentation = null)
     {
-        return parent::OPEN_ANNOTATION;
+        return $this->getIndentedString(parent::OPEN_ANNOTATION, $indentation);
     }
     /**
      * Allows to generate content after children content is generated
@@ -119,6 +119,6 @@ class PhpAnnotationBlock extends AbstractElement
      */
     public function getLineAfterChildren($indentation = null)
     {
-        return parent::CLOSE_ANNOTATION;
+        return $this->getIndentedString(parent::CLOSE_ANNOTATION, $indentation);
     }
 }
