@@ -190,6 +190,18 @@ class PhpClass extends AbstractElement
         );
     }
     /**
+     * Allows to indicate that children are contained by brackets,
+     * in the case the method returns true, getBracketBeforeChildren
+     * is called instead of getLineBeforeChildren and getBracketAfterChildren
+     * is called instead of getLineAfterChildren, but be aware that these methods
+     * call the two others
+     * @return boolean
+     */
+    public function useBracketsForChildren()
+    {
+        return true;
+    }
+    /**
      * @return bool
      */
     public function canBeAlone()

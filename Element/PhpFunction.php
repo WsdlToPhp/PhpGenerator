@@ -5,16 +5,6 @@ namespace WsdlToPhp\PhpGenerator\Element;
 class PhpFunction extends AbstractAccessRestrictedElement
 {
     /**
-     * opening a function
-     * @var string
-     */
-    const OPEN_BRACKET = '{';
-    /**
-     * closing a function
-     * @var string
-     */
-    const CLOSE_BRACKET = '}';
-    /**
      * @var string[]|PhpFunctionParameter[]
      */
     protected $parameters;
@@ -136,25 +126,16 @@ class PhpFunction extends AbstractAccessRestrictedElement
         );
     }
     /**
-     * Allows to generate content before children content is generated
-     * @param int $indentation
-     * @return string
+     * Allows to indicate that children are contained by brackets,
+     * in the case the method returns true, getBracketBeforeChildren
+     * is called instead of getLineBeforeChildren and getBracketAfterChildren
+     * is called instead of getLineAfterChildren, but be aware that these methods
+     * call the two others
+     * @return boolean
      */
-    public function getLineBeforeChildren($indentation = null)
+    public function useBracketsForChildren()
     {
-        $line = $this->getIndentedString(self::OPEN_BRACKET, $indentation);
-        $this->setIndentation(($indentation === null ? $this->getIndentation() : $indentation) + 1);
-        return $line;
-    }
-    /**
-     * Allows to generate content after children content is generated
-     * @param int $indentation
-     * @return string
-     */
-    public function getLineAfterChildren($indentation = null)
-    {
-        $this->setIndentation(($indentation === null ? $this->getIndentation() : $indentation) - 1);
-        return $this->getIndentedString(self::CLOSE_BRACKET, $indentation);
+        return true;
     }
     /**
      * @return bool
