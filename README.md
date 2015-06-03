@@ -116,18 +116,20 @@ displays
 ##### More complex
 ```php
 <?php
-$annotationBlock = new PhpAnnotationBlock(array(
-    'This sample annotation is on one line',
-));
+$annotationBlock = new PhpAnnotationBlock();
+$annotationBlock->addChild(new PhpAnnotation('date', '2015-01-01'));
+$annotationBlock->addChild(new PhpAnnotation('author', 'PhpTeam'));
+$annotationBlock->addChild('This annotation is useful!');
 echo $constant->toString();
 ```
 displays
 ```php
 /**
- * This sample annotation is on one line
+ * @date 2015-01-01
+ * @author PhpTeam
+ * This annotation is useful!
  */
 ```
-
 
 ### Generate PHP file from simple file to class file.
 
