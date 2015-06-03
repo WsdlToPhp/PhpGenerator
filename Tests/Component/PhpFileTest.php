@@ -2,19 +2,19 @@
 
 namespace WsdlToPhp\PhpGenerator\Tests\Component;
 
-use WsdlToPhp\PhpGenerator\Component\PhpClass;
-use WsdlToPhp\PhpGenerator\Element\PhpFunctionParameter;
-use WsdlToPhp\PhpGenerator\Element\PhpAnnotation;
 use WsdlToPhp\PhpGenerator\Tests\TestCase;
-use WsdlToPhp\PhpGenerator\Element\PhpProperty;
-use WsdlToPhp\PhpGenerator\Component\PhpFile;
+use WsdlToPhp\PhpGenerator\Component\PhpClass as PhpClassComponent;
+use WsdlToPhp\PhpGenerator\Component\PhpFile as PhpFileComponent;
+use WsdlToPhp\PhpGenerator\Element\PhpFunctionParameter as PhpFunctionParameterElement;
+use WsdlToPhp\PhpGenerator\Element\PhpAnnotation as PhpAnnotationElement;
+use WsdlToPhp\PhpGenerator\Element\PhpProperty as PhpPropertyElement;
 
 class PhpFileTest extends AbstractComponent
 {
     public function testSimpleToString()
     {
-        $file = new PhpFile('Foo');
-        $class = new PhpClass('Foo', true, 'stdClass');
+        $file = new PhpFileComponent('Foo');
+        $class = new PhpClassComponent('Foo', true, 'stdClass');
 
         $class
             ->setNamespace('My\\Testing\\NamespaceName')
@@ -26,26 +26,26 @@ class PhpFileTest extends AbstractComponent
             ->addConstant('FOO', 'theValue')
             ->addAnnotationBlock('@var string')
             ->addConstant('BAR', 'theOtherValue')
-            ->addAnnotationBlock(new PhpAnnotation('var', 'int'))
+            ->addAnnotationBlock(new PhpAnnotationElement('var', 'int'))
             ->addProperty('bar', 1)
-            ->addAnnotationBlock(new PhpAnnotation('var', 'bool'))
-            ->addPropertyElement(new PhpProperty('sample', true))
+            ->addAnnotationBlock(new PhpAnnotationElement('var', 'bool'))
+            ->addPropertyElement(new PhpPropertyElement('sample', true))
             ->addAnnotationBlock(array(
-                new PhpAnnotation(PhpAnnotation::NO_NAME, 'This method is very useful'),
-                new PhpAnnotation('date', '2012-03-01'),
+                new PhpAnnotationElement(PhpAnnotationElement::NO_NAME, 'This method is very useful'),
+                new PhpAnnotationElement('date', '2012-03-01'),
                 '@return mixed'
             ))
             ->addMethod('getMyValue', array(
-                new PhpFunctionParameter('asString', true),
+                new PhpFunctionParameterElement('asString', true),
                 'unusedParameter'
             ))
             ->addAnnotationBlock(array(
-                new PhpAnnotation(PhpAnnotation::NO_NAME, 'This method is very useless'),
-                new PhpAnnotation('date', '2012-03-01'),
+                new PhpAnnotationElement(PhpAnnotationElement::NO_NAME, 'This method is very useless'),
+                new PhpAnnotationElement('date', '2012-03-01'),
                 '@return void'
             ))
             ->addMethod('uselessMethod', array(
-                new PhpFunctionParameter('uselessParameter', null),
+                new PhpFunctionParameterElement('uselessParameter', null),
                 'unusedParameter'
             ));
         $file->addClassComponent($class);
