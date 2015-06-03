@@ -105,7 +105,7 @@ const FOO = true;
 $annotationBlock = new PhpAnnotationBlock(array(
     'This sample annotation is on one line',
 ));
-echo $constant->toString();
+echo $annotationBlock->toString();
 ```
 displays
 ```php
@@ -120,7 +120,7 @@ $annotationBlock = new PhpAnnotationBlock();
 $annotationBlock->addChild(new PhpAnnotation('date', '2015-01-01'));
 $annotationBlock->addChild(new PhpAnnotation('author', 'PhpTeam'));
 $annotationBlock->addChild('This annotation is useful!');
-echo $constant->toString();
+echo $annotationBlock->toString();
 ```
 displays
 ```php
