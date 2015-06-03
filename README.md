@@ -131,6 +131,59 @@ displays
  */
 ```
 
+#### Create a function
+##### Simple function without any body
+```php
+<?php
+$function = new PhpFunction('foo', array(
+    'bar',
+    array(
+        'name' => 'demo',
+        'value' => 1,
+    ),
+    array(
+        'name' => 'sample',
+        'value' => null,
+    ),
+    new PhpFunctionParameter('deamon', true),
+));
+echo $function->toString();
+```
+displays
+```php
+function foo($bar, $demo = 1, $sample = NULL, $deamon = true)
+{
+}
+```
+##### Function with a body
+```php
+<?php
+$function = new PhpFunction('foo', array(
+    'bar',
+    array(
+        'name' => 'demo',
+        'value' => 1,
+    ),
+    array(
+        'name' => 'sample',
+        'value' => null,
+    ),
+    new PhpFunctionParameter('deamon', true),
+));
+
+$function->addChild(new PhpVariable('bar', 1));
+$function->addChild('return $bar;');
+echo $annotationBlock->toString();
+```
+displays
+```php
+function foo($bar, $demo = 1, $sample = NULL, $deamon = true)
+{
+    $bar = 1;
+    return $bar;
+}
+```
+
 ### Generate PHP file from simple file to class file.
 
 ## Main constraints
