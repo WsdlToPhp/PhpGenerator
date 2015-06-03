@@ -3,7 +3,6 @@
 namespace WsdlToPhp\PhpGenerator\Tests\Component;
 
 use WsdlToPhp\PhpGenerator\Component\PhpClass;
-
 use WsdlToPhp\PhpGenerator\Element\PhpFunctionParameter;
 use WsdlToPhp\PhpGenerator\Element\PhpAnnotation;
 use WsdlToPhp\PhpGenerator\Tests\TestCase;
