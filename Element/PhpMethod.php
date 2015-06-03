@@ -155,13 +155,6 @@ class PhpMethod extends PhpFunction
         return true;
     }
     /**
-     * @return bool
-     */
-    public function canBeAlone()
-    {
-        return false;
-    }
-    /**
      * @param string $propertyName
      * @param bool $value
      * @throws \InvalidArgumentException

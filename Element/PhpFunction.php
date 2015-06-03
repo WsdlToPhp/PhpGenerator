@@ -136,11 +136,4 @@ class PhpFunction extends AbstractAccessRestrictedElement
     {
         return true;
     }
-    /**
-     * @return bool
-     */
-    public function canBeAlone()
-    {
-        return true;
-    }
 }

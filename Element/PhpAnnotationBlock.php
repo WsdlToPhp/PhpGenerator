@@ -121,11 +121,4 @@ class PhpAnnotationBlock extends AbstractElement
     {
         return parent::CLOSE_ANNOTATION;
     }
-    /**
-     * @return bool
-     */
-    public function canBeAlone()
-    {
-        return true;
-    }
 }

@@ -123,11 +123,4 @@ class PhpConstant extends AbstractAssignedValueElement
     {
         return array();
     }
-    /**
-     * @return bool
-     */
-    public function canBeAlone()
-    {
-        return true;
-    }
 }

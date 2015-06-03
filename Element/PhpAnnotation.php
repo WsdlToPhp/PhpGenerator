@@ -88,11 +88,4 @@ class PhpAnnotation extends AbstractElement
     {
         return array();
     }
-    /**
-     * @return bool
-     */
-    public function canBeAlone()
-    {
-        return false;
-    }
 }

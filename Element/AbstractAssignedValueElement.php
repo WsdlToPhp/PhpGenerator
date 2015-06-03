@@ -106,11 +106,4 @@ abstract class AbstractAssignedValueElement extends AbstractAccessRestrictedElem
      * @return bool
      */
     abstract public function endsWithSemicolon();
-    /**
-     * @return bool
-     */
-    public function canBeAlone()
-    {
-        return true;
-    }
 }

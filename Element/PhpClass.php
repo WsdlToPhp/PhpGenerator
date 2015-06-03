@@ -201,11 +201,4 @@ class PhpClass extends AbstractElement
     {
         return true;
     }
-    /**
-     * @return bool
-     */
-    public function canBeAlone()
-    {
-        return true;
-    }
 }

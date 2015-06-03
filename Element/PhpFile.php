@@ -32,12 +32,4 @@ class PhpFile extends AbstractElement
             'WsdlToPhp\\PhpGenerator\\Element\\PhpVariable',
         );
     }
-    /**
-     * @see \WsdlToPhp\PhpGenerator\Element\FileableInterface::canBeAlone()
-     * @return true
-     */
-    public function canBeAlone()
-    {
-        return true;
-    }
 }
