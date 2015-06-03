@@ -62,14 +62,14 @@ abstract class AbstractElement implements GenerableInterface, FileableInterface
         $lines = array(
             $this->getIndentedString($this->getPhpDeclaration(), $indentation),
         );
-        $before = $this->getLineBeforeChildren($indentation);
+        $before = $this->getContextualLineBeforeChildren($indentation);
         if ($before !== '') {
             $lines[] = $before;
         }
         foreach ($this->getChildren() as $child) {
-            $lines[] = $this->getChildContent($child, $indentation);
+            $lines[] = $this->getChildContent($child, $indentation + ($this->useBracketsForChildren() ? 1 : 0));
         }
-        $after = $this->getLineAfterChildren($indentation);
+        $after = $this->getContextualLineAfterChildren($indentation);
         if ($after !== '') {
             $lines[] = $after;
         }
@@ -150,6 +150,34 @@ abstract class AbstractElement implements GenerableInterface, FileableInterface
      */
     abstract public function getChildrenTypes();
     /**
+     * @param int $indentation
+     * @return string
+     */
+    private function getContextualLineBeforeChildren($indentation = null)
+    {
+        $line = '';
+        if ($this->useBracketsForChildren()) {
+            $line = $this->getBracketBeforeChildren($indentation);
+        } else {
+            $line = $this->getLineBeforeChildren($indentation);
+        }
+        return $line;
+    }
+    /**
+     * @param int $indentation
+     * @return string
+     */
+    private function getContextualLineAfterChildren($indentation = null)
+    {
+        $line = '';
+        if ($this->useBracketsForChildren()) {
+            $line = $this->getBracketAfterChildren($indentation);
+        } else {
+            $line = $this->getLineAfterChildren($indentation);
+        }
+        return $line;
+    }
+    /**
      * Allows to generate content before children content is generated
      * @param int $indentation
      * @return string
@@ -166,6 +194,39 @@ abstract class AbstractElement implements GenerableInterface, FileableInterface
     public function getLineAfterChildren($indentation = null)
     {
         return '';
+    }
+    /**
+     * Allows to indicate that children are contained by brackets,
+     * in the case the method returns true, getBracketBeforeChildren
+     * is called instead of getLineBeforeChildren and getBracketAfterChildren
+     * is called instead of getLineAfterChildren, but be aware that these methods
+     * call the two others
+     * @return boolean
+     */
+    public function useBracketsForChildren()
+    {
+        return false;
+    }
+    /**
+     * Allows to generate content before children content is generated
+     * @param int $indentation
+     * @return string
+     */
+    public function getBracketBeforeChildren($indentation = null)
+    {
+        $line = $this->getIndentedString(self::OPEN_BRACKET, $indentation);
+        $this->setIndentation(($indentation === null ? $this->getIndentation() : $indentation) + 1);
+        return $line;
+    }
+    /**
+     * Allows to generate content after children content is generated
+     * @param int $indentation
+     * @return string
+     */
+    public function getBracketAfterChildren($indentation = null)
+    {
+        $this->setIndentation(($indentation === null ? $this->getIndentation() : $indentation) - 1);
+        return $this->getIndentedString(self::CLOSE_BRACKET, $indentation);
     }
     /**
      * @param int $indentation
