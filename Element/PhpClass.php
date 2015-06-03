@@ -195,7 +195,7 @@ class PhpClass extends AbstractElement
      * is called instead of getLineBeforeChildren and getBracketAfterChildren
      * is called instead of getLineAfterChildren, but be aware that these methods
      * call the two others
-     * @return boolean
+     * @return bool
      */
     public function useBracketsForChildren()
     {
