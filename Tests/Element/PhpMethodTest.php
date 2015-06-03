@@ -15,7 +15,7 @@ class PhpMethodTest extends TestCase
 {
     public function testPublicGetPhpDeclaration()
     {
-        $method = new PhpMethod('foo', PhpMethod::ACCESS_PUBLIC, array(
+        $method = new PhpMethod('foo', array(
             'bar',
             array(
                 'name' => 'demo',
@@ -33,63 +33,63 @@ class PhpMethodTest extends TestCase
 
     public function testProtectedGetPhpDeclaration()
     {
-        $method = new PhpMethod('foo', PhpMethod::ACCESS_PROTECTED, array(
+        $method = new PhpMethod('foo', array(
             'bar',
-        ));
+        ), PhpMethod::ACCESS_PROTECTED);
 
         $this->assertSame('protected function foo($bar)', $method->getPhpDeclaration());
     }
 
     public function testPrivateGetPhpDeclaration()
     {
-        $method = new PhpMethod('foo', PhpMethod::ACCESS_PRIVATE, array(
+        $method = new PhpMethod('foo', array(
             'bar',
-        ));
+        ), PhpMethod::ACCESS_PRIVATE);
 
         $this->assertSame('private function foo($bar)', $method->getPhpDeclaration());
     }
 
     public function testPublicStaticGetPhpDeclaration()
     {
-        $method = new PhpMethod('foo', PhpMethod::ACCESS_PUBLIC, array(
+        $method = new PhpMethod('foo', array(
             'bar',
-        ), false, true);
+        ), PhpMethod::ACCESS_PUBLIC, false, true);
 
         $this->assertSame('public static function foo($bar)', $method->getPhpDeclaration());
     }
 
     public function testProtectedStaticGetPhpDeclaration()
     {
-        $method = new PhpMethod('foo', PhpMethod::ACCESS_PROTECTED, array(
+        $method = new PhpMethod('foo', array(
             'bar',
-        ), false, true);
+        ), PhpMethod::ACCESS_PROTECTED, false, true);
 
         $this->assertSame('protected static function foo($bar)', $method->getPhpDeclaration());
     }
 
     public function testPublicFinalGetPhpDeclaration()
     {
-        $method = new PhpMethod('foo', PhpMethod::ACCESS_PUBLIC, array(
+        $method = new PhpMethod('foo', array(
             'bar',
-        ), false, false, true);
+        ), PhpMethod::ACCESS_PUBLIC, false, false, true);
 
         $this->assertSame('final public function foo($bar)', $method->getPhpDeclaration());
     }
 
     public function testAbstractPublicGetPhpDeclaration()
     {
-        $method = new PhpMethod('foo', PhpMethod::ACCESS_PUBLIC, array(
+        $method = new PhpMethod('foo', array(
             'bar',
-        ), true);
+        ), PhpMethod::ACCESS_PUBLIC, true);
 
         $this->assertSame('abstract public function foo($bar);', $method->getPhpDeclaration());
     }
 
     public function testEmptyBodyPublicGetPhpDeclaration()
     {
-        $method = new PhpMethod('foo', PhpMethod::ACCESS_PUBLIC, array(
+        $method = new PhpMethod('foo', array(
             'bar',
-        ), false, false, false, false);
+        ), PhpMethod::ACCESS_PUBLIC, false, false, false, false);
 
         $this->assertSame('public function foo($bar);', $method->getPhpDeclaration());
     }
@@ -115,7 +115,7 @@ class PhpMethodTest extends TestCase
 
     public function testAddChildVariable()
     {
-        $method = new PhpMethod('foo', null, array());
+        $method = new PhpMethod('foo', array());
 
         $method->addChild(new PhpVariable('bar'));
 
@@ -124,7 +124,7 @@ class PhpMethodTest extends TestCase
 
     public function testPublicEmptyBodyToString()
     {
-        $method = new PhpMethod('foo', PhpMethod::ACCESS_PUBLIC, array(
+        $method = new PhpMethod('foo', array(
             'bar',
             array(
                 'name' => 'demo',
@@ -142,7 +142,7 @@ class PhpMethodTest extends TestCase
 
     public function testPublicWithBodyToString()
     {
-        $method = new PhpMethod('foo', PhpMethod::ACCESS_PUBLIC, array(
+        $method = new PhpMethod('foo', array(
             'bar',
             array(
                 'name' => 'demo',

@@ -12,7 +12,7 @@ class PhpFunctionTest extends TestCase
 {
     public function testGetPhpDeclaration()
     {
-        $function = new PhpFunction('foo', null, array(
+        $function = new PhpFunction('foo', array(
             'bar',
             array(
                 'name' => 'demo',
@@ -33,14 +33,14 @@ class PhpFunctionTest extends TestCase
      */
     public function testAddChild()
     {
-        $function = new PhpFunction('foo', null, array());
+        $function = new PhpFunction('foo', array());
 
         $function->addChild(new PhpProperty('Bar'));
     }
 
     public function testAddChildVariable()
     {
-        $function = new PhpFunction('foo', null, array());
+        $function = new PhpFunction('foo', array());
 
         $function->addChild(new PhpVariable('bar'));
 
@@ -49,7 +49,7 @@ class PhpFunctionTest extends TestCase
 
     public function testAddChildString()
     {
-        $function = new PhpFunction('foo', null, array());
+        $function = new PhpFunction('foo', array());
 
         $function->addChild('bar');
 
@@ -58,7 +58,7 @@ class PhpFunctionTest extends TestCase
 
     public function testToStringEmptyBody()
     {
-        $function = new PhpFunction('foo', null, array(
+        $function = new PhpFunction('foo', array(
             'bar',
             array(
                 'name' => 'demo',
@@ -76,7 +76,7 @@ class PhpFunctionTest extends TestCase
 
     public function testToStringWithBody()
     {
-        $function = new PhpFunction('foo', null, array(
+        $function = new PhpFunction('foo', array(
             'bar',
             array(
                 'name' => 'demo',

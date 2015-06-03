@@ -194,7 +194,7 @@ class PhpClassTest extends TestCase
     {
         $class = new PhpClass('Foo');
 
-        $class->addChild(new PhpMethod('bar', PhpMethod::ACCESS_PROTECTED));
+        $class->addChild(new PhpMethod('bar', array(), PhpMethod::ACCESS_PROTECTED));
 
         $this->assertSame("class Foo\n{\n    protected function bar()\n    {\n    }\n}", $class->toString());
     }
@@ -203,7 +203,7 @@ class PhpClassTest extends TestCase
     {
         $class = new PhpClass('Foo');
 
-        $class->addChild(new PhpMethod('bar', PhpMethod::ACCESS_PRIVATE));
+        $class->addChild(new PhpMethod('bar', array(), PhpMethod::ACCESS_PRIVATE));
 
         $this->assertSame("class Foo\n{\n    private function bar()\n    {\n    }\n}", $class->toString());
     }
@@ -212,11 +212,11 @@ class PhpClassTest extends TestCase
     {
         $class = new PhpClass('Foo');
 
-        $method = new PhpMethod('bar', PhpMethod::ACCESS_PRIVATE, array(
+        $method = new PhpMethod('bar', array(
             'bar',
             'foo',
             'sample',
-        ));
+        ), PhpMethod::ACCESS_PRIVATE);
         $method->addChild(new PhpVariable('foo', 1));
         $class->addChild($method);
 

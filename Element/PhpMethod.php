@@ -22,16 +22,17 @@ class PhpMethod extends PhpFunction
     protected $hasBody;
     /**
      * @param string $name
-     * @param string $access
      * @param string[]|PhpFunctionParameter[] $parameters
+     * @param string $access
      * @param bool $abstract
      * @param bool $static
      * @param bool $final
      * @param bool $hasBody
      */
-    public function __construct($name, $access = parent::ACCESS_PUBLIC, array $parameters = array(), $abstract = false, $static = false, $final = false, $hasBody = true)
+    public function __construct($name, array $parameters = array(), $access = parent::ACCESS_PUBLIC, $abstract = false, $static = false, $final = false, $hasBody = true)
     {
-        parent::__construct($name, $access, $parameters);
+        parent::__construct($name, $parameters);
+        $this->setAccess($access);
         $this->setAbstract($abstract);
         $this->setStatic($static);
         $this->setFinal($final);

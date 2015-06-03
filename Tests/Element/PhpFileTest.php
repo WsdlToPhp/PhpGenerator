@@ -45,7 +45,7 @@ class PhpFileTest extends TestCase
     {
         $file = new PhpFile('foo');
 
-        $file->addChild(new PhpFunction('foo', null, array(
+        $file->addChild(new PhpFunction('foo', array(
             'foo',
             'sample',
             'demo',
