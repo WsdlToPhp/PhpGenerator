@@ -2,6 +2,8 @@
 
 namespace WsdlToPhp\PhpGenerator\Tests\Element;
 
+use WsdlToPhp\PhpGenerator\Element\PhpClass;
+
 use WsdlToPhp\PhpGenerator\Element\PhpFunction;
 use WsdlToPhp\PhpGenerator\Element\PhpVariable;
 use WsdlToPhp\PhpGenerator\Element\PhpMethod;
@@ -64,5 +66,21 @@ class PhpFileTest extends TestCase
         )));
 
         $this->assertSame("<?php\n/**\n * date is the key\n * time is the core key\n */", $file->toString());
+    }
+
+    public function testAnnotationClassMethodBlockToString()
+    {
+        $file = new PhpFile('foo');
+
+        $file->addChild(new PhpAnnotationBlock(array(
+            'date is the key',
+            'time is the core key',
+        )));
+
+        $class = new PhpClass('Foo');
+        $class->addChild(new PhpMethod('Bar'));
+        $file->addChild($class);
+
+        $this->assertSame("<?php\n/**\n * date is the key\n * time is the core key\n */\nclass Foo\n{\n    public function Bar()\n    {\n    }\n}", $file->toString());
     }
 }
