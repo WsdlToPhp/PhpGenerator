@@ -155,8 +155,9 @@ class PhpMethodTest extends TestCase
             new PhpFunctionParameter('deamon', true),
         ));
 
-        $method->addChild(new PhpVariable('bar', 1));
-        $method->addChild('return $bar;');
+        $method
+            ->addChild(new PhpVariable('bar', 1))
+            ->addChild('return $bar;');
 
         $this->assertSame("public function foo(\$bar, \$demo = 1, \$sample = NULL, \$deamon = true)\n{\n    \$bar = 1;\n    return \$bar;\n}", $method->toString());
     }

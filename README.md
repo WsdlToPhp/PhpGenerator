@@ -109,9 +109,10 @@ displays
 ##### More complex
 ```php
 $annotationBlock = new PhpAnnotationBlock();
-$annotationBlock->addChild(new PhpAnnotation('date', '2015-01-01'));
-$annotationBlock->addChild(new PhpAnnotation('author', 'PhpTeam'));
-$annotationBlock->addChild('This annotation is useful!');
+$annotationBlock
+    ->addChild(new PhpAnnotation('date', '2015-01-01'))
+    ->addChild(new PhpAnnotation('author', 'PhpTeam'))
+    ->addChild('This annotation is useful!');
 echo $annotationBlock->toString();
 ```
 displays
@@ -161,8 +162,9 @@ $function = new PhpFunction('foo', array(
     new PhpFunctionParameter('deamon', true),
 ));
 
-$function->addChild(new PhpVariable('bar', 1));
-$function->addChild('return $bar;');
+$function
+    ->addChild(new PhpVariable('bar', 1))
+    ->addChild('return $bar;');
 echo $function->toString();
 ```
 displays
@@ -212,8 +214,9 @@ $method = new PhpMethod('foo', array(
     new PhpFunctionParameter('deamon', true),
 ));
 
-$method->addChild(new PhpVariable('bar', 1));
-$method->addChild('return $bar;');
+$method
+    ->addChild(new PhpVariable('bar', 1))
+    ->addChild('return $bar;');
 echo $method->toString();
 ```
 displays

@@ -116,9 +116,10 @@ class PhpAnnotationBlockTest extends TestCase
     {
         $annotationBlock = new PhpAnnotationBlock();
 
-        $annotationBlock->addChild(new PhpAnnotation('date', '2015-01-01'));
-        $annotationBlock->addChild(new PhpAnnotation('author', 'PhpTeam'));
-        $annotationBlock->addChild('This annotation is useful!');
+        $annotationBlock
+            ->addChild(new PhpAnnotation('date', '2015-01-01'))
+            ->addChild(new PhpAnnotation('author', 'PhpTeam'))
+            ->addChild('This annotation is useful!');
 
         $this->assertSame("/**\n * @date 2015-01-01\n * @author PhpTeam\n * This annotation is useful!\n */", $annotationBlock->toString());
     }

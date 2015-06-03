@@ -89,8 +89,9 @@ class PhpFunctionTest extends TestCase
             new PhpFunctionParameter('deamon', true),
         ));
 
-        $function->addChild(new PhpVariable('bar', 1));
-        $function->addChild('return $bar;');
+        $function
+            ->addChild(new PhpVariable('bar', 1))
+            ->addChild('return $bar;');
 
         $this->assertSame("function foo(\$bar, \$demo = 1, \$sample = NULL, \$deamon = true)\n{\n    \$bar = 1;\n    return \$bar;\n}", $function->toString());
     }
