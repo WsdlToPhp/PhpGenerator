@@ -2,7 +2,6 @@
 
 namespace WsdlToPhp\PhpGenerator\Tests\Component;
 
-use WsdlToPhp\PhpGenerator\Tests\TestCase;
 use WsdlToPhp\PhpGenerator\Component\PhpClass as PhpClassComponent;
 use WsdlToPhp\PhpGenerator\Component\PhpFile as PhpFileComponent;
 use WsdlToPhp\PhpGenerator\Element\PhpFunctionParameter as PhpFunctionParameterElement;
