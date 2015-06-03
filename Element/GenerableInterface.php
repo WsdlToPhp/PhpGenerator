@@ -23,6 +23,16 @@ interface GenerableInterface
      */
     const CLOSE_BRACKET = '}';
     /**
+     * opening an annotation
+     * @var string
+     */
+    const OPEN_ANNOTATION = '/**';
+    /**
+     * closing an annotation
+     * @var string
+     */
+    const CLOSE_ANNOTATION = ' */';
+    /**
      * Must return the strict representation for the current element
      * @param int $indentation
      * @return string
