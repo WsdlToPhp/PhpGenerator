@@ -105,7 +105,7 @@ class PhpAnnotationBlockTest extends TestCase
 
     public function testToStringChildAnnotation()
     {
-        $annotationBlock = new PhpAnnotationBlock(array());
+        $annotationBlock = new PhpAnnotationBlock();
 
         $annotationBlock->addChild(new PhpAnnotation('Author', 'PhpTeam'));
 

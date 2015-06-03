@@ -98,6 +98,37 @@ displays
 const FOO = true;
 ```
 
+#### Create an annotation block
+##### Simple
+```php
+<?php
+$annotationBlock = new PhpAnnotationBlock(array(
+    'This sample annotation is on one line',
+));
+echo $constant->toString();
+```
+displays
+```php
+/**
+ * This sample annotation is on one line
+ */
+```
+##### More complex
+```php
+<?php
+$annotationBlock = new PhpAnnotationBlock(array(
+    'This sample annotation is on one line',
+));
+echo $constant->toString();
+```
+displays
+```php
+/**
+ * This sample annotation is on one line
+ */
+```
+
+
 ### Generate PHP file from simple file to class file.
 
 ## Main constraints

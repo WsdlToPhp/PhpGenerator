@@ -7,7 +7,7 @@ class PhpAnnotationBlock extends AbstractElement
     /**
      * @param string $name
      */
-    public function __construct(array $annotations)
+    public function __construct(array $annotations = array())
     {
         parent::__construct('_');
         $this->setAnnotations($annotations);
