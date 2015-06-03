@@ -46,46 +46,55 @@ class PhpInterfaceTest extends TestCase
      */
     public function testAddChildWithException()
     {
-        $class = new PhpInterface('Foo');
+        $interface = new PhpInterface('Foo');
 
-        $class->addChild(new PhpProperty('Bar'));
+        $interface->addChild(new PhpProperty('Bar'));
     }
 
     public function testAddChildMethod()
     {
-        $class = new PhpInterface('Foo');
+        $interface = new PhpInterface('Foo');
 
-        $class->addChild(new PhpMethod('Bar'));
+        $interface->addChild(new PhpMethod('Bar'));
 
-        $this->assertCount(1, $class->getChildren());
+        $this->assertCount(1, $interface->getChildren());
     }
 
     public function testAddChildConstant()
     {
-        $class = new PhpInterface('Foo');
+        $interface = new PhpInterface('Foo');
 
-        $class->addChild(new PhpConstant('Bar'));
+        $interface->addChild(new PhpConstant('Bar'));
 
-        $this->assertCount(1, $class->getChildren());
+        $this->assertCount(1, $interface->getChildren());
     }
 
     public function testAddChildAnnotationBlock()
     {
-        $class = new PhpInterface('Foo');
+        $interface = new PhpInterface('Foo');
 
-        $class->addChild(new PhpAnnotationBlock(array(
+        $interface->addChild(new PhpAnnotationBlock(array(
             'Bar',
         )));
 
-        $this->assertCount(1, $class->getChildren());
+        $this->assertCount(1, $interface->getChildren());
     }
 
     public function testAddChildString()
     {
-        $class = new PhpInterface('Foo');
+        $interface = new PhpInterface('Foo');
 
-        $class->addChild("\n");
+        $interface->addChild("\n");
 
-        $this->assertCount(1, $class->getChildren());
+        $this->assertCount(1, $interface->getChildren());
+    }
+
+    public function testSimpleIntefaceEmptyPublicMethodToString()
+    {
+        $interface = new PhpInterface('Foo');
+
+        $interface->addChild(new PhpMethod('bar'));
+
+        $this->assertSame("interface Foo\n{\n    public function bar();\n}", $interface->toString());
     }
 }
