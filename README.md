@@ -317,6 +317,138 @@ displays
 public function foo($bar);
 ```
 
+#### Create a class, an abstract class
+##### Simple class without any method
+```php
+<?php
+$class = new PhpClass('Foo');
+echo $class->toString();
+```
+displays
+```php
+class Foo
+{
+}
+```
+##### Simple abstract class without any method
+```php
+<?php
+$class = new PhpClass('Foo', true);
+echo $class->toString();
+```
+displays
+```php
+abstract class Foo
+{
+}
+```
+##### Simple class without any method with inheritance
+```php
+<?php
+$class = new PhpClass('Foo', false, 'Bar');
+echo $class->toString();
+```
+displays
+```php
+class Foo extends Bar
+{
+}
+```
+##### Simple class without any method with implementation
+```php
+<?php
+$class = new PhpClass('Foo', false, 'Bar', array(
+    'Demo',
+    'Sample',
+));
+// equivalent to:
+$class = new PhpClass('Foo', false, 'Bar', array(
+    new PhpClass('Demo'),
+    new PhpClass('Sample'),
+));
+echo $class->toString();
+```
+displays
+```php
+class Foo extends Bar implements Demo, Sample
+{
+}
+```
+##### Class with one empty method
+```php
+<?php
+$class = new PhpClass('Foo');
+$class->addChild(new PhpMethod('bar'));
+echo $class->toString();
+```
+displays
+```php
+class Foo
+{
+    public function bar()
+    {
+    }
+}
+```
+##### Class with one method
+```php
+<?php
+$class = new PhpClass('Foo');
+$method = new PhpMethod('bar', array(
+    'bar',
+    'foo',
+    'sample',
+), PhpMethod::ACCESS_PRIVATE);
+$method->addChild(new PhpVariable('foo', 1));
+$class->addChild($method);
+echo $class->toString();
+```
+displays
+```php
+class Foo
+{
+    private function bar($bar, $foo, $sample)
+    {
+        $foo = 1;
+    }
+}
+```
+
+#### Create an interface
+##### Simple class without any method
+```php
+<?php
+$interface = new PhpInterface('Foo');
+echo $interface->toString();
+```
+displays
+```php
+interface Foo
+{
+}
+```
+##### Simple class with one method
+```php
+<?php
+$interface = new PhpInterface('Foo');
+$interface->addChild(new PhpMethod('bar'));
+echo $interface->toString();
+```
+displays
+```php
+interface Foo
+{
+    public function bar();
+}
+```
+##### Interface does not accept any property
+```php
+<?php
+$interface = new PhpInterface('Foo');
+$class->addChild(new PhpProperty('Bar'));
+```
+throws an ```\InvaliddArgumentException``` exception.
+
 ### Generate PHP file from simple file to class file.
 
 ## Main constraints
