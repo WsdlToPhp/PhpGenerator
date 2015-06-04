@@ -59,6 +59,7 @@ abstract class AbstractElement implements GenerableInterface
      */
     public function toString($indentation = null)
     {
+        $lines = array();
         $declaration = $this->getPhpDeclaration();
         if (!empty($declaration)) {
             $lines = array(
