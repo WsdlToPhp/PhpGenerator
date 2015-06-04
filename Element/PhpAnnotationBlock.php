@@ -73,7 +73,7 @@ class PhpAnnotationBlock extends AbstractElement
     /**
      * @param mixed $child
      * @throws \InvalidArgumentException
-     * @return PhpAnnotation
+     * @return PhpAnnotationBlock
      */
     public function addChild($child)
     {
