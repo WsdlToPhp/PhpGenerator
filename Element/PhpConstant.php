@@ -44,7 +44,7 @@ class PhpConstant extends AbstractAssignedValueElement
         return $this;
     }
     /**
-     * @param PhpClass $class
+     * @param PhpClass|null $class
      * @return bool
      */
     public static function classIsValid($class)

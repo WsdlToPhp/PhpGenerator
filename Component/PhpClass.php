@@ -87,7 +87,7 @@ class PhpClass extends AbstractComponent
      * @param PhpConstantElement $class
      * @return PhpClass
      */
-    public function addConstant($name, $value = null, PhpConstantElement $class = null)
+    public function addConstant($name, $value = null, PhpClassElement $class = null)
     {
         return $this->addConstantElement(new PhpConstantElement($name, $value, $class));
     }
