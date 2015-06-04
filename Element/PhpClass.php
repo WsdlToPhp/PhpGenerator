@@ -35,7 +35,7 @@ class PhpClass extends AbstractElement
     /**
      * @param string $name
      * @param bool $abstract
-     * @param string|PhpClass $extends
+     * @param string|PhpClass|null $extends
      * @param string[]|PhpClass[] $interfaces
      */
     public function __construct($name, $abstract = false, $extends = null, array $interfaces = array())
@@ -73,7 +73,7 @@ class PhpClass extends AbstractElement
         return $this->getAbstract() === false ? '' : static::PHP_ABSTRACT_KEYWORD . ' ';
     }
     /**
-     * @param string|PhpClass $extends
+     * @param string|PhpClass|null $extends
      * @throws \InvalidArgumentException
      * @return PhpClass
      */
@@ -86,7 +86,7 @@ class PhpClass extends AbstractElement
         return $this;
     }
     /**
-     * @param string|PhpClass $extends
+     * @param string|PhpClass|null $extends
      * @return bool
      */
     public static function extendsIsValid($extends)
