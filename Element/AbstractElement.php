@@ -59,6 +59,7 @@ abstract class AbstractElement implements GenerableInterface
      */
     public function toString($indentation = null)
     {
+        $lines = array();
         $declaration = $this->getPhpDeclaration();
         if (!empty($declaration)) {
             $lines = array(
@@ -79,14 +80,13 @@ abstract class AbstractElement implements GenerableInterface
         return implode(self::BREAK_LINE_CHAR, $lines);
     }
     /**
-     * @param sring|AbstractElement $child
+     * @param string|AbstractElement $child
      * @param int $indentation
      * @throws \InvalidArgumentException
      * @return string
      */
     protected function getChildContent($child, $indentation = null)
     {
-        $content = '';
         if (is_string($child)) {
             $content = $this->getIndentedString($child, $indentation);
         } elseif ($child instanceof AbstractElement) {
@@ -99,7 +99,7 @@ abstract class AbstractElement implements GenerableInterface
     /**
      * @return string
      */
-    protected function getPhpName()
+    public function getPhpName()
     {
         return sprintf('%s', $this->getName());
     }
@@ -137,7 +137,7 @@ abstract class AbstractElement implements GenerableInterface
         return (bool)$valid;
     }
     /**
-     * @return AbstractElement[]||mixed[]
+     * @return AbstractElement[]|mixed[]
      */
     public function getChildren()
     {
@@ -158,7 +158,6 @@ abstract class AbstractElement implements GenerableInterface
      */
     private function getContextualLineBeforeChildren($indentation = null)
     {
-        $line = '';
         if ($this->useBracketsForChildren()) {
             $line = $this->getBracketBeforeChildren($indentation);
         } else {
@@ -172,7 +171,6 @@ abstract class AbstractElement implements GenerableInterface
      */
     private function getContextualLineAfterChildren($indentation = null)
     {
-        $line = '';
         if ($this->useBracketsForChildren()) {
             $line = $this->getBracketAfterChildren($indentation);
         } else {

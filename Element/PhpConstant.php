@@ -13,7 +13,7 @@ class PhpConstant extends AbstractAssignedValueElement
      * @param mixed $value
      * @param PhpClass $class
      */
-    public function __construct($name, $value = null, $class = null)
+    public function __construct($name, $value = null, PhpClass $class = null)
     {
         parent::__construct($name, $value);
         $this->setValue($value);
@@ -23,7 +23,7 @@ class PhpConstant extends AbstractAssignedValueElement
      * @see \WsdlToPhp\PhpGenerator\Element\AbstractElement::getName()
      * @return string
      */
-    protected function getPhpName()
+    public function getPhpName()
     {
         if ($this->getClass() instanceof PhpClass) {
             return strtoupper(parent::getPhpName());
@@ -35,7 +35,7 @@ class PhpConstant extends AbstractAssignedValueElement
      * @throws \InvalidArgumentException
      * @return PhpConstant
      */
-    public function setClass($class)
+    public function setClass(PhpClass $class = null)
     {
         if (!self::classIsValid($class)) {
             throw new \InvalidArgumentException(sprintf('Class must be a string or a PhpClass instance, "%s" given', gettype($class)));
@@ -44,7 +44,7 @@ class PhpConstant extends AbstractAssignedValueElement
         return $this;
     }
     /**
-     * @param PhpClass $class
+     * @param PhpClass|null $class
      * @return bool
      */
     public static function classIsValid($class)

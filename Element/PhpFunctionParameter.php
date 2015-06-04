@@ -9,9 +9,9 @@ class PhpFunctionParameter extends PhpVariable
      */
     protected $type;
     /**
-     * @param sring $name
+     * @param string $name
      * @param mixed $value
-     * @param sring $type
+     * @param string $type
      */
     public function __construct($name, $value, $type = null)
     {

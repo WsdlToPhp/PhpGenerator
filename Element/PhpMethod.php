@@ -64,7 +64,7 @@ class PhpMethod extends PhpFunction
         return $this->getAbstract() === true ? 'abstract ' : '';
     }
     /**
-     * @param bool $abstract
+     * @param bool $final
      * @throws \InvalidArgumentException
      * @return PhpMethod
      */

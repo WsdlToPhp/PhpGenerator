@@ -7,6 +7,7 @@ use WsdlToPhp\PhpGenerator\Element\PhpAnnotationBlock as PhpAnnotationBlockEleme
 use WsdlToPhp\PhpGenerator\Element\PhpProperty as PhpPropertyElement;
 use WsdlToPhp\PhpGenerator\Element\PhpConstant as PhpConstantElement;
 use WsdlToPhp\PhpGenerator\Element\PhpMethod as PhpMethodElement;
+use WsdlToPhp\PhpGenerator\Element\PhpAnnotation as PhpAnnotationElement;
 
 class PhpClass extends AbstractComponent
 {
@@ -24,7 +25,7 @@ class PhpClass extends AbstractComponent
     protected $namespace = '';
     /**
      * @param string $name
-     * @param string $abstract
+     * @param bool $abstract
      * @param string $extends
      * @param array $interfaces
      */
@@ -44,7 +45,7 @@ class PhpClass extends AbstractComponent
         return $this;
     }
     /**
-     * @param PhpMethod $method
+     * @param PhpMethodElement $method
      * @return PhpClass
      */
     public function addMethodElement(PhpMethodElement $method)
@@ -68,7 +69,7 @@ class PhpClass extends AbstractComponent
         return $this->addMethodElement(new PhpMethodElement($name, $parameters, $access, $abstract, $static, $final, $hasBody));
     }
     /**
-     * @param PhpConstant $constant
+     * @param PhpConstantElement $constant
      * @return PhpClass
      */
     public function addConstantElement(PhpConstantElement $constant)
@@ -83,10 +84,10 @@ class PhpClass extends AbstractComponent
      * @see \WsdlToPhp\PhpGenerator\Element\PhpConstant::__construct()
      * @param string $name
      * @param mixed $value
-     * @param PhpClass $class
+     * @param PhpConstantElement $class
      * @return PhpClass
      */
-    public function addConstant($name, $value = null, $class = null)
+    public function addConstant($name, $value = null, PhpClassElement $class = null)
     {
         return $this->addConstantElement(new PhpConstantElement($name, $value, $class));
     }
@@ -100,7 +101,7 @@ class PhpClass extends AbstractComponent
         return $this;
     }
     /**
-     * @param PhpProperty $property
+     * @param PhpPropertyElement $property
      * @return PhpClass
      */
     public function addPropertyElement(PhpPropertyElement $property)
@@ -120,7 +121,7 @@ class PhpClass extends AbstractComponent
         return $this->addPropertyElement(new PhpPropertyElement($name, $value, $access));
     }
     /**
-     * @param PhpAnnotationBlock $annotationBlock
+     * @param PhpAnnotationBlockElement $annotationBlock
      * @return PhpClass
      */
     public function addAnnotationBlockElement(PhpAnnotationBlockElement $annotationBlock)
@@ -130,7 +131,7 @@ class PhpClass extends AbstractComponent
     }
     /**
      * @see \WsdlToPhp\PhpGenerator\Element\PhpAnnotationBlock::__construct()
-     * @param array $annotations
+     * @param array|string|PhpAnnotationElement $annotations
      * @return PhpClass
      */
     public function addAnnotationBlock($annotations)
