@@ -7,6 +7,7 @@ use WsdlToPhp\PhpGenerator\Element\PhpAnnotationBlock as PhpAnnotationBlockEleme
 use WsdlToPhp\PhpGenerator\Element\PhpProperty as PhpPropertyElement;
 use WsdlToPhp\PhpGenerator\Element\PhpConstant as PhpConstantElement;
 use WsdlToPhp\PhpGenerator\Element\PhpMethod as PhpMethodElement;
+use WsdlToPhp\PhpGenerator\Element\PhpAnnotation as PhpAnnotationElement;
 
 class PhpClass extends AbstractComponent
 {
@@ -24,7 +25,7 @@ class PhpClass extends AbstractComponent
     protected $namespace = '';
     /**
      * @param string $name
-     * @param string $abstract
+     * @param bool $abstract
      * @param string $extends
      * @param array $interfaces
      */
@@ -130,7 +131,7 @@ class PhpClass extends AbstractComponent
     }
     /**
      * @see \WsdlToPhp\PhpGenerator\Element\PhpAnnotationBlock::__construct()
-     * @param array $annotations
+     * @param array|string|PhpAnnotationElement $annotations
      * @return PhpClass
      */
     public function addAnnotationBlock($annotations)

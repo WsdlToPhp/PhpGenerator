@@ -79,7 +79,7 @@ abstract class AbstractElement implements GenerableInterface
         return implode(self::BREAK_LINE_CHAR, $lines);
     }
     /**
-     * @param sring|AbstractElement $child
+     * @param string|AbstractElement $child
      * @param int $indentation
      * @throws \InvalidArgumentException
      * @return string
@@ -136,7 +136,7 @@ abstract class AbstractElement implements GenerableInterface
         return (bool)$valid;
     }
     /**
-     * @return AbstractElement[]||mixed[]
+     * @return AbstractElement[]|mixed[]
      */
     public function getChildren()
     {

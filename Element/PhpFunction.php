@@ -10,7 +10,7 @@ class PhpFunction extends AbstractAccessRestrictedElement
     protected $parameters;
     /**
      * @param string $name
-     * @param string[]|PhpFunctionParameter[] $parameters
+     * @param mixed[]|PhpFunctionParameter[] $parameters
      */
     public function __construct($name, array $parameters = array())
     {

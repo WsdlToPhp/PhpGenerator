@@ -17,7 +17,7 @@ class PhpAnnotation extends AbstractElement
      */
     protected $content;
     /**
-     * @param sring $name
+     * @param string $name
      * @param string $content
      */
     public function __construct($name, $content)
