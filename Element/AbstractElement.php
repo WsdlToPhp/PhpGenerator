@@ -86,7 +86,6 @@ abstract class AbstractElement implements GenerableInterface
      */
     protected function getChildContent($child, $indentation = null)
     {
-        $content = '';
         if (is_string($child)) {
             $content = $this->getIndentedString($child, $indentation);
         } elseif ($child instanceof AbstractElement) {
@@ -158,7 +157,6 @@ abstract class AbstractElement implements GenerableInterface
      */
     private function getContextualLineBeforeChildren($indentation = null)
     {
-        $line = '';
         if ($this->useBracketsForChildren()) {
             $line = $this->getBracketBeforeChildren($indentation);
         } else {
@@ -172,7 +170,6 @@ abstract class AbstractElement implements GenerableInterface
      */
     private function getContextualLineAfterChildren($indentation = null)
     {
-        $line = '';
         if ($this->useBracketsForChildren()) {
             $line = $this->getBracketAfterChildren($indentation);
         } else {
