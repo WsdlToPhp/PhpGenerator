@@ -84,10 +84,10 @@ class PhpClass extends AbstractComponent
      * @see \WsdlToPhp\PhpGenerator\Element\PhpConstant::__construct()
      * @param string $name
      * @param mixed $value
-     * @param PhpClass $class
+     * @param PhpConstantElement $class
      * @return PhpClass
      */
-    public function addConstant($name, $value = null, $class = null)
+    public function addConstant($name, $value = null, PhpConstantElement $class = null)
     {
         return $this->addConstantElement(new PhpConstantElement($name, $value, $class));
     }

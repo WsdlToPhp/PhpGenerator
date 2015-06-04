@@ -13,7 +13,7 @@ class PhpConstant extends AbstractAssignedValueElement
      * @param mixed $value
      * @param PhpClass $class
      */
-    public function __construct($name, $value = null, $class = null)
+    public function __construct($name, $value = null, PhpClass $class = null)
     {
         parent::__construct($name, $value);
         $this->setValue($value);
