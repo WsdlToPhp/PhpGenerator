@@ -5,7 +5,7 @@ namespace WsdlToPhp\PhpGenerator\Element;
 class PhpAnnotationBlock extends AbstractElement
 {
     /**
-     * @param string $name
+     * @param array $annotations
      */
     public function __construct(array $annotations = array())
     {
