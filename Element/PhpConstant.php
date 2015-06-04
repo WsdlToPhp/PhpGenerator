@@ -35,7 +35,7 @@ class PhpConstant extends AbstractAssignedValueElement
      * @throws \InvalidArgumentException
      * @return PhpConstant
      */
-    public function setClass($class)
+    public function setClass(PhpClass $class = null)
     {
         if (!self::classIsValid($class)) {
             throw new \InvalidArgumentException(sprintf('Class must be a string or a PhpClass instance, "%s" given', gettype($class)));
