@@ -1,5 +1,7 @@
 <?php
 
+namespace WsdlToPhp\PhpGenerator\Tests\Element;
+
 use WsdlToPhp\PhpGenerator\Element\PhpVariable;
 use WsdlToPhp\PhpGenerator\Element\PhpClass;
 use WsdlToPhp\PhpGenerator\Element\PhpConstant;
