@@ -68,7 +68,7 @@ class PhpAnnotation extends AbstractElement
      * @see \WsdlToPhp\PhpGenerator\Element\AbstractElement::getPhpName()
      * @return string
      */
-    protected function getPhpName()
+    public function getPhpName()
     {
         return (!empty($this->name) && $this->getName() !== static::NO_NAME) ? sprintf(' @%s', parent::getPhpName()) : '';
     }

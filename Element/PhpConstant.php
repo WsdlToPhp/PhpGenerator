@@ -23,7 +23,7 @@ class PhpConstant extends AbstractAssignedValueElement
      * @see \WsdlToPhp\PhpGenerator\Element\AbstractElement::getName()
      * @return string
      */
-    protected function getPhpName()
+    public function getPhpName()
     {
         if ($this->getClass() instanceof PhpClass) {
             return strtoupper(parent::getPhpName());
