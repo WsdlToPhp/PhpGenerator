@@ -99,7 +99,7 @@ abstract class AbstractElement implements GenerableInterface
     /**
      * @return string
      */
-    protected function getPhpName()
+    public function getPhpName()
     {
         return sprintf('%s', $this->getName());
     }
