@@ -45,7 +45,7 @@ class PhpClass extends AbstractComponent
         return $this;
     }
     /**
-     * @param PhpMethod $method
+     * @param PhpMethodElement $method
      * @return PhpClass
      */
     public function addMethodElement(PhpMethodElement $method)
@@ -69,7 +69,7 @@ class PhpClass extends AbstractComponent
         return $this->addMethodElement(new PhpMethodElement($name, $parameters, $access, $abstract, $static, $final, $hasBody));
     }
     /**
-     * @param PhpConstant $constant
+     * @param PhpConstantElement $constant
      * @return PhpClass
      */
     public function addConstantElement(PhpConstantElement $constant)
@@ -101,7 +101,7 @@ class PhpClass extends AbstractComponent
         return $this;
     }
     /**
-     * @param PhpProperty $property
+     * @param PhpPropertyElement $property
      * @return PhpClass
      */
     public function addPropertyElement(PhpPropertyElement $property)
@@ -121,7 +121,7 @@ class PhpClass extends AbstractComponent
         return $this->addPropertyElement(new PhpPropertyElement($name, $value, $access));
     }
     /**
-     * @param PhpAnnotationBlock $annotationBlock
+     * @param PhpAnnotationBlockElement $annotationBlock
      * @return PhpClass
      */
     public function addAnnotationBlockElement(PhpAnnotationBlockElement $annotationBlock)
