@@ -31,8 +31,8 @@ class PhpConstant extends AbstractAssignedValueElement
         return parent::getPhpName();
     }
     /**
-     * @param PhpClass $class
      * @throws \InvalidArgumentException
+     * @param PhpClass $class
      * @return PhpConstant
      */
     public function setClass(PhpClass $class = null)
@@ -52,7 +52,7 @@ class PhpConstant extends AbstractAssignedValueElement
         return $class === null || $class instanceof PhpClass;
     }
     /**
-     * @return string|PhpClass
+     * @return PhpClass
      */
     public function getClass()
     {
@@ -72,7 +72,7 @@ class PhpConstant extends AbstractAssignedValueElement
     /**
      * returns the way the value is assigned to the element
      * @return string
-    */
+     */
     public function getAssignmentSign()
     {
         if ($this->getClass() instanceof PhpClass) {
@@ -83,7 +83,7 @@ class PhpConstant extends AbstractAssignedValueElement
     /**
      * retutns the way the assignment is finished
      * @return string
-    */
+     */
     public function getAssignmentFinishing()
     {
         if ($this->getClass() instanceof PhpClass) {

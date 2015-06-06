@@ -24,8 +24,8 @@ abstract class AbstractAssignedValueElement extends AbstractAccessRestrictedElem
         $this->setValue($value);
     }
     /**
-     * @param mixed $value
      * @throws \InvalidArgumentException
+     * @param mixed $value
      * @return AbstractAssignedValueElement
      */
     public function setValue($value)

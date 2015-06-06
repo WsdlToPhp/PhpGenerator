@@ -18,8 +18,8 @@ class PhpFunction extends AbstractAccessRestrictedElement
         $this->setParameters($parameters);
     }
     /**
-     * @param array $parameters
      * @throws \InvalidArgumentException
+     * @param array $parameters
      * @return PhpFunction
      */
     public function setParameters(array $parameters)

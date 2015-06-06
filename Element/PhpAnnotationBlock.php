@@ -13,8 +13,8 @@ class PhpAnnotationBlock extends AbstractElement
         $this->setAnnotations($annotations);
     }
     /**
-     * @param string[]|array[]|PhpAnnotation[] $annotations
      * @throws \InvalidArgumentException
+     * @param string[]|array[]|PhpAnnotation[] $annotations
      * @return PhpAnnotationBlock
      */
     protected function setAnnotations(array $annotations)
@@ -71,8 +71,8 @@ class PhpAnnotationBlock extends AbstractElement
         return (is_string($annotation) && !empty($annotation)) || (is_array($annotation) && array_key_exists('content', $annotation)) || $annotation instanceof PhpAnnotation;
     }
     /**
-     * @param mixed $child
      * @throws \InvalidArgumentException
+     * @param mixed $child
      * @return PhpAnnotationBlock
      */
     public function addChild($child)

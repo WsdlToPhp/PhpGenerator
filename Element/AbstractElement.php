@@ -80,9 +80,9 @@ abstract class AbstractElement implements GenerableInterface
         return implode(self::BREAK_LINE_CHAR, $lines);
     }
     /**
+     * @throws \InvalidArgumentException
      * @param string|AbstractElement $child
      * @param int $indentation
-     * @throws \InvalidArgumentException
      * @return string
      */
     protected function getChildContent($child, $indentation = null)
@@ -104,8 +104,8 @@ abstract class AbstractElement implements GenerableInterface
         return sprintf('%s', $this->getName());
     }
     /**
-     * @param mixed $child
      * @throws \InvalidArgumentException
+     * @param mixed $child
      * @return AbstractElement
      */
     public function addChild($child)
@@ -256,6 +256,7 @@ abstract class AbstractElement implements GenerableInterface
     }
     /**
      * @param string $string
+     * @param int $indentation
      * @return string
      */
     public function getIndentedString($string, $indentation = null)

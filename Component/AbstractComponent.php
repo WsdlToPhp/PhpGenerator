@@ -6,6 +6,10 @@ use WsdlToPhp\PhpGenerator\Element\AbstractElement;
 
 abstract class AbstractComponent implements GenerableInterface
 {
+    /**
+     * @see \WsdlToPhp\PhpGenerator\Component\GenerableInterface::toString()
+     * @return string
+     */
     public function toString()
     {
         $content = array();
@@ -19,8 +23,8 @@ abstract class AbstractComponent implements GenerableInterface
      */
     abstract public function getElements();
     /**
-     * @param string|AbstractElement $element
      * @throws \InvalidArgumentException
+     * @param string|AbstractElement $element
      * @return string
      */
     protected function getElementString($element)

@@ -7,7 +7,6 @@ use WsdlToPhp\PhpGenerator\Element\PhpAnnotationBlock as PhpAnnotationBlockEleme
 use WsdlToPhp\PhpGenerator\Element\PhpProperty as PhpPropertyElement;
 use WsdlToPhp\PhpGenerator\Element\PhpConstant as PhpConstantElement;
 use WsdlToPhp\PhpGenerator\Element\PhpMethod as PhpMethodElement;
-use WsdlToPhp\PhpGenerator\Element\PhpAnnotation as PhpAnnotationElement;
 
 class PhpClass extends AbstractComponent
 {
@@ -84,7 +83,7 @@ class PhpClass extends AbstractComponent
      * @see \WsdlToPhp\PhpGenerator\Element\PhpConstant::__construct()
      * @param string $name
      * @param mixed $value
-     * @param PhpConstantElement $class
+     * @param PhpClassElement $class
      * @return PhpClass
      */
     public function addConstant($name, $value = null, PhpClassElement $class = null)

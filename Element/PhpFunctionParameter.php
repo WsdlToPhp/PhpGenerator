@@ -18,8 +18,8 @@ class PhpFunctionParameter extends PhpVariable
         parent::__construct($name, $value);
     }
     /**
-     * @param string|PhpClass $type
      * @throws \InvalidArgumentException
+     * @param string|PhpClass $type
      * @return PhpFunctionParameter
      */
     public function setType($type)
@@ -64,7 +64,7 @@ class PhpFunctionParameter extends PhpVariable
     /**
      * returns the way the value is assigned to the element
      * @returns string
-    */
+     */
     public function getAssignmentSign()
     {
         return $this->hasValue() ? ' = ' : '';
