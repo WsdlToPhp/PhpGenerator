@@ -15,7 +15,7 @@ class PhpVariable extends AbstractAssignedValueElement
     /**
      * returns the way the value is assigned to the element
      * @returns string
-    */
+     */
     public function getAssignmentSign()
     {
         return ' = ';
@@ -23,7 +23,7 @@ class PhpVariable extends AbstractAssignedValueElement
     /**
      * retutns the way the assignment is finished
      * @return string
-    */
+     */
     public function getAssignmentFinishing()
     {
         return '';
