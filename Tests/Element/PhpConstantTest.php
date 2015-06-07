@@ -53,17 +53,6 @@ class PhpConstantTest extends TestCase
         new PhpConstant('Foo', array());
     }
 
-    /**
-     * @expectedException PHPUnit_Framework_Error
-     * @expectedException InvalidArgumentException
-     */
-    public function testSetClass()
-    {
-        $constant = new PhpConstant('Foo', 1);
-
-        $constant->setClass(new PhpFunctionParameter('bar', 1));
-    }
-
     public function testGetPhpDeclarationNullValueForClass()
     {
         $constant = new PhpConstant('foo', null, new PhpClass('bar'));

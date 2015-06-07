@@ -31,25 +31,13 @@ class PhpConstant extends AbstractAssignedValueElement
         return parent::getPhpName();
     }
     /**
-     * @throws \InvalidArgumentException
      * @param PhpClass $class
      * @return PhpConstant
      */
     public function setClass(PhpClass $class = null)
     {
-        if (!self::classIsValid($class)) {
-            throw new \InvalidArgumentException(sprintf('Class must be a string or a PhpClass instance, "%s" given', gettype($class)));
-        }
         $this->class = $class;
         return $this;
-    }
-    /**
-     * @param PhpClass|null $class
-     * @return bool
-     */
-    public static function classIsValid($class)
-    {
-        return $class === null || $class instanceof PhpClass;
     }
     /**
      * @return PhpClass
