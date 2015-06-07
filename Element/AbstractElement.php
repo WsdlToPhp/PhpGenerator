@@ -53,6 +53,14 @@ abstract class AbstractElement implements GenerableInterface
         return preg_match('/^[a-zA-Z_][a-zA-Z0-9_]*$/D', $name) === 1;
     }
     /**
+     * @param string $string
+     * @return bool
+     */
+    public static function stringIsValid($string)
+    {
+        return (is_string($string) && !empty($string) && self::nameIsValid($string));
+    }
+    /**
      * @see \WsdlToPhp\PhpGenerator\Element\GenerableInterface::toString()
      * @param int $indentation
      * @return string

@@ -36,7 +36,7 @@ class PhpFunctionParameter extends PhpVariable
      */
     public static function typeIsValid($type)
     {
-        return $type === null || (is_string($type) && !empty($type) && self::nameIsValid($type)) || $type instanceof PhpClass;
+        return $type === null || self::stringIsValid($type) || $type instanceof PhpClass;
     }
     /**
      * @return string|PhpClass
