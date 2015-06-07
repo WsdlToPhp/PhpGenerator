@@ -62,6 +62,14 @@ abstract class AbstractElement implements GenerableInterface
         return (is_string($string) && !empty($string) && (!$checkName || self::nameIsValid($string)));
     }
     /**
+     * @param mixed $object
+     * @return bool
+     */
+    public static function objectIsValid($object, $checkClass = null)
+    {
+        return (is_object($object) && ($checkClass === null || get_class($object) === $checkClass));
+    }
+    /**
      * @see \WsdlToPhp\PhpGenerator\Element\GenerableInterface::toString()
      * @param int $indentation
      * @return string
@@ -118,7 +126,7 @@ abstract class AbstractElement implements GenerableInterface
      */
     public function addChild($child)
     {
-        if (!$this->childrenIsValid($child)) {
+        if (!$this->childIsValid($child)) {
             $types = $this->getChildrenTypes();
             if (empty($types)) {
                 throw new \InvalidArgumentException('This element does not accept any child element');
@@ -133,13 +141,13 @@ abstract class AbstractElement implements GenerableInterface
      * @param mixed $child
      * @return bool
      */
-    protected function childrenIsValid($child)
+    protected function childIsValid($child)
     {
         $valid = false;
         $authorizedTypes = $this->getChildrenTypes();
         if (!empty($authorizedTypes)) {
             foreach ($authorizedTypes as $authorizedType) {
-                $valid |= (gettype($child) === $authorizedType) || (is_object($child) && get_class($child) === $authorizedType);
+                $valid |= (gettype($child) === $authorizedType) || self::objectIsValid($child, $authorizedType);
             }
         }
         return (bool)$valid;
