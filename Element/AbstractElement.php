@@ -76,25 +76,65 @@ abstract class AbstractElement implements GenerableInterface
      */
     public function toString($indentation = null)
     {
-        $lines = array();
-        $declaration = $this->getPhpDeclaration();
-        if (!empty($declaration)) {
-            $lines = array(
-                $this->getIndentedString($declaration, $indentation),
-            );
-        }
-        $before = $this->getContextualLineBeforeChildren($indentation);
-        if (!empty($before)) {
-            $lines[] = $before;
-        }
+        $lines = array(
+            $this->getToStringDeclaration($indentation),
+            $this->getToStringBeforeChildren($indentation),
+        );
         foreach ($this->getChildren() as $child) {
             $lines[] = $this->getChildContent($child, $indentation + ($this->useBracketsForChildren() ? 1 : 0));
         }
+        $lines[] = $this->getToStringAfterChildren($indentation);
+        return implode(self::BREAK_LINE_CHAR, self::cleanArrayToString($lines));
+    }
+    /**
+     * @param int $indentation
+     * @return string|null
+     */
+    private function getToStringDeclaration($indentation = null)
+    {
+        $declaration = $this->getPhpDeclaration();
+        if (!empty($declaration)) {
+            return $this->getIndentedString($declaration, $indentation);
+        }
+        return null;
+    }
+    /**
+     * @param string $indentation
+     * @return string|null
+     */
+    private function getToStringBeforeChildren($indentation = null)
+    {
+        $before = $this->getContextualLineBeforeChildren($indentation);
+        if (!empty($before)) {
+            return $before;
+        }
+        return null;
+    }
+    /**
+     * @param string $indentation
+     * @return string|null
+     */
+    private function getToStringAfterChildren($indentation = null)
+    {
         $after = $this->getContextualLineAfterChildren($indentation);
         if (!empty($after)) {
-            $lines[] = $after;
+            return $after;
         }
-        return implode(self::BREAK_LINE_CHAR, $lines);
+        return null;
+    }
+    /**
+     * @param array $array
+     * @return array
+     */
+    private static function cleanArrayToString($array)
+    {
+        $newArray = array();
+        foreach ($array as $line) {
+            if ($line !== null) {
+                $newArray[] = $line;
+            }
+        }
+        return $newArray;
     }
     /**
      * @throws \InvalidArgumentException
