@@ -101,6 +101,34 @@ class PhpMethodTest extends TestCase
         $method->addChild(new PhpInterface('Bar'));
     }
 
+    /**
+     * @expectedException InvalidArgumentException
+     */
+    public function testCheckBooleanWithException()
+    {
+        PhpMethod::checkBooleanWithException('myProperty', 1);
+    }
+
+    public function testGetLineBeforeChildren()
+    {
+        $method = new PhpMethod('Foo');
+        $method->setHasBody(true);
+
+        $line = $method->getLineBeforeChildren();
+
+        $this->assertSame('', $line);
+    }
+
+    public function testGetLineAfterChildren()
+    {
+        $method = new PhpMethod('Foo');
+        $method->setHasBody(true);
+
+        $line = $method->getLineAfterChildren();
+
+        $this->assertSame('', $line);
+    }
+
     public function testAddChildString()
     {
         $method = new PhpMethod('Foo');

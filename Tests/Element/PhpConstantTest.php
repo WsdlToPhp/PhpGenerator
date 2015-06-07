@@ -6,6 +6,7 @@ use WsdlToPhp\PhpGenerator\Element\PhpVariable;
 use WsdlToPhp\PhpGenerator\Element\PhpClass;
 use WsdlToPhp\PhpGenerator\Element\PhpConstant;
 use WsdlToPhp\PhpGenerator\Tests\TestCase;
+use WsdlToPhp\PhpGenerator\Element\PhpFunctionParameter;
 
 class PhpConstantTest extends TestCase
 {
@@ -50,6 +51,17 @@ class PhpConstantTest extends TestCase
     public function testExceptionForNonScalerValue()
     {
         new PhpConstant('Foo', array());
+    }
+
+    /**
+     * @expectedException PHPUnit_Framework_Error
+     * @expectedException InvalidArgumentException
+     */
+    public function testSetClass()
+    {
+        $constant = new PhpConstant('Foo', 1);
+
+        $constant->setClass(new PhpFunctionParameter('bar', 1));
     }
 
     public function testGetPhpDeclarationNullValueForClass()
@@ -109,5 +121,12 @@ class PhpConstantTest extends TestCase
         $constant = new PhpConstant('foo', null, new PhpClass('bar'));
 
         $this->assertSame('const FOO = null;', $constant->toString());
+    }
+
+    public function testGetChildrenTypes()
+    {
+        $constant = new PhpConstant('foo', null, new PhpClass('bar'));
+
+        $this->assertSame(array(), $constant->getChildrenTypes());
     }
 }

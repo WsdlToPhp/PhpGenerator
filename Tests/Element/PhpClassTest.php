@@ -127,6 +127,38 @@ class PhpClassTest extends TestCase
         $class->addChild(new PhpInterface('Bar'));
     }
 
+    /**
+     * @expectedException InvalidArgumentException
+     */
+    public function testSetAbstract()
+    {
+        $class = new PhpClass('Foo');
+
+        $class->setAbstract(1);
+    }
+
+    /**
+     * @expectedException InvalidArgumentException
+     */
+    public function testSetExtends()
+    {
+        $class = new PhpClass('Foo');
+
+        $class->setExtends('Partagé');
+    }
+
+    /**
+     * @expectedException InvalidArgumentException
+     */
+    public function testSetInterfaces()
+    {
+        $class = new PhpClass('Foo');
+
+        $class->setInterfaces(array(
+            'Partagé',
+        ));
+    }
+
     public function testAddChildMethod()
     {
         $class = new PhpClass('Foo');

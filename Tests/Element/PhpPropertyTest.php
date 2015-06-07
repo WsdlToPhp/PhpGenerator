@@ -90,4 +90,14 @@ class PhpPropertyTest extends TestCase
 
         $property->addChild(new PhpVariable('Bar'));
     }
+
+    /**
+     * @expectedException InvalidArgumentException
+     */
+    public function testSetAccess()
+    {
+        $property = new PhpProperty('Foo');
+
+        $property->setAccess(' public');
+    }
 }
