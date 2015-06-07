@@ -87,12 +87,11 @@ abstract class AbstractElement implements GenerableInterface
      */
     protected function getChildContent($child, $indentation = null)
     {
+        $content = '';
         if (is_string($child)) {
             $content = $this->getIndentedString($child, $indentation);
         } elseif ($child instanceof AbstractElement) {
             $content = $child->toString($indentation === null ? $this->getIndentation() : $indentation);
-        } else {
-            throw new \InvalidArgumentException(sprintf('Child\'s content could not be generated for: %s:%s', gettype($child), is_object($child) ? get_class($child) : 'not an object'));
         }
         return $content;
     }
