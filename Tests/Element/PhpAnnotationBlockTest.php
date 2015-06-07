@@ -127,10 +127,32 @@ class PhpAnnotationBlockTest extends TestCase
     /**
      * @expectedException InvalidArgumentException
      */
-    public function testGetChildContentWithException()
+    public function testAddChildContentWithException()
     {
         $annotationBlock = new PhpAnnotationBlock();
 
-        $annotationBlock->addChild(array('Toto'));
+        $annotationBlock->addChild(array(
+            'Toto',
+        ));
+    }
+
+    public function testAddChildContentOk()
+    {
+        $annotationBlock = new PhpAnnotationBlock();
+
+        $annotationBlock->addChild(array(
+            'content' => 'The content',
+            'name' => 'name',
+        ));
+    }
+
+    /**
+     * @expectedException InvalidArgumentException
+     */
+    public function testGetConstructWithException()
+    {
+        $annotationBlock = new PhpAnnotationBlock(array(
+            new PhpFunction('Bar'),
+        ));
     }
 }
