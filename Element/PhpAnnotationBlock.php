@@ -71,7 +71,7 @@ class PhpAnnotationBlock extends AbstractElement
      */
     protected static function annotationIsValid($annotation)
     {
-        return (is_string($annotation) && !empty($annotation)) || (is_array($annotation) && array_key_exists('content', $annotation)) || $annotation instanceof PhpAnnotation;
+        return self::stringIsValid($annotation, false) || (is_array($annotation) && array_key_exists('content', $annotation)) || $annotation instanceof PhpAnnotation;
     }
     /**
      * @throws \InvalidArgumentException
