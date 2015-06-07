@@ -6,6 +6,7 @@ use WsdlToPhp\PhpGenerator\Component\PhpInterface as PhpInterfaceComponent;
 use WsdlToPhp\PhpGenerator\Element\PhpFunctionParameter as PhpFunctionParameterElement;
 use WsdlToPhp\PhpGenerator\Element\PhpAnnotation as PhpAnnotationElement;
 use WsdlToPhp\PhpGenerator\Element\PhpProperty as PhpPropertyElement;
+use WsdlToPhp\PhpGenerator\Element\PhpMethod;
 
 class PhpInterfaceTest extends AbstractComponent
 {
@@ -34,10 +35,10 @@ class PhpInterfaceTest extends AbstractComponent
                 new PhpAnnotationElement('date', '2012-03-01'),
                 '@return mixed'
             ))
-            ->addMethod('getMyValue', array(
+            ->addMethodElement(new PhpMethod('getMyValue', array(
                 new PhpFunctionParameterElement('asString', true),
                 'unusedParameter'
-            ))
+            )))
             ->addAnnotationBlock(array(
                 new PhpAnnotationElement(PhpAnnotationElement::NO_NAME, 'This method is very useless'),
                 new PhpAnnotationElement('date', '2012-03-01'),
