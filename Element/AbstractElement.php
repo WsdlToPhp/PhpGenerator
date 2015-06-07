@@ -50,7 +50,7 @@ abstract class AbstractElement implements GenerableInterface
      */
     public static function nameIsValid($name)
     {
-        return preg_match('/^[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*$/D', $name) === 1;
+        return preg_match('/^[a-zA-Z_][a-zA-Z0-9_]*$/D', $name) === 1;
     }
     /**
      * @see \WsdlToPhp\PhpGenerator\Element\GenerableInterface::toString()
