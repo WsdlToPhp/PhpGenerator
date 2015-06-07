@@ -144,6 +144,8 @@ class PhpAnnotationBlockTest extends TestCase
             'content' => 'The content',
             'name' => 'name',
         ));
+
+        $this->assertCount(1, $annotationBlock->getChildren());
     }
 
     /**

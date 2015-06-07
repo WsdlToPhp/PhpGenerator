@@ -3,9 +3,7 @@
 namespace WsdlToPhp\PhpGenerator\Component;
 
 use WsdlToPhp\PhpGenerator\Element\PhpClass as PhpClassElement;
-use WsdlToPhp\PhpGenerator\Element\PhpAnnotationBlock as PhpAnnotationBlockElement;
 use WsdlToPhp\PhpGenerator\Element\PhpProperty as PhpPropertyElement;
-use WsdlToPhp\PhpGenerator\Element\PhpConstant as PhpConstantElement;
 use WsdlToPhp\PhpGenerator\Element\PhpMethod as PhpMethodElement;
 
 class PhpClass extends AbstractComponent
@@ -14,10 +12,6 @@ class PhpClass extends AbstractComponent
      * @var array
      */
     protected $uses = array();
-    /**
-     * @var PhpClassElement
-     */
-    protected $class;
     /**
      * @var string
      */
@@ -30,7 +24,7 @@ class PhpClass extends AbstractComponent
      */
     public function __construct($name, $abstract = false, $extends = null, array $interfaces = array())
     {
-        $this->class = new PhpClassElement($name, $abstract, $extends, $interfaces);
+        $this->setMainElement(new PhpClassElement($name, $abstract, $extends, $interfaces));
     }
     /**
      * @param string $use
@@ -49,7 +43,7 @@ class PhpClass extends AbstractComponent
      */
     public function addMethodElement(PhpMethodElement $method)
     {
-        $this->class->addChild($method);
+        $this->mainElement->addChild($method);
         return $this;
     }
     /**
@@ -68,29 +62,6 @@ class PhpClass extends AbstractComponent
         return $this->addMethodElement(new PhpMethodElement($name, $parameters, $access, $abstract, $static, $final, $hasBody));
     }
     /**
-     * @param PhpConstantElement $constant
-     * @return PhpClass
-     */
-    public function addConstantElement(PhpConstantElement $constant)
-    {
-        if (!$constant->getClass() instanceof PhpClassElement) {
-            $constant->setClass($this->class);
-        }
-        $this->class->addChild($constant);
-        return $this;
-    }
-    /**
-     * @see \WsdlToPhp\PhpGenerator\Element\PhpConstant::__construct()
-     * @param string $name
-     * @param mixed $value
-     * @param PhpClassElement $class
-     * @return PhpClass
-     */
-    public function addConstant($name, $value = null, PhpClassElement $class = null)
-    {
-        return $this->addConstantElement(new PhpConstantElement($name, $value, $class));
-    }
-    /**
      * @param string $namespace
      * @return PhpClass
      */
@@ -105,7 +76,7 @@ class PhpClass extends AbstractComponent
      */
     public function addPropertyElement(PhpPropertyElement $property)
     {
-        $this->class->addChild($property);
+        $this->mainElement->addChild($property);
         return $this;
     }
     /**
@@ -118,26 +89,6 @@ class PhpClass extends AbstractComponent
     public function addProperty($name, $value = null, $access = PhpPropertyElement::ACCESS_PUBLIC)
     {
         return $this->addPropertyElement(new PhpPropertyElement($name, $value, $access));
-    }
-    /**
-     * @param PhpAnnotationBlockElement $annotationBlock
-     * @return PhpClass
-     */
-    public function addAnnotationBlockElement(PhpAnnotationBlockElement $annotationBlock)
-    {
-        $this->class->addChild($annotationBlock);
-        return $this;
-    }
-    /**
-     * @see \WsdlToPhp\PhpGenerator\Element\PhpAnnotationBlock::__construct()
-     * @param array|string|PhpAnnotationElement $annotations
-     * @return PhpClass
-     */
-    public function addAnnotationBlock($annotations)
-    {
-        return $this->addAnnotationBlockElement(new PhpAnnotationBlockElement(is_array($annotations) ? $annotations : array(
-            $annotations,
-        )));
     }
     /**
      * @see \WsdlToPhp\PhpGenerator\Component\AbstractComponent::getElements()
@@ -156,7 +107,7 @@ class PhpClass extends AbstractComponent
             }
             $elements[] = self::BREAK_LINE_CHAR;
         }
-        $elements[] = $this->class;
+        $elements[] = $this->mainElement;
         return $elements;
     }
 }
