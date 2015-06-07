@@ -45,10 +45,13 @@ class PhpAnnotationBlock extends AbstractElement
     {
         if ($annotation instanceof PhpAnnotation) {
             return $annotation;
-        } elseif (is_array($annotation)) {
+        } elseif (is_string($annotation)) {
+            return new PhpAnnotation(PhpAnnotation::NO_NAME, $annotation);
+        } elseif (is_array($annotation) && array_key_exists('content', $annotation)) {
             return new PhpAnnotation(array_key_exists('name', $annotation) ? $annotation['name'] : PhpAnnotation::NO_NAME, $annotation['content']);
+        } else {
+            throw new \InvalidArgumentException(sprintf('Annotation parameter "%s" is invalid', gettype($annotation)));
         }
-        return new PhpAnnotation(PhpAnnotation::NO_NAME, $annotation);
     }
     /**
      * @param string[]|array[]|PhpAnnotation[] $annotations
