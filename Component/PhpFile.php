@@ -5,6 +5,7 @@ namespace WsdlToPhp\PhpGenerator\Component;
 use WsdlToPhp\PhpGenerator\Element\PhpFile as PhpFileElement;
 use WsdlToPhp\PhpGenerator\Component\PhpClass as PhpClassComponent;
 use WsdlToPhp\PhpGenerator\Element\PhpVariable as PhpVariableElement;
+use WsdlToPhp\PhpGenerator\Element\PhpFunction as PhpFunctionElement;
 
 class PhpFile extends AbstractComponent
 {
@@ -36,7 +37,7 @@ class PhpFile extends AbstractComponent
     }
     /**
      * @param PhpVariableElement $variable
-     * @return AbstractComponent
+     * @return PhpFile
      */
     public function addVariableElement(PhpVariableElement $variable)
     {
@@ -47,11 +48,29 @@ class PhpFile extends AbstractComponent
      * @see \WsdlToPhp\PhpGenerator\Element\PhpVariable::__construct()
      * @param string $name
      * @param mixed $value
-     * @param PhpClassElement $class
-     * @return PhpClass
+     * @return PhpFile
      */
     public function addVariable($name, $value = null)
     {
         return $this->addVariableElement(new PhpVariableElement($name, $value));
+    }
+    /**
+     * @param PhpFunctionElement $variable
+     * @return PhpFile
+     */
+    public function addFunctionElement(PhpFunctionElement $function)
+    {
+        $this->mainElement->addChild($function);
+        return $this;
+    }
+    /**
+     * @see \WsdlToPhp\PhpGenerator\Element\PhpFunction::__construct()
+     * @param string $name
+     * @param array $parameters
+     * @return PhpFile
+     */
+    public function addFunction($name, array $parameters = array())
+    {
+        return $this->addFunctionElement(new PhpFunctionElement($name, $parameters));
     }
 }

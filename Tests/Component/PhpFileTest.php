@@ -71,4 +71,16 @@ class PhpFileTest extends AbstractComponent
         $this->assertSame("<?php\n\$foo = 0;", $file->toString());
 
     }
+
+    public function testAddFunctionToString()
+    {
+        $file = new PhpFileComponent('Foo');
+
+        $file->addFunction('name', array(
+            'bar',
+        ));
+
+        $this->assertSame("<?php\nfunction name(\$bar)\n{\n}", $file->toString());
+
+    }
 }
