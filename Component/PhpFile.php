@@ -55,7 +55,7 @@ class PhpFile extends AbstractComponent
         return $this->addVariableElement(new PhpVariableElement($name, $value));
     }
     /**
-     * @param PhpFunctionElement $variable
+     * @param PhpFunctionElement $function
      * @return PhpFile
      */
     public function addFunctionElement(PhpFunctionElement $function)
