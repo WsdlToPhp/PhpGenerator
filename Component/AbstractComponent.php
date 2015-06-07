@@ -33,8 +33,7 @@ abstract class AbstractComponent implements GenerableInterface
             return $element;
         } elseif ($element instanceof AbstractElement) {
             return $element->toString();
-        } else {
-            throw new \InvalidArgumentException(sprintf('Element of type "%s" can\'t be generated', gettype($element)));
         }
+        return '';
     }
 }
