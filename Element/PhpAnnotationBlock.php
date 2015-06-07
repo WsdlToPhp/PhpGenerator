@@ -38,6 +38,7 @@ class PhpAnnotationBlock extends AbstractElement
         return $finalAnnotations;
     }
     /**
+     * @throws \InvalidArgumentException
      * @param string|array|PhpAnnotation $annotation
      * @return PhpAnnotation
      */
