@@ -61,4 +61,14 @@ class PhpFileTest extends AbstractComponent
 
         $file->setMainElement(new PhpFunctionParameterElement('bar'));
     }
+
+    public function testAddVariableToString()
+    {
+        $file = new PhpFileComponent('Foo');
+
+        $file->addVariable('foo', 0);
+
+        $this->assertSame("<?php\n\$foo = 0;", $file->toString());
+
+    }
 }
