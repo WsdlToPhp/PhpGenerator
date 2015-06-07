@@ -46,8 +46,8 @@ class PhpClass extends AbstractElement
         $this->setInterfaces($interfaces);
     }
     /**
-     * @param bool $abstract
      * @throws \InvalidArgumentException
+     * @param bool $abstract
      * @return PhpClass
      */
     public function setAbstract($abstract)
@@ -73,8 +73,8 @@ class PhpClass extends AbstractElement
         return $this->getAbstract() === false ? '' : static::PHP_ABSTRACT_KEYWORD . ' ';
     }
     /**
-     * @param string|PhpClass|null $extends
      * @throws \InvalidArgumentException
+     * @param string|PhpClass|null $extends
      * @return PhpClass
      */
     public function setExtends($extends)
@@ -91,7 +91,7 @@ class PhpClass extends AbstractElement
      */
     public static function extendsIsValid($extends)
     {
-        return $extends === null || (is_string($extends) && !empty($extends)) || $extends instanceof PhpClass;
+        return $extends === null || self::stringIsValid($extends) || $extends instanceof PhpClass;
     }
     /**
      * @return string|PhpClass
@@ -109,8 +109,8 @@ class PhpClass extends AbstractElement
         return empty($extends) ? '' : sprintf(' %s %s', static::PHP_EXTENDS_KEYWORD, ($extends instanceof PhpClass ? $extends->getName() : $extends));
     }
     /**
-     * @param string[]|PhpClass[] $interfaces
      * @throws \InvalidArgumentException
+     * @param string[]|PhpClass[] $interfaces
      * @return PhpClass
      */
     public function setInterfaces(array $interfaces = array())
@@ -139,7 +139,7 @@ class PhpClass extends AbstractElement
      */
     public static function interfaceIsValid($interface)
     {
-        return (is_string($interface) && !empty($interface)) || $interface instanceof PhpClass;
+        return self::stringIsValid($interface) || $interface instanceof PhpClass;
     }
     /**
      *

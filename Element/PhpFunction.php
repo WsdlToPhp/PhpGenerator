@@ -18,8 +18,8 @@ class PhpFunction extends AbstractAccessRestrictedElement
         $this->setParameters($parameters);
     }
     /**
-     * @param array $parameters
      * @throws \InvalidArgumentException
+     * @param array $parameters
      * @return PhpFunction
      */
     public function setParameters(array $parameters)
@@ -73,7 +73,7 @@ class PhpFunction extends AbstractAccessRestrictedElement
      */
     public static function parameterIsValid($parameter)
     {
-        return (is_string($parameter) && !empty($parameter)) || (is_array($parameter) && array_key_exists('name', $parameter)) || $parameter instanceof PhpFunctionParameter;
+        return self::stringIsValid($parameter) || (is_array($parameter) && array_key_exists('name', $parameter)) || $parameter instanceof PhpFunctionParameter;
     }
     /**
      * @return string[]|PhpFunctionParameter[]

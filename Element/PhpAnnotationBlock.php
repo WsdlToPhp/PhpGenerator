@@ -13,8 +13,8 @@ class PhpAnnotationBlock extends AbstractElement
         $this->setAnnotations($annotations);
     }
     /**
-     * @param string[]|array[]|PhpAnnotation[] $annotations
      * @throws \InvalidArgumentException
+     * @param string[]|array[]|PhpAnnotation[] $annotations
      * @return PhpAnnotationBlock
      */
     protected function setAnnotations(array $annotations)
@@ -38,6 +38,7 @@ class PhpAnnotationBlock extends AbstractElement
         return $finalAnnotations;
     }
     /**
+     * @throws \InvalidArgumentException
      * @param string|array|PhpAnnotation $annotation
      * @return PhpAnnotation
      */
@@ -45,10 +46,13 @@ class PhpAnnotationBlock extends AbstractElement
     {
         if ($annotation instanceof PhpAnnotation) {
             return $annotation;
-        } elseif (is_array($annotation)) {
+        } elseif (is_string($annotation)) {
+            return new PhpAnnotation(PhpAnnotation::NO_NAME, $annotation);
+        } elseif (is_array($annotation) && array_key_exists('content', $annotation)) {
             return new PhpAnnotation(array_key_exists('name', $annotation) ? $annotation['name'] : PhpAnnotation::NO_NAME, $annotation['content']);
+        } else {
+            throw new \InvalidArgumentException(sprintf('Annotation parameter "%s" is invalid', gettype($annotation)));
         }
-        return new PhpAnnotation(PhpAnnotation::NO_NAME, $annotation);
     }
     /**
      * @param string[]|array[]|PhpAnnotation[] $annotations
@@ -68,16 +72,16 @@ class PhpAnnotationBlock extends AbstractElement
      */
     protected static function annotationIsValid($annotation)
     {
-        return (is_string($annotation) && !empty($annotation)) || (is_array($annotation) && array_key_exists('content', $annotation)) || $annotation instanceof PhpAnnotation;
+        return self::stringIsValid($annotation, false) || (is_array($annotation) && array_key_exists('content', $annotation)) || $annotation instanceof PhpAnnotation;
     }
     /**
-     * @param mixed $child
      * @throws \InvalidArgumentException
+     * @param mixed $child
      * @return PhpAnnotationBlock
      */
     public function addChild($child)
     {
-        if (!$this->childrenIsValid($child)) {
+        if (!$this->childIsValid($child)) {
             return parent::addChild($child);
         }
         $this->children[] = $this->transformAnnotation($child);

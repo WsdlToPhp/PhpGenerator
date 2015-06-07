@@ -39,8 +39,8 @@ class PhpMethod extends PhpFunction
         $this->setHasBody($hasBody);
     }
     /**
-     * @param bool $abstract
      * @throws \InvalidArgumentException
+     * @param bool $abstract
      * @return PhpMethod
      */
     public function setAbstract($abstract)
@@ -64,8 +64,8 @@ class PhpMethod extends PhpFunction
         return $this->getAbstract() === true ? 'abstract ' : '';
     }
     /**
-     * @param bool $final
      * @throws \InvalidArgumentException
+     * @param bool $final
      * @return PhpMethod
      */
     public function setFinal($final)
@@ -89,8 +89,8 @@ class PhpMethod extends PhpFunction
         return $this->getFinal() === true ? 'final ' : '';
     }
     /**
-     * @param bool $static
      * @throws \InvalidArgumentException
+     * @param bool $static
      * @return PhpMethod
      */
     public function setStatic($static)
@@ -114,8 +114,8 @@ class PhpMethod extends PhpFunction
         return $this->getStatic() === true ? 'static ' : '';
     }
     /**
-     * @param bool $hasBody
      * @throws \InvalidArgumentException
+     * @param bool $hasBody
      * @return PhpMethod
      */
     public function setHasBody($hasBody)
@@ -155,9 +155,9 @@ class PhpMethod extends PhpFunction
         return true;
     }
     /**
+     * @throws \InvalidArgumentException
      * @param string $propertyName
      * @param bool $value
-     * @throws \InvalidArgumentException
      */
     public static function checkBooleanWithException($propertyName, $value)
     {

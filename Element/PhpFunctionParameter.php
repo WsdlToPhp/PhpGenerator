@@ -13,13 +13,13 @@ class PhpFunctionParameter extends PhpVariable
      * @param mixed $value
      * @param string $type
      */
-    public function __construct($name, $value, $type = null)
+    public function __construct($name, $value = null, $type = null)
     {
         parent::__construct($name, $value);
     }
     /**
-     * @param string|PhpClass $type
      * @throws \InvalidArgumentException
+     * @param string|PhpClass $type
      * @return PhpFunctionParameter
      */
     public function setType($type)
@@ -36,7 +36,7 @@ class PhpFunctionParameter extends PhpVariable
      */
     public static function typeIsValid($type)
     {
-        return $type === null || (is_string($type) && !empty($type)) || $type instanceof PhpClass;
+        return $type === null || self::stringIsValid($type) || $type instanceof PhpClass;
     }
     /**
      * @return string|PhpClass
@@ -64,7 +64,7 @@ class PhpFunctionParameter extends PhpVariable
     /**
      * returns the way the value is assigned to the element
      * @returns string
-    */
+     */
     public function getAssignmentSign()
     {
         return $this->hasValue() ? ' = ' : '';

@@ -38,6 +38,28 @@ class PhpFunctionTest extends TestCase
         $function->addChild(new PhpProperty('Bar'));
     }
 
+    /**
+     * @expectedException InvalidArgumentException
+     */
+    public function testSetParameters()
+    {
+        $function = new PhpFunction('foo', array());
+
+        $function->setParameters(array(
+            new PhpFunction('bar'),
+        ));
+    }
+
+    /**
+     * @expectedException InvalidArgumentException
+     */
+    public function testSetName()
+    {
+        $function = new PhpFunction('foo', array());
+
+        $function->setName('Partagé');
+    }
+
     public function testAddChildVariable()
     {
         $function = new PhpFunction('foo', array());

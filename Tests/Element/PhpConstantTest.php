@@ -110,4 +110,11 @@ class PhpConstantTest extends TestCase
 
         $this->assertSame('const FOO = null;', $constant->toString());
     }
+
+    public function testGetChildrenTypes()
+    {
+        $constant = new PhpConstant('foo', null, new PhpClass('bar'));
+
+        $this->assertSame(array(), $constant->getChildrenTypes());
+    }
 }

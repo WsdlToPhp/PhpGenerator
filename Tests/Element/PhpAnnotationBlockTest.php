@@ -123,4 +123,38 @@ class PhpAnnotationBlockTest extends TestCase
 
         $this->assertSame("/**\n * @date 2015-01-01\n * @author PhpTeam\n * This annotation is useful!\n */", $annotationBlock->toString());
     }
+
+    /**
+     * @expectedException InvalidArgumentException
+     */
+    public function testAddChildContentWithException()
+    {
+        $annotationBlock = new PhpAnnotationBlock();
+
+        $annotationBlock->addChild(array(
+            'Toto',
+        ));
+    }
+
+    public function testAddChildContentOk()
+    {
+        $annotationBlock = new PhpAnnotationBlock();
+
+        $annotationBlock->addChild(array(
+            'content' => 'The content',
+            'name' => 'name',
+        ));
+
+        $this->assertCount(1, $annotationBlock->getChildren());
+    }
+
+    /**
+     * @expectedException InvalidArgumentException
+     */
+    public function testGetConstructWithException()
+    {
+        $annotationBlock = new PhpAnnotationBlock(array(
+            new PhpFunction('Bar'),
+        ));
+    }
 }

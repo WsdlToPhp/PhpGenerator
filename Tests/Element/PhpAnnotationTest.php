@@ -57,4 +57,11 @@ class PhpAnnotationTest extends TestCase
 
         $this->assertSame(' * This sample annotation is on one line', $annotation->toString());
     }
+
+    public function testHasContent()
+    {
+        $annotation = new PhpAnnotation(PhpAnnotation::NO_NAME, 'This sample annotation is on one line');
+
+        $this->assertTrue($annotation->hasContent());
+    }
 }

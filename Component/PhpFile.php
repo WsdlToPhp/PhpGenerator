@@ -2,35 +2,30 @@
 
 namespace WsdlToPhp\PhpGenerator\Component;
 
-use WsdlToPhp\PhpGenerator\Element\PhpAnnotationBlock as PhpAnnotationBlockElement;
-use WsdlToPhp\PhpGenerator\Element\PhpConstant as PhpConstantElement;
-use WsdlToPhp\PhpGenerator\Element\PhpVariable as PhpVariableElement;
-use WsdlToPhp\PhpGenerator\Element\PhpInterface as PhpInterfaceElement;
-use WsdlToPhp\PhpGenerator\Element\PhpClass as PhpClassElement;
 use WsdlToPhp\PhpGenerator\Element\PhpFile as PhpFileElement;
+use WsdlToPhp\PhpGenerator\Element\PhpVariable as PhpVariableElement;
+use WsdlToPhp\PhpGenerator\Element\PhpFunction as PhpFunctionElement;
 use WsdlToPhp\PhpGenerator\Component\PhpClass as PhpClassComponent;
+use WsdlToPhp\PhpGenerator\Component\PhpInterface as PhpInterfaceComponent;
 
 class PhpFile extends AbstractComponent
 {
-    /**
-     * @var PhpFileElement
-     */
-    protected $file;
     /**
      * @param string $name
      */
     public function __construct($name)
     {
-        $this->file = new PhpFileElement($name);
+        $this->setMainElement(new PhpFileElement($name));
     }
     /**
-     * @param PhpClassElement $class
-     * @return PhpFile
+     * @see \WsdlToPhp\PhpGenerator\Component\AbstractComponent::getElements()
+     * @return PhpFileElement[]
      */
-    public function addClassElement(PhpClassElement $class)
+    public function getElements()
     {
-        $this->file->addChild($class);
-        return $this;
+        return array(
+            $this->getMainElement(),
+        );
     }
     /**
      * @param PhpClassComponent $class
@@ -38,16 +33,16 @@ class PhpFile extends AbstractComponent
      */
     public function addClassComponent(PhpClassComponent $class)
     {
-        $this->file->addChild($class->toString());
+        $this->mainElement->addChild($class->toString());
         return $this;
     }
     /**
-     * @param PhpInterfaceElement $interface
+     * @param PhpInterfaceComponent $interface
      * @return PhpFile
      */
-    public function addInterrfaceElement(PhpInterfaceElement $interface)
+    public function addInterfaceComponent(PhpInterfaceComponent $interface)
     {
-        $this->file->addChild($interface);
+        $this->mainElement->addChild($interface->toString());
         return $this;
     }
     /**
@@ -56,35 +51,36 @@ class PhpFile extends AbstractComponent
      */
     public function addVariableElement(PhpVariableElement $variable)
     {
-        $this->file->addChild($variable);
+        $this->mainElement->addChild($variable);
         return $this;
     }
     /**
-     * @param PhpConstantElement $constant
+     * @see \WsdlToPhp\PhpGenerator\Element\PhpVariable::__construct()
+     * @param string $name
+     * @param mixed $value
      * @return PhpFile
      */
-    public function addConstantElement(PhpConstantElement $constant)
+    public function addVariable($name, $value = null)
     {
-        $this->file->addChild($constant);
-        return $this;
+        return $this->addVariableElement(new PhpVariableElement($name, $value));
     }
     /**
-     * @param PhpAnnotationBlockElement $annotationBlock
+     * @param PhpFunctionElement $function
      * @return PhpFile
      */
-    public function addAnnotationBlock(PhpAnnotationBlockElement $annotationBlock)
+    public function addFunctionElement(PhpFunctionElement $function)
     {
-        $this->file->addChild($annotationBlock);
+        $this->mainElement->addChild($function);
         return $this;
     }
     /**
-     * @see \WsdlToPhp\PhpGenerator\Component\AbstractComponent::getElements()
-     * @return AbstractElement[]|string[]
+     * @see \WsdlToPhp\PhpGenerator\Element\PhpFunction::__construct()
+     * @param string $name
+     * @param array $parameters
+     * @return PhpFile
      */
-    public function getElements()
+    public function addFunction($name, array $parameters = array())
     {
-        return array(
-            $this->file,
-        );
+        return $this->addFunctionElement(new PhpFunctionElement($name, $parameters));
     }
 }

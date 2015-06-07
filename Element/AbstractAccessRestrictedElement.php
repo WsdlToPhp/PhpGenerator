@@ -30,8 +30,8 @@ abstract class AbstractAccessRestrictedElement extends AbstractElement
         $this->setAccess($access);
     }
     /**
-     * @param string $access
      * @throws \InvalidArgumentException
+     * @param string $access
      * @return AbstractElement
      */
     public function setAccess($access)
