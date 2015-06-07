@@ -58,12 +58,13 @@ abstract class AbstractComponent implements GenerableInterface
      */
     protected function getElementString($element)
     {
+        $string = '';
         if (is_scalar($element)) {
-            return $element;
+            $string = $element;
         } elseif ($element instanceof AbstractElement) {
-            return $element->toString();
+            $string = $element->toString();
         }
-        return '';
+        return $string;
     }
     /**
      * @param PhpConstantElement $constant
