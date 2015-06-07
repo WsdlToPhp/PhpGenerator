@@ -91,7 +91,7 @@ class PhpClass extends AbstractElement
      */
     public static function extendsIsValid($extends)
     {
-        return $extends === null || (is_string($extends) && !empty($extends) && self::nameIsValid($extends)) || $extends instanceof PhpClass;
+        return $extends === null || self::stringIsValid($extends) || $extends instanceof PhpClass;
     }
     /**
      * @return string|PhpClass
@@ -139,7 +139,7 @@ class PhpClass extends AbstractElement
      */
     public static function interfaceIsValid($interface)
     {
-        return (is_string($interface) && !empty($interface) && self::nameIsValid($interface)) || $interface instanceof PhpClass;
+        return self::stringIsValid($interface) || $interface instanceof PhpClass;
     }
     /**
      *
