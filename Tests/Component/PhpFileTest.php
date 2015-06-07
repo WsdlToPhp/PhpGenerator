@@ -51,4 +51,14 @@ class PhpFileTest extends AbstractComponent
 
         $this->assertSameContent(__FUNCTION__, $file);
     }
+
+    /**
+     * @expectedException InvalidArgumentException
+     */
+    public function testSetMainElementWithException()
+    {
+        $file = new PhpFileComponent('Foo');
+
+        $file->setMainElement(new PhpFunctionParameterElement('bar'));
+    }
 }
