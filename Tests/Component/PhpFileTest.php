@@ -10,7 +10,7 @@ use WsdlToPhp\PhpGenerator\Element\PhpProperty as PhpPropertyElement;
 
 class PhpFileTest extends AbstractComponent
 {
-    public function testSimpleToString()
+    public function testSimpleClassToString()
     {
         $file = new PhpFileComponent('Foo');
         $class = new PhpClassComponent('Foo', true, 'stdClass');
