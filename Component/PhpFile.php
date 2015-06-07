@@ -3,9 +3,10 @@
 namespace WsdlToPhp\PhpGenerator\Component;
 
 use WsdlToPhp\PhpGenerator\Element\PhpFile as PhpFileElement;
-use WsdlToPhp\PhpGenerator\Component\PhpClass as PhpClassComponent;
 use WsdlToPhp\PhpGenerator\Element\PhpVariable as PhpVariableElement;
 use WsdlToPhp\PhpGenerator\Element\PhpFunction as PhpFunctionElement;
+use WsdlToPhp\PhpGenerator\Component\PhpClass as PhpClassComponent;
+use WsdlToPhp\PhpGenerator\Component\PhpInterface as PhpInterfaceComponent;
 
 class PhpFile extends AbstractComponent
 {
@@ -33,6 +34,15 @@ class PhpFile extends AbstractComponent
     public function addClassComponent(PhpClassComponent $class)
     {
         $this->mainElement->addChild($class->toString());
+        return $this;
+    }
+    /**
+     * @param PhpInterfaceComponent $interface
+     * @return PhpFile
+     */
+    public function addInterfaceComponent(PhpInterfaceComponent $interface)
+    {
+        $this->mainElement->addChild($interface->toString());
         return $this;
     }
     /**
