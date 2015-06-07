@@ -82,7 +82,7 @@ abstract class AbstractComponent implements GenerableInterface
      * @param string $name
      * @param mixed $value
      * @param PhpClassElement $class
-     * @return PhpClass
+     * @return AbstractComponent
      */
     public function addConstant($name, $value = null, PhpClassElement $class = null)
     {
@@ -90,7 +90,7 @@ abstract class AbstractComponent implements GenerableInterface
     }
     /**
      * @param PhpAnnotationBlockElement $annotationBlock
-     * @return PhpClass
+     * @return AbstractComponent
      */
     public function addAnnotationBlockElement(PhpAnnotationBlockElement $annotationBlock)
     {
@@ -100,7 +100,7 @@ abstract class AbstractComponent implements GenerableInterface
     /**
      * @see \WsdlToPhp\PhpGenerator\Element\PhpAnnotationBlock::__construct()
      * @param array|string|PhpAnnotationElement $annotations
-     * @return PhpClass
+     * @return AbstractComponent
      */
     public function addAnnotationBlock($annotations)
     {
