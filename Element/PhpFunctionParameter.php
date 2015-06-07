@@ -13,7 +13,7 @@ class PhpFunctionParameter extends PhpVariable
      * @param mixed $value
      * @param string $type
      */
-    public function __construct($name, $value, $type = null)
+    public function __construct($name, $value = null, $type = null)
     {
         parent::__construct($name, $value);
     }
