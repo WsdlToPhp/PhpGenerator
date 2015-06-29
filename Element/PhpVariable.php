@@ -18,7 +18,7 @@ class PhpVariable extends AbstractAssignedValueElement
      */
     public function getAssignmentSign()
     {
-        return ' = ';
+        return $this->hasValue() ? ' = ' : '';
     }
     /**
      * retutns the way the assignment is finished

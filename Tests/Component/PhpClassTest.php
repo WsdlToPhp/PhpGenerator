@@ -27,6 +27,8 @@ class PhpClassTest extends AbstractComponent
             ->addProperty('bar', 1)
             ->addAnnotationBlock(new PhpAnnotationElement('var', 'bool'))
             ->addPropertyElement(new PhpPropertyElement('sample', true))
+            ->addAnnotationBlock(new PhpAnnotationElement('var', 'string'))
+            ->addPropertyElement(new PhpPropertyElement('noValue', PhpPropertyElement::NO_VALUE))
             ->addAnnotationBlock(array(
                 new PhpAnnotationElement(PhpAnnotationElement::NO_NAME, 'This method is very useful'),
                 new PhpAnnotationElement('date', '2012-03-01'),
