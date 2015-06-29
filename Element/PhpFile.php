@@ -17,6 +17,15 @@ class PhpFile extends AbstractElement
         return self::START_FILE;
     }
     /**
+     * @see \WsdlToPhp\PhpGenerator\Element\AbstractElement::toString()
+     * @param int $indentation
+     * @return string
+     */
+    public function toString($indentation = null)
+    {
+        return sprintf('%s%s', parent::toString($indentation), self::BREAK_LINE_CHAR);
+    }
+    /**
      * @see \WsdlToPhp\PhpGenerator\Element\AbstractElement::getChildrenTypes()
      * @return string[]
      */
