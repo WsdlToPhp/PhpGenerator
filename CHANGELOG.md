@@ -1,6 +1,10 @@
 CHANGELOG
 =========
 
+0.0.3
+-----
+Apply PSR-2 rule: All PHP files MUST end with a single blank line.
+
 0.0.2
 -----
 Code coverage improved
