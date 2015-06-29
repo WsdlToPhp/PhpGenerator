@@ -69,7 +69,7 @@ class PhpFileTest extends AbstractComponent
 
         $file->addVariable('foo', 0);
 
-        $this->assertSame("<?php\n\$foo = 0;", $file->toString());
+        $this->assertSame("<?php\n\$foo = 0;\n", $file->toString());
     }
 
     public function testAddFunctionToString()
@@ -80,7 +80,7 @@ class PhpFileTest extends AbstractComponent
             'bar',
         ));
 
-        $this->assertSame("<?php\nfunction name(\$bar)\n{\n}", $file->toString());
+        $this->assertSame("<?php\nfunction name(\$bar)\n{\n}\n", $file->toString());
     }
     public function testSimpleInterfaceToString()
     {

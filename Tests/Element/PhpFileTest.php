@@ -29,7 +29,7 @@ class PhpFileTest extends TestCase
 
         $file->addChild(new PhpVariable('foo', 1));
 
-        $this->assertSame("<?php\n\$foo = 1;", $file->toString());
+        $this->assertSame("<?php\n\$foo = 1;\n", $file->toString());
     }
 
     public function testConstantToString()
@@ -38,7 +38,7 @@ class PhpFileTest extends TestCase
 
         $file->addChild(new PhpConstant('foo', 1));
 
-        $this->assertSame("<?php\ndefine('foo', 1);", $file->toString());
+        $this->assertSame("<?php\ndefine('foo', 1);\n", $file->toString());
     }
 
     public function testFunctionToString()
@@ -51,7 +51,7 @@ class PhpFileTest extends TestCase
             'demo',
         )));
 
-        $this->assertSame("<?php\nfunction foo(\$foo, \$sample, \$demo)\n{\n}", $file->toString());
+        $this->assertSame("<?php\nfunction foo(\$foo, \$sample, \$demo)\n{\n}\n", $file->toString());
     }
 
     public function testAnnotationBlockToString()
@@ -63,7 +63,7 @@ class PhpFileTest extends TestCase
             'time is the core key',
         )));
 
-        $this->assertSame("<?php\n/**\n * date is the key\n * time is the core key\n */", $file->toString());
+        $this->assertSame("<?php\n/**\n * date is the key\n * time is the core key\n */\n", $file->toString());
     }
 
     public function testAnnotationClassMethodBlockToString()
@@ -79,6 +79,6 @@ class PhpFileTest extends TestCase
         $class->addChild(new PhpMethod('Bar'));
         $file->addChild($class);
 
-        $this->assertSame("<?php\n/**\n * date is the key\n * time is the core key\n */\nclass Foo\n{\n    public function Bar()\n    {\n    }\n}", $file->toString());
+        $this->assertSame("<?php\n/**\n * date is the key\n * time is the core key\n */\nclass Foo\n{\n    public function Bar()\n    {\n    }\n}\n", $file->toString());
     }
 }
