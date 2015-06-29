@@ -24,6 +24,10 @@ abstract class Foo extends stdClass
      */
     public $sample = true;
     /**
+     * @var string
+     */
+    public $noValue;
+    /**
      * This method is very useful
      * @date 2012-03-01
      * @return mixed
