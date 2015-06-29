@@ -1,6 +1,10 @@
 CHANGELOG
 =========
 
+0.0.4
+-----
+Fix issue regarding property/variable that has no value but always has a null value assigned with an assignment sign
+
 0.0.3
 -----
 Apply PSR-2 rule: All PHP files MUST end with a single blank line.
