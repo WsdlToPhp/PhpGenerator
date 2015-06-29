@@ -34,4 +34,11 @@ class PhpFunctionParameterTest extends TestCase
     {
         $this->assertFalse(PhpFunctionParameter::typeIsValid('Partagé'));
     }
+
+    public function testSetTypeForDeclaration()
+    {
+        $functionParameter = new PhpFunctionParameter('foo', true, 'array');
+
+        $this->assertSame('array $foo = true', $functionParameter->toString());
+    }
 }

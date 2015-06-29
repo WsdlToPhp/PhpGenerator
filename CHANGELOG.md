@@ -1,6 +1,10 @@
 CHANGELOG
 =========
 
+0.0.5
+-----
+Fix issue: function parameter type is not tooken into account
+
 0.0.4
 -----
 Fix issue regarding property/variable that has no value but always has a null value assigned with an assignment sign

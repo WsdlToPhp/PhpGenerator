@@ -16,6 +16,7 @@ class PhpFunctionParameter extends PhpVariable
     public function __construct($name, $value = null, $type = null)
     {
         parent::__construct($name, $value);
+        $this->setType($type);
     }
     /**
      * @throws \InvalidArgumentException
