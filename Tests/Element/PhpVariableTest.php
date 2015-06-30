@@ -96,4 +96,11 @@ class PhpVariableTest extends TestCase
 
         $this->assertSame('$foo = null;', $variable->toString());
     }
+
+    public function testToStringStringNewsValue()
+    {
+        $variable = new PhpVariable('foo', 'news');
+
+        $this->assertSame('$foo = \'news\';', $variable->toString());
+    }
 }
