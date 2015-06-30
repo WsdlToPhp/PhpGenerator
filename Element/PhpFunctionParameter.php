@@ -78,4 +78,15 @@ class PhpFunctionParameter extends PhpVariable
     {
         return false;
     }
+    /**
+     * @see \WsdlToPhp\PhpGenerator\Element\AbstractAssignedValueElement::getAnyValue()
+     * @return string
+     */
+    protected function getAnyValue($value)
+    {
+        if (is_array($value)) {
+            return str_replace(array(self::BREAK_LINE_CHAR, ' '), '', var_export($value, true));
+        }
+        return parent::getAnyValue($value);
+    }
 }
