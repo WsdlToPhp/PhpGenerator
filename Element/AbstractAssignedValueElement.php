@@ -61,20 +61,38 @@ abstract class AbstractAssignedValueElement extends AbstractAccessRestrictedElem
         return $this->getFinalValue();
     }
     /**
-     * @return string|mixed
+     * @return mixed
      */
     protected function getFinalValue()
     {
-        if (is_scalar($this->getValue())) {
-            if (stripos($this->getValue(), '::') === 0) {
-                return substr($this->getValue(), 2);
-            } elseif (stripos($this->getValue(), '::') !== false || stripos($this->getValue(), 'new') !== false || stripos($this->getValue(), '(') !== false || stripos($this->getValue(), ')') !== false) {
-                return $this->getValue();
-            }
+        if (is_scalar($this->getValue()) && ($scalarValue = $this->getScalarValue($this->getValue())) !== null) {
+            return $scalarValue;
         } elseif (is_null($this->getValue())) {
             return 'null';
         }
-        return var_export($this->getValue(), true);
+        return $this->getAnyValue($this->getValue());
+    }
+    /**
+     * @param mixed $value
+     * @return mixed
+     */
+    protected function getScalarValue($value)
+    {
+        $sclarValue = null;
+        if (stripos($value, '::') === 0) {
+            $sclarValue = substr($value, 2);
+        } elseif (stripos($value, '::') !== false || stripos($value, 'new') !== false || stripos($value, '(') !== false || stripos($value, ')') !== false) {
+            $sclarValue = $value;
+        }
+        return $sclarValue;
+    }
+    /**
+     * @param mixed $value
+     * @return string
+     */
+    protected function getAnyValue($value)
+    {
+        return var_export($value, true);
     }
     /**
      * @return string

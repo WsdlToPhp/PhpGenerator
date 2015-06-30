@@ -37,8 +37,15 @@ class PhpFunctionParameterTest extends TestCase
 
     public function testSetTypeForDeclaration()
     {
-        $functionParameter = new PhpFunctionParameter('foo', true, 'array');
+        $functionParameter = new PhpFunctionParameter('foo', true, 'bool');
 
-        $this->assertSame('array $foo = true', $functionParameter->toString());
+        $this->assertSame('bool $foo = true', $functionParameter->toString());
+    }
+
+    public function testToStringEmptyArrayValue()
+    {
+        $functionParameter = new PhpFunctionParameter('foo', array(), 'array');
+
+        $this->assertSame('array $foo = array()', $functionParameter->toString());
     }
 }
