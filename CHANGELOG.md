@@ -1,6 +1,10 @@
 CHANGELOG
 =========
 
+0.0.7
+-----
+Fix issue: if variable has 'news' as value, the variable is generated with news instead of 'news'
+
 0.0.6
 -----
 Improvement: improve lisiblity and extensibility for PhpVariable and PhpFunctionParameter
