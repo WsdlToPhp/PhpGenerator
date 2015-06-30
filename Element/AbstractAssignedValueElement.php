@@ -81,7 +81,7 @@ abstract class AbstractAssignedValueElement extends AbstractAccessRestrictedElem
         $sclarValue = null;
         if (stripos($value, '::') === 0) {
             $sclarValue = substr($value, 2);
-        } elseif (stripos($value, '::') !== false || stripos($value, 'new') !== false || stripos($value, '(') !== false || stripos($value, ')') !== false) {
+        } elseif (stripos($value, '::') !== false || stripos($value, 'new ') !== false || stripos($value, '(') !== false || stripos($value, ')') !== false) {
             $sclarValue = $value;
         }
         return $sclarValue;
