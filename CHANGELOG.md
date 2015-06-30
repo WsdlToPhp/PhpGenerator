@@ -1,6 +1,10 @@
 CHANGELOG
 =========
 
+0.0.6
+-----
+Improvement: improve lisiblity and extensibility for PhpVariable and PhpFunctionParameter
+
 0.0.5
 -----
 Fix issue: function parameter type is not tooken into account
