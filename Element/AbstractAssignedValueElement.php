@@ -92,7 +92,12 @@ abstract class AbstractAssignedValueElement extends AbstractAccessRestrictedElem
      */
     protected function getAnyValue($value)
     {
-        return var_export($value, true);
+        $exportedValue = var_export($value, true);
+        // work around for known bug https://bugs.php.net/bug.php?id=66866
+        if (is_float($value) && strlen($value) !== strlen($exportedValue)) {
+            $exportedValue = substr($exportedValue, 0, strlen($value));
+        }
+        return $exportedValue;
     }
     /**
      * @return string
