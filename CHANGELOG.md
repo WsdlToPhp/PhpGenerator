@@ -1,6 +1,10 @@
 CHANGELOG
 =========
 
+0.0.8
+-----
+Fix issue: workaround for known var_export issue with float value
+
 0.0.7
 -----
 Fix issue: if variable has 'news' as value, the variable is generated with news instead of 'news'
