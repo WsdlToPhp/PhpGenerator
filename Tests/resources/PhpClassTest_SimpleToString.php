@@ -20,6 +20,8 @@ abstract class Foo extends stdClass
      */
     public $bar = 1;
     /**
+     * - documentation: The ID of the contact that performed the action, if available.-
+     * May be blank for anonymous activity.
      * @var bool
      */
     public $sample = true;
