@@ -317,6 +317,10 @@ abstract class AbstractElement implements GenerableInterface
      */
     public function getIndentedString($string, $indentation = null)
     {
-        return sprintf('%s%s', $this->getIndentationString($indentation), $string);
+        $strings = explode(self::BREAK_LINE_CHAR, $string);
+        foreach ($strings as $i=>$s) {
+            $strings[$i] = sprintf('%s%s', $this->getIndentationString($indentation), $s);
+        }
+        return implode(self::BREAK_LINE_CHAR, $strings);
     }
 }
