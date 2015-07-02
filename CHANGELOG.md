@@ -1,6 +1,10 @@
 CHANGELOG
 =========
 
+0.0.9
+-----
+Fix issue : within a class, the additonal multi lines are not indented correcly
+
 0.0.8
 -----
 Fix issue: workaround for known var_export issue with float value
