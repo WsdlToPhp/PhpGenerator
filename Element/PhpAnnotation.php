@@ -17,13 +17,20 @@ class PhpAnnotation extends AbstractElement
      */
     protected $content;
     /**
+     * @var int
+     */
+    protected $maxLength;
+    /**
      * @param string $name
      * @param string $content
+     * @param int $maxLength
      */
-    public function __construct($name, $content)
+    public function __construct($name, $content, $maxLength = self::MAX_LENGTH)
     {
         parent::__construct($name);
-        $this->setContent($content);
+        $this
+            ->setContent($content)
+            ->setMaxLength($maxLength);
     }
     /**
      * @param string $content
@@ -57,8 +64,8 @@ class PhpAnnotation extends AbstractElement
         $content = array(
             $fullContent,
         );
-        if (strlen($fullContent) > static::MAX_LENGTH) {
-            $content = str_split($fullContent, static::MAX_LENGTH);
+        if (strlen($fullContent) > $this->getMaxLength()) {
+            $content = str_split($fullContent, $this->getMaxLength());
         }
         return array_map(function ($element) {
             return sprintf(' %s', $element);
@@ -87,5 +94,21 @@ class PhpAnnotation extends AbstractElement
     public function getChildrenTypes()
     {
         return array();
+    }
+    /**
+     * @param int $maxlength
+     * @return PhpAnnotation
+     */
+    public function setMaxLength($maxlength)
+    {
+        $this->maxLength = $maxlength;
+        return $this;
+    }
+    /**
+     * @return int
+     */
+    public function getMaxLength()
+    {
+        return $this->maxLength;
     }
 }

@@ -41,6 +41,13 @@ class PhpAnnotationTest extends TestCase
                           " *  This sample annotation is on one line", $annotation->getPhpDeclaration());
     }
 
+    public function testGetSeveralLinesLargerWithNamePhpDeclaration()
+    {
+        $annotation = new PhpAnnotation('description', str_repeat('This sample annotation is on one line ', 7), 300);
+
+        $this->assertSame(" * @description This sample annotation is on one line This sample annotation is on one line This sample annotation is on one line This sample annotation is on one line This sample annotation is on one line This sample annotation is on one line This sample annotation is on one line", $annotation->getPhpDeclaration());
+    }
+
     /**
      * @expectedException InvalidArgumentException
      */
