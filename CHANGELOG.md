@@ -1,6 +1,10 @@
 CHANGELOG
 =========
 
+0.0.10
+-----
+allow to provide annotation max length to use
+
 0.0.9
 -----
 Fix issue : within a class, the additonal multi lines are not indented correcly
