@@ -254,4 +254,11 @@ class PhpClassTest extends TestCase
 
         $this->assertSame("class Foo\n{\n    private function bar(\$bar, \$foo, \$sample)\n    {\n        \$foo = 1;\n    }\n}", $class->toString());
     }
+
+    public function testExtendsFromNamespace()
+    {
+        $class = new PhpClass('Foo', false, '\\DOMDocument');
+
+        $this->assertSame("class Foo extends \\DOMDocument\n{\n}", $class->toString());
+    }
 }
