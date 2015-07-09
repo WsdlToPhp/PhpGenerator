@@ -46,20 +46,26 @@ abstract class AbstractElement implements GenerableInterface
     }
     /**
      * @param string $name
+     * @param bool $allowBackslash
      * @return bool
      */
-    public static function nameIsValid($name)
+    public static function nameIsValid($name, $allowBackslash = false)
     {
-        return preg_match('/^[a-zA-Z_][a-zA-Z0-9_]*$/D', $name) === 1;
+        $pattern = '/^[a-zA-Z_][a-zA-Z0-9_]*$/D';
+        if ($allowBackslash === true) {
+            $pattern = '/^[a-zA-Z_\\\][a-zA-Z0-9_\\\]*$/D';
+        }
+        return preg_match($pattern, $name) === 1;
     }
     /**
      * @param mixed $string
      * @param bool $checkName
+     * @param bool $allowBackslash
      * @return bool
      */
-    public static function stringIsValid($string, $checkName = true)
+    public static function stringIsValid($string, $checkName = true, $allowBackslash = false)
     {
-        return (is_string($string) && !empty($string) && (!$checkName || self::nameIsValid($string)));
+        return (is_string($string) && !empty($string) && (!$checkName || self::nameIsValid($string, $allowBackslash)));
     }
     /**
      * @param mixed $object

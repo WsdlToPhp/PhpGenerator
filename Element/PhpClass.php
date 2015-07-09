@@ -91,7 +91,7 @@ class PhpClass extends AbstractElement
      */
     public static function extendsIsValid($extends)
     {
-        return $extends === null || self::stringIsValid($extends) || $extends instanceof PhpClass;
+        return $extends === null || self::stringIsValid($extends, true, true) || $extends instanceof PhpClass;
     }
     /**
      * @return string|PhpClass

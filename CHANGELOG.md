@@ -1,6 +1,10 @@
 CHANGELOG
 =========
 
+0.0.11
+-----
+Issue : allow backslash within class name for namespace
+
 0.0.10
 -----
 allow to provide annotation max length to use
