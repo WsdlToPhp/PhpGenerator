@@ -14,11 +14,6 @@ class PhpClassTest extends AbstractComponent
         $class = new PhpClassComponent('Foo', true, 'stdClass');
 
         $class
-            ->setNamespace('My\\Testing\\NamespaceName')
-            ->addUse('My\\Testing\\ParentNamespace\\Model')
-            ->addUse('My\\Testing\\ParentNamespace\\Repository')
-            ->addUse('My\\Testing\\ParentNamespace\\Generator')
-            ->addUse('My\\Testing\\ParentNamespace\\Foo', 'FooType')
             ->addAnnotationBlock('@var string')
             ->addConstant('FOO', 'theValue')
             ->addAnnotationBlock('@var string')

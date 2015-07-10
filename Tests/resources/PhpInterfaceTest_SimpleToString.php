@@ -1,10 +1,3 @@
-namespace My\Testing\NamespaceName;
-
-use My\Testing\ParentNamespace\Model;
-use My\Testing\ParentNamespace\Repository;
-use My\Testing\ParentNamespace\Generator;
-use My\Testing\ParentNamespace\Foo as FooType;
-
 interface Foo extends stdClass
 {
     /**

@@ -83,4 +83,25 @@ class PhpFile extends AbstractComponent
     {
         return $this->addFunctionElement(new PhpFunctionElement($name, $parameters));
     }
+    /**
+     * @param string $use
+     * @param string $as
+     * @param string $last
+     * @return PhpFile
+     */
+    public function addUse($use, $as = null, $last = false)
+    {
+        $expression = empty($as) ? "use %1\$s;%3\$s" : "use %1\$s as %2\$s;%3\$s";
+        $this->mainElement->addChild(sprintf($expression, $use, $as, $last ? self::BREAK_LINE_CHAR : ''));
+        return $this;
+    }
+    /**
+     * @param string $namespace
+     * @return PhpFile
+     */
+    public function setNamespace($namespace)
+    {
+        $this->mainElement->addChild(sprintf("%2\$snamespace %s;%s", $namespace, self::BREAK_LINE_CHAR));
+        return $this;
+    }
 }

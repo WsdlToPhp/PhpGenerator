@@ -9,14 +9,6 @@ use WsdlToPhp\PhpGenerator\Element\PhpMethod as PhpMethodElement;
 class PhpClass extends AbstractComponent
 {
     /**
-     * @var array
-     */
-    protected $uses = array();
-    /**
-     * @var string
-     */
-    protected $namespace = '';
-    /**
      * @param string $name
      * @param bool $abstract
      * @param string $extends
@@ -25,17 +17,6 @@ class PhpClass extends AbstractComponent
     public function __construct($name, $abstract = false, $extends = null, array $interfaces = array())
     {
         $this->setMainElement(new PhpClassElement($name, $abstract, $extends, $interfaces));
-    }
-    /**
-     * @param string $use
-     * @param string $as
-     * @return PhpClass
-     */
-    public function addUse($use, $as = null)
-    {
-        $expression = empty($as) ? "use %1\$s;%3\$s" : "use %1\$s as %2\$s;%3\$s";
-        $this->uses[] = sprintf($expression, $use, $as, self::BREAK_LINE_CHAR);
-        return $this;
     }
     /**
      * @param PhpMethodElement $method
@@ -62,15 +43,6 @@ class PhpClass extends AbstractComponent
         return $this->addMethodElement(new PhpMethodElement($name, $parameters, $access, $abstract, $static, $final, $hasBody));
     }
     /**
-     * @param string $namespace
-     * @return PhpClass
-     */
-    public function setNamespace($namespace)
-    {
-        $this->namespace = sprintf("namespace %s;%s", $namespace, self::BREAK_LINE_CHAR);
-        return $this;
-    }
-    /**
      * @param PhpPropertyElement $property
      * @return PhpClass
      */
@@ -92,22 +64,12 @@ class PhpClass extends AbstractComponent
     }
     /**
      * @see \WsdlToPhp\PhpGenerator\Component\AbstractComponent::getElements()
-     * @return AbstractElement[]|string[]
+     * @return PhpClassElement[]
      */
     public function getElements()
     {
-        $elements = array();
-        if (!empty($this->namespace)) {
-            $elements[] = $this->namespace;
-            $elements[] = self::BREAK_LINE_CHAR;
-        }
-        if (!empty($this->uses)) {
-            foreach ($this->uses as $use) {
-                $elements[] = $use;
-            }
-            $elements[] = self::BREAK_LINE_CHAR;
-        }
-        $elements[] = $this->mainElement;
-        return $elements;
+        return array(
+            $this->getMainElement(),
+        );
     }
 }

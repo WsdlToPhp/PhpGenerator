@@ -1,4 +1,5 @@
 <?php
+
 namespace My\Testing\NamespaceName;
 
 use My\Testing\ParentNamespace\Model;

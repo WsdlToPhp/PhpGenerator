@@ -1,6 +1,10 @@
 CHANGELOG
 =========
 
+0.0.12
+-----
+Refactoring : Use statements and Namespace are contained by a file not a class as each element should only knows what it contains not what that is around itself.
+
 0.0.11
 -----
 Issue : allow backslash within class name for namespace
