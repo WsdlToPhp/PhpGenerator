@@ -1,6 +1,10 @@
 CHANGELOG
 =========
 
+0.0.13
+-----
+Issue #2 : allow backslash for function/method parameter type
+
 0.0.12
 -----
 Refactoring : Use statements and Namespace are contained by a file not a class as each element should only knows what it contains not what that is around itself.
