@@ -48,4 +48,11 @@ class PhpFunctionParameterTest extends TestCase
 
         $this->assertSame('array $foo = array()', $functionParameter->toString());
     }
+
+    public function testToStringWithNamespace()
+    {
+        $functionParameter = new PhpFunctionParameter('foo', null, 'My\Name\Space');
+
+        $this->assertSame('My\Name\Space $foo = null', $functionParameter->toString());
+    }
 }
