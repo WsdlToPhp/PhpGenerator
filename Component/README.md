@@ -12,11 +12,6 @@ Using one of these components, you can generate the content of more complex elem
 ```php
 $class = new PhpClassComponent('Foo', true, 'stdClass');
 $class
-    ->setNamespace('My\\Testing\\NamespaceName')
-    ->addUse('My\\Testing\\ParentNamespace\\Model')
-    ->addUse('My\\Testing\\ParentNamespace\\Repository')
-    ->addUse('My\\Testing\\ParentNamespace\\Generator')
-    ->addUse('My\\Testing\\ParentNamespace\\Foo', 'FooType')
     ->addAnnotationBlock('@var string')
     ->addConstant('FOO', 'theValue')
     ->addAnnotationBlock('@var string')
@@ -47,13 +42,6 @@ echo $class->toString();
 ```
 displays
 ```php
-namespace My\Testing\NamespaceName;
-
-use My\Testing\ParentNamespace\Model;
-use My\Testing\ParentNamespace\Repository;
-use My\Testing\ParentNamespace\Generator;
-use My\Testing\ParentNamespace\Foo as FooType;
-
 abstract class Foo extends stdClass
 {
     /**
@@ -95,11 +83,6 @@ abstract class Foo extends stdClass
 $file = new PhpFileComponent('Foo');
 $class = new PhpClassComponent('Foo', true, 'stdClass');
 $class
-    ->setNamespace('My\\Testing\\NamespaceName')
-    ->addUse('My\\Testing\\ParentNamespace\\Model')
-    ->addUse('My\\Testing\\ParentNamespace\\Repository')
-    ->addUse('My\\Testing\\ParentNamespace\\Generator')
-    ->addUse('My\\Testing\\ParentNamespace\\Foo', 'FooType')
     ->addAnnotationBlock('@var string')
     ->addConstant('FOO', 'theValue')
     ->addAnnotationBlock('@var string')
@@ -126,12 +109,19 @@ $class
         new PhpFunctionParameterElement('uselessParameter', null),
         'unusedParameter'
     ));
-$file->addClassComponent($class);
+$file
+    ->setNamespace('My\\Testing\\NamespaceName')
+    ->addUse('My\\Testing\\ParentNamespace\\Model')
+    ->addUse('My\\Testing\\ParentNamespace\\Repository')
+    ->addUse('My\\Testing\\ParentNamespace\\Generator')
+    ->addUse('My\\Testing\\ParentNamespace\\Foo', 'FooType')
+    ->addClassComponent($class);
 echo $file->toString();
 ```
 displays
 ```php
 <?php
+
 namespace My\Testing\NamespaceName;
 
 use My\Testing\ParentNamespace\Model;
