@@ -78,13 +78,13 @@ abstract class AbstractAssignedValueElement extends AbstractAccessRestrictedElem
      */
     protected function getScalarValue($value)
     {
-        $sclarValue = null;
+        $scalarValue = null;
         if (stripos($value, '::') === 0) {
-            $sclarValue = substr($value, 2);
+            $scalarValue = substr($value, 2);
         } elseif (stripos($value, '::') !== false || stripos($value, 'new ') !== false || stripos($value, '(') !== false || stripos($value, ')') !== false) {
-            $sclarValue = $value;
+            $scalarValue = $value;
         }
-        return $sclarValue;
+        return $scalarValue;
     }
     /**
      * @param mixed $value
