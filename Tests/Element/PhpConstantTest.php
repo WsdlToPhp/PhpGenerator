@@ -44,6 +44,13 @@ class PhpConstantTest extends TestCase
         $this->assertSame('define(\'foo\', 1);', $constant->getPhpDeclaration());
     }
 
+    public function testGetPhpDeclarationParenthesisValue()
+    {
+        $constant = new PhpConstant('foo', 'NCSA Common (Apache default)');
+
+        $this->assertSame('define(\'foo\', \'NCSA Common (Apache default)\');', $constant->getPhpDeclaration());
+    }
+
     /**
      * @expectedException InvalidArgumentException
      */
@@ -57,6 +64,13 @@ class PhpConstantTest extends TestCase
         $constant = new PhpConstant('foo', null, new PhpClass('bar'));
 
         $this->assertSame('const FOO = null;', $constant->getPhpDeclaration());
+    }
+
+    public function testGetPhpDeclarationParenthesisValueForClass()
+    {
+        $constant = new PhpConstant('foo', 'NCSA Common (Apache default)', new PhpClass('bar'));
+
+        $this->assertSame('const FOO = \'NCSA Common (Apache default)\';', $constant->getPhpDeclaration());
     }
 
     public function testGetPhpDeclarationTrueValueForClass()

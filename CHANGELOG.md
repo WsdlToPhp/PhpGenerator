@@ -1,6 +1,10 @@
 CHANGELOG
 =========
 
+0.0.15
+-----
+Issue #3: fix constant declaration for specific value containing (
+ 
 0.0.14
 -----
 Improvement: make annotation splitting more clever using word wrap in order to keep 
