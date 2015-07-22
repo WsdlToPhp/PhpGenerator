@@ -21,7 +21,7 @@ class PhpClassTest extends AbstractComponent
             ->addAnnotationBlock(new PhpAnnotationElement('var', 'int'))
             ->addProperty('bar', 1)
             ->addAnnotationBlock(array(
-                '- documentation: The ID of the contact that performed the action, if available.-May be blank for anonymous activity.',
+                '- documentation: The ID of the contact that performed the action, if available. May be blank for anonymous activity.',
                 new PhpAnnotationElement('var', 'bool'),
             ))
             ->addPropertyElement(new PhpPropertyElement('sample', true))

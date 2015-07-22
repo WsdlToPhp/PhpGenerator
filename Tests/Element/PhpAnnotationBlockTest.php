@@ -35,9 +35,9 @@ class PhpAnnotationBlockTest extends TestCase
 
         $this->assertSame("/**\n" .
                           " * This sample annotation is on one line This sample annotation is on one line This\n" .
-                          " *  sample annotation is on one line This sample annotation is on one line This sam\n" .
-                          " * ple annotation is on one line This sample annotation is on one line This sample \n" .
-                          " * annotation is on one line\n" .
+                          " * sample annotation is on one line This sample annotation is on one line This\n" .
+                          " * sample annotation is on one line This sample annotation is on one line This\n" .
+                          " * sample annotation is on one line\n" .
                           " */", $annotationBlock->toString());
     }
 
@@ -48,10 +48,10 @@ class PhpAnnotationBlockTest extends TestCase
         ));
 
         $this->assertSame("/**\n" .
-                          " * @description This sample annotation is on one line This sample annotation is on \n" .
-                          " * one line This sample annotation is on one line This sample annotation is on one \n" .
+                          " * @description This sample annotation is on one line This sample annotation is on\n" .
+                          " * one line This sample annotation is on one line This sample annotation is on one\n" .
                           " * line This sample annotation is on one line This sample annotation is on one line\n" .
-                          " *  This sample annotation is on one line\n" .
+                          " * This sample annotation is on one line\n" .
                           " */", $annotationBlock->toString());
     }
 
@@ -96,10 +96,10 @@ class PhpAnnotationBlockTest extends TestCase
         ));
 
         $this->assertSame("/**\n" .
-                          " * @description This sample annotation is on one line This sample annotation is on \n" .
-                          " * one line This sample annotation is on one line This sample annotation is on one \n" .
+                          " * @description This sample annotation is on one line This sample annotation is on\n" .
+                          " * one line This sample annotation is on one line This sample annotation is on one\n" .
                           " * line This sample annotation is on one line This sample annotation is on one line\n" .
-                          " *  This sample annotation is on one line\n" .
+                          " * This sample annotation is on one line\n" .
                           " */", $annotationBlock->toString());
     }
 
