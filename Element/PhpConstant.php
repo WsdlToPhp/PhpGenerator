@@ -111,4 +111,12 @@ class PhpConstant extends AbstractAssignedValueElement
     {
         return array();
     }
+    /**
+     * Always return null to avoid having value being detected as a potential function/method/variable
+     * @see \WsdlToPhp\PhpGenerator\Element\AbstractAssignedValueElement::getScalarValue()
+     */
+    protected function getScalarValue($value)
+    {
+        return null;
+    }
 }
