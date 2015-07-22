@@ -1,6 +1,10 @@
 CHANGELOG
 =========
 
+0.0.14
+-----
+Improvement: make annotation splitting more clever using word wrap in order to keep 
+
 0.0.13
 -----
 Issue #2 : allow backslash for function/method parameter type
