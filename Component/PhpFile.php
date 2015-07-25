@@ -86,7 +86,7 @@ class PhpFile extends AbstractComponent
     /**
      * @param string $use
      * @param string $as
-     * @param string $last
+     * @param bool $last
      * @return PhpFile
      */
     public function addUse($use, $as = null, $last = false)
