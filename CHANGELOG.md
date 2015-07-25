@@ -1,6 +1,10 @@
 CHANGELOG
 =========
 
+0.0.16
+-----
+Minor: correct annotation
+
 0.0.15
 -----
 Issue #3: fix constant declaration for specific value containing (
