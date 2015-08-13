@@ -11,14 +11,15 @@
     </php>
     
     <testsuite name="Test Suite">
-        <directory>./Tests</directory>
+        <directory>./Tests/</directory>
     </testsuite>
 
     <filter>
         <whitelist>
             <directory>./</directory>
             <exclude>
-                <directory>Tests/</directory>
+                <directory>./Tests</directory>
+                <directory>./vendor</directory>
             </exclude>
         </whitelist>
     </filter>
