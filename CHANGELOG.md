@@ -1,8 +1,8 @@
 CHANGELOG
 =========
 
-WIP
----
+1.0.0RC01
+---------
 - Major: update source code structure, put Component and Element fodlers under ```src``` fodler, update composer and phpunit accordingly
 
 0.0.16
