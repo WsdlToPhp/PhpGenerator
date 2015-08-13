@@ -1,4 +1,5 @@
 # WsdlToPhp Php Generator, a Real PHP source code generator
+[![Latest Stable Version](https://poser.pugx.org/wsdltophp/phpgenerator/version.png)](https://packagist.org/packages/wsdltophp/phpgenerator)
 [![Build Status](https://api.travis-ci.org/WsdlToPhp/PhpGenerator.svg)](https://travis-ci.org/WsdlToPhp/PhpGenerator)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/WsdlToPhp/PhpGenerator/badges/quality-score.png)](https://scrutinizer-ci.com/g/WsdlToPhp/PhpGenerator/)
 [![Code Coverage](https://scrutinizer-ci.com/g/WsdlToPhp/PhpGenerator/badges/coverage.png)](https://scrutinizer-ci.com/g/WsdlToPhp/PhpGenerator/)

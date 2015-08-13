@@ -22,6 +22,9 @@
         "fabpot/php-cs-fixer": "~1.8"
     },
     "autoload": {
-        "psr-4": { "WsdlToPhp\\PhpGenerator\\": "" }
+        "psr-4": {
+            "WsdlToPhp\\PhpGenerator\\": "src",
+            "WsdlToPhp\\PhpGenerator\\Tests\\": "Tests"
+        }
     }
 }
