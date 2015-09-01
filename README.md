@@ -12,8 +12,8 @@ Rest assured that it is not tweaked for the purpose of the [PackageGenerator](ht
 ## Main features
 This projet contains two main features:
 
-- [Element](Element/README.md): generate basic elements
-- [Component](Component/README.md): generate structured complex elements
+- [Element](src/Element/README.md): generate basic elements
+- [Component](src/Component/README.md): generate structured complex elements
 
 ## Unit tests
 You can run the unit tests with the following command:
