@@ -137,9 +137,6 @@ class PhpClassTest extends TestCase
         $class->setAbstract(1);
     }
 
-    /**
-     * @expectedException InvalidArgumentException
-     */
     public function testSetExtends()
     {
         $class = new PhpClass('Foo');
@@ -147,9 +144,6 @@ class PhpClassTest extends TestCase
         $class->setExtends('Partagé');
     }
 
-    /**
-     * @expectedException InvalidArgumentException
-     */
     public function testSetInterfaces()
     {
         $class = new PhpClass('Foo');

@@ -110,4 +110,17 @@ class PhpVariableTest extends TestCase
 
         $this->assertSame('$foo = 0.4;', $variable->toString());
     }
+
+    public function testCyrillic()
+    {
+        $variable = new PhpVariable('КонтактнаяИнформация', 0.4);
+
+        $this->assertSame('$КонтактнаяИнформация = 0.4;', $variable->toString());
+    }
+
+    public function testé()
+    {
+        $é = 4;
+        $this->assertEquals(4, $é);
+    }
 }

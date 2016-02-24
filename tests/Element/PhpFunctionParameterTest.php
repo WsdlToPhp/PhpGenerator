@@ -30,9 +30,9 @@ class PhpFunctionParameterTest extends TestCase
         $this->assertTrue(PhpFunctionParameter::typeIsValid('string'));
     }
 
-    public function testTypeIsValidFalse()
+    public function testTypeIsValidAccentuated()
     {
-        $this->assertFalse(PhpFunctionParameter::typeIsValid('Partagé'));
+        $this->assertTrue(PhpFunctionParameter::typeIsValid('Partagé'));
     }
 
     public function testSetTypeForDeclaration()

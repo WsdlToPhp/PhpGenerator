@@ -50,9 +50,6 @@ class PhpFunctionTest extends TestCase
         ));
     }
 
-    /**
-     * @expectedException InvalidArgumentException
-     */
     public function testSetName()
     {
         $function = new PhpFunction('foo', array());
