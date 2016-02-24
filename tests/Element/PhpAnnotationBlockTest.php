@@ -153,7 +153,7 @@ class PhpAnnotationBlockTest extends TestCase
      */
     public function testGetConstructWithException()
     {
-        $annotationBlock = new PhpAnnotationBlock(array(
+        new PhpAnnotationBlock(array(
             new PhpFunction('Bar'),
         ));
     }
