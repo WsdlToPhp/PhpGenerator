@@ -35,15 +35,12 @@ class PhpAnnotationTest extends TestCase
     {
         $annotation = new PhpAnnotation('description', str_repeat('This sample annotation is on one line ', 7));
 
-        $this->assertSame(" * @description This sample annotation is on one line This sample annotation is on\n" .
-                          " * one line This sample annotation is on one line This sample annotation is on one\n" .
-                          " * line This sample annotation is on one line This sample annotation is on one line\n" .
-                          " * This sample annotation is on one line", $annotation->getPhpDeclaration());
+        $this->assertSame(" * @description This sample annotation is on one line This sample annotation is on one line This sample annotation is on one line This sample annotation is on one line This sample annotation is on one line This sample annotation is on one line This sample annotation is on one line", $annotation->getPhpDeclaration());
     }
 
     public function testGetSeveralLinesLargerWithNamePhpDeclaration()
     {
-        $annotation = new PhpAnnotation('description', str_repeat('This sample annotation is on one line ', 7), 300);
+        $annotation = new PhpAnnotation('description', str_repeat('This sample annotation is on one line ', 7));
 
         $this->assertSame(" * @description This sample annotation is on one line This sample annotation is on one line This sample annotation is on one line This sample annotation is on one line This sample annotation is on one line This sample annotation is on one line This sample annotation is on one line", $annotation->getPhpDeclaration());
     }

@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## WIP
+- issue #5 - No autocomplete because of return type on a new line after @return in annotation
+
 ## 1.0.1
 - issue #4 - Cyrillic alphabet is not handled well
 
