@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## WIP
+## 1.1.0
 - issue #5 - No autocomplete because of return type on a new line after @return in annotation
 
 ## 1.0.1
