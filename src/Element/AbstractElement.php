@@ -196,7 +196,7 @@ abstract class AbstractElement implements GenerableInterface
                 $valid |= (gettype($child) === $authorizedType) || self::objectIsValid($child, $authorizedType);
             }
         }
-        return (bool)$valid;
+        return (bool) $valid;
     }
     /**
      * @return AbstractElement[]|mixed[]
@@ -324,7 +324,7 @@ abstract class AbstractElement implements GenerableInterface
     public function getIndentedString($string, $indentation = null)
     {
         $strings = explode(self::BREAK_LINE_CHAR, $string);
-        foreach ($strings as $i=>$s) {
+        foreach ($strings as $i => $s) {
             $strings[$i] = sprintf('%s%s', $this->getIndentationString($indentation), $s);
         }
         return implode(self::BREAK_LINE_CHAR, $strings);

@@ -64,7 +64,7 @@ class PhpAnnotationBlock extends AbstractElement
         foreach ($annotations as $annotation) {
             $valid &= self::annotationIsValid($annotation);
         }
-        return (bool)$valid;
+        return (bool) $valid;
     }
     /**
      * @param string|array|PhpAnnotation $annotation

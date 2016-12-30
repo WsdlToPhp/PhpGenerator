@@ -65,7 +65,7 @@ class PhpFunction extends AbstractAccessRestrictedElement
         foreach ($parameters as $parameter) {
             $valid &= self::parameterIsValid($parameter);
         }
-        return (bool)$valid;
+        return (bool) $valid;
     }
     /**
      * @param string|array|PhpFunctionParameter $parameter
