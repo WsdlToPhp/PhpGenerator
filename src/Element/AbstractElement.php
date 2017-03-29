@@ -84,7 +84,7 @@ abstract class AbstractElement implements GenerableInterface
     {
         $lines = array(
             $this->getToStringDeclaration($indentation),
-            $this->getToStringBeforeChildren($indentation)
+            $this->getToStringBeforeChildren($indentation),
         );
         foreach ($this->getChildren() as $child) {
             $lines[] = $this->getChildContent($child, $indentation + ($this->useBracketsForChildren() ? 1 : 0));
