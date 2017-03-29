@@ -68,4 +68,13 @@ class PhpAnnotationTest extends TestCase
 
         $this->assertTrue($annotation->hasContent());
     }
+
+    public function testExceptionMessageOnName()
+    {
+        try {
+            new PhpAnnotation(0, '');
+        } catch (\InvalidArgumentException $e) {
+            $this->assertSame('Name "0" is invalid when instantiating PhpAnnotation object', $e->getMessage());
+        }
+    }
 }

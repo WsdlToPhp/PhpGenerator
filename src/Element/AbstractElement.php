@@ -32,7 +32,7 @@ abstract class AbstractElement implements GenerableInterface
     public function setName($name)
     {
         if (!self::nameIsValid($name)) {
-            throw new \InvalidArgumentException(sprintf('Name "%s" is invalid, please provide a valid name', $name));
+            throw new \InvalidArgumentException(sprintf('Name "%s" is invalid when instantiating %s object', $name, $this->getCalledClass()));
         }
         $this->name = $name;
         return $this;
@@ -84,7 +84,7 @@ abstract class AbstractElement implements GenerableInterface
     {
         $lines = array(
             $this->getToStringDeclaration($indentation),
-            $this->getToStringBeforeChildren($indentation),
+            $this->getToStringBeforeChildren($indentation)
         );
         foreach ($this->getChildren() as $child) {
             $lines[] = $this->getChildContent($child, $indentation + ($this->useBracketsForChildren() ? 1 : 0));
@@ -328,5 +328,12 @@ abstract class AbstractElement implements GenerableInterface
             $strings[$i] = sprintf('%s%s', $this->getIndentationString($indentation), $s);
         }
         return implode(self::BREAK_LINE_CHAR, $strings);
+    }
+    /**
+     * @return string
+     */
+    final public function getCalledClass()
+    {
+        return substr(get_called_class(), strrpos(get_called_class(), '\\') + 1);
     }
 }

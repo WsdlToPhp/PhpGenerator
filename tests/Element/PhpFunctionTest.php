@@ -114,4 +114,13 @@ class PhpFunctionTest extends TestCase
 
         $this->assertSame("function foo(\$bar, \$demo = 1, \$sample = null, \$deamon = true)\n{\n    \$bar = 1;\n    return \$bar;\n}", $function->toString());
     }
+
+    public function testExceptionMessageOnName()
+    {
+        try {
+            new PhpFunction(0);
+        } catch (\InvalidArgumentException $e) {
+            $this->assertSame('Name "0" is invalid when instantiating PhpFunction object', $e->getMessage());
+        }
+    }
 }

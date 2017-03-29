@@ -97,4 +97,13 @@ class PhpInterfaceTest extends TestCase
 
         $this->assertSame("interface Foo\n{\n    public function bar();\n}", $interface->toString());
     }
+
+    public function testExceptionMessageOnName()
+    {
+        try {
+            new PhpInterface(0);
+        } catch (\InvalidArgumentException $e) {
+            $this->assertSame('Name "0" is invalid when instantiating PhpInterface object', $e->getMessage());
+        }
+    }
 }

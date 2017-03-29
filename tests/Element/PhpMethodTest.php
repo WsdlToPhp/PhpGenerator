@@ -186,4 +186,13 @@ class PhpMethodTest extends TestCase
 
         $this->assertSame("public function foo(\$bar, \$demo = 1, \$sample = null, \$deamon = true)\n{\n    \$bar = 1;\n    return \$bar;\n}", $method->toString());
     }
+
+    public function testExceptionMessageOnName()
+    {
+        try {
+            new PhpMethod(0);
+        } catch (\InvalidArgumentException $e) {
+            $this->assertSame('Name "0" is invalid when instantiating PhpMethod object', $e->getMessage());
+        }
+    }
 }

@@ -100,4 +100,13 @@ class PhpPropertyTest extends TestCase
 
         $property->setAccess(' public');
     }
+
+    public function testExceptionMessageOnName()
+    {
+        try {
+            new PhpProperty(0);
+        } catch (\InvalidArgumentException $e) {
+            $this->assertSame('Name "0" is invalid when instantiating PhpProperty object', $e->getMessage());
+        }
+    }
 }
