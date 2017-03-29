@@ -123,4 +123,13 @@ class PhpVariableTest extends TestCase
         $é = 4;
         $this->assertEquals(4, $é);
     }
+
+    public function testExceptionMessageOnName()
+    {
+        try {
+            new PhpVariable(0);
+        } catch (\InvalidArgumentException $e) {
+            $this->assertSame('Name "0" is invalid when instantiating PhpVariable object', $e->getMessage());
+        }
+    }
 }

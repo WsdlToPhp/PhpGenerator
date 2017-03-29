@@ -31,7 +31,7 @@ abstract class AbstractAssignedValueElement extends AbstractAccessRestrictedElem
     public function setValue($value)
     {
         if ($this->getAcceptNonScalarValue() === false && !is_scalar($value) && $value !== null) {
-            throw new \InvalidArgumentException(sprintf('Value of type "%s" is not a valid scalar value', gettype($value)));
+            throw new \InvalidArgumentException(sprintf('Value of type "%s" is not a valid scalar value for %s object', gettype($value), $this->getCalledClass()));
         }
         $this->value = $value;
         return $this;

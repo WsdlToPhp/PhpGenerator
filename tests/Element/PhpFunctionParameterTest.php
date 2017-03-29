@@ -55,4 +55,13 @@ class PhpFunctionParameterTest extends TestCase
 
         $this->assertSame('My\Name\Space $foo = null', $functionParameter->toString());
     }
+
+    public function testExceptionMessageOnName()
+    {
+        try {
+            new PhpFunctionParameter(0);
+        } catch (\InvalidArgumentException $e) {
+            $this->assertSame('Name "0" is invalid when instantiating PhpFunctionParameter object', $e->getMessage());
+        }
+    }
 }
