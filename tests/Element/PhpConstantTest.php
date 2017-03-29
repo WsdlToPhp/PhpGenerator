@@ -131,4 +131,22 @@ class PhpConstantTest extends TestCase
 
         $this->assertSame(array(), $constant->getChildrenTypes());
     }
+
+    public function testExceptionMessageOnName()
+    {
+        try {
+            new PhpConstant(0);
+        } catch (\InvalidArgumentException $e) {
+            $this->assertSame('Name "0" is invalid when instantiating PhpConstant object', $e->getMessage());
+        }
+    }
+
+    public function testExceptionMessageOnValue()
+    {
+        try {
+            new PhpConstant('Foo', new \stdClass());
+        } catch (\InvalidArgumentException $e) {
+            $this->assertSame('Value of type "object" is not a valid scalar value for PhpConstant object', $e->getMessage());
+        }
+    }
 }

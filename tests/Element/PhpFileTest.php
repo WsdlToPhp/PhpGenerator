@@ -81,4 +81,13 @@ class PhpFileTest extends TestCase
 
         $this->assertSame("<?php\n/**\n * date is the key\n * time is the core key\n */\nclass Foo\n{\n    public function Bar()\n    {\n    }\n}\n", $file->toString());
     }
+
+    public function testExceptionMessageOnName()
+    {
+        try {
+            new PhpFile(0);
+        } catch (\InvalidArgumentException $e) {
+            $this->assertSame('Name "0" is invalid when instantiating PhpFile object', $e->getMessage());
+        }
+    }
 }

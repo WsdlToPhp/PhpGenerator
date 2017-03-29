@@ -255,4 +255,13 @@ class PhpClassTest extends TestCase
 
         $this->assertSame("class Foo extends \\DOMDocument\n{\n}", $class->toString());
     }
+
+    public function testExceptionMessageOnName()
+    {
+        try {
+            new PhpClass(0);
+        } catch (\InvalidArgumentException $e) {
+            $this->assertSame('Name "0" is invalid when instantiating PhpClass object', $e->getMessage());
+        }
+    }
 }

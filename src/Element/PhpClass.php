@@ -131,7 +131,7 @@ class PhpClass extends AbstractElement
         foreach ($interfaces as $interface) {
             $valid &= self::interfaceIsValid($interface);
         }
-        return (bool)$valid;
+        return (bool) $valid;
     }
     /**
      * @param string|PhpClass $interface

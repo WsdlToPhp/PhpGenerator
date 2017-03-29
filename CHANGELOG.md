@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## 1.2.0
+- issue #7 - Improve Exception message
+
 ## 1.1.0
 - issue #5 - No autocomplete because of return type on a new line after @return in annotation
 
