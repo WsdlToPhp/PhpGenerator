@@ -165,3 +165,4 @@ abstract class Foo extends stdClass
     }
 }
 ```
+

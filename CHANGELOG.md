@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## 1.2.1
+- Review filemode, add SensioLabs Insight badge
+
 ## 1.2.0
 - issue #7 - Improve Exception message
 

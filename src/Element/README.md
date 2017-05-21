@@ -519,3 +519,4 @@ Each element must only have access to its sub content, this means a class does n
 - a function contains: variables, string code lines, empty line, annotation blocks
 - an annotation block contains: annotations
 - variable, property, function parameter, annotation and constant can't contain any element
+
