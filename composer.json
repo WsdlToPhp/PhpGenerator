@@ -33,7 +33,7 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "WsdlToPhp\\PackageGenerator\\Tests\\": "tests"
+            "WsdlToPhp\\PhpGenerator\\Tests\\": "tests"
         }
     },
     "config": {
