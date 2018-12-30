@@ -54,7 +54,9 @@ class PhpFunctionTest extends TestCase
     {
         $function = new PhpFunction('foo', array());
 
-        $function->setName('Partagé');
+        $function->setName($name = 'Partagé');
+
+        $this->assertSame($name, $function->getName());
     }
 
     public function testAddChildVariable()

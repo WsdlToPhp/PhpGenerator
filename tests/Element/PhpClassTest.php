@@ -141,16 +141,20 @@ class PhpClassTest extends TestCase
     {
         $class = new PhpClass('Foo');
 
-        $class->setExtends('Partagé');
+        $class->setExtends($extends = 'Partagé');
+
+        $this->assertSame($extends, $class->getExtends());
     }
 
     public function testSetInterfaces()
     {
         $class = new PhpClass('Foo');
 
-        $class->setInterfaces(array(
+        $class->setInterfaces($interfaces = array(
             'Partagé',
         ));
+
+        $this->assertSame($interfaces, $class->getInterfaces());
     }
 
     public function testAddChildMethod()
