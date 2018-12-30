@@ -22,5 +22,5 @@ You can run the unit tests with the following command:
 ```
     $ cd /path/to/src/WsdlToPhp/PhpGenerator/
     $ composer install
-    $ phpunit
+    $ composer test
 ```
