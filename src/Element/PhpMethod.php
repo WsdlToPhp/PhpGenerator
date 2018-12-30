@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace WsdlToPhp\PhpGenerator\Element;
 
 class PhpMethod extends PhpFunction
@@ -29,112 +31,105 @@ class PhpMethod extends PhpFunction
      * @param bool $final
      * @param bool $hasBody
      */
-    public function __construct($name, array $parameters = array(), $access = parent::ACCESS_PUBLIC, $abstract = false, $static = false, $final = false, $hasBody = true)
+    public function __construct(string $name, array $parameters = [], string $access = parent::ACCESS_PUBLIC, bool $abstract = false, bool $static = false, bool $final = false, bool $hasBody = true)
     {
         parent::__construct($name, $parameters);
-        $this->setAccess($access);
-        $this->setAbstract($abstract);
-        $this->setStatic($static);
-        $this->setFinal($final);
-        $this->setHasBody($hasBody);
+        $this
+            ->setAccess($access)
+            ->setAbstract($abstract)
+            ->setStatic($static)
+            ->setFinal($final)
+            ->setHasBody($hasBody);
     }
     /**
-     * @throws \InvalidArgumentException
      * @param bool $abstract
      * @return PhpMethod
      */
-    public function setAbstract($abstract)
+    public function setAbstract(bool $abstract): PhpMethod
     {
-        self::checkBooleanWithException('abstract', $abstract);
         $this->abstract = $abstract;
         return $this;
     }
     /**
      * @return bool
      */
-    public function getAbstract()
+    public function getAbstract(): bool
     {
         return $this->abstract;
     }
     /**
      * @return string
      */
-    protected function getPhpAbstract()
+    protected function getPhpAbstract(): string
     {
         return $this->getAbstract() === true ? 'abstract ' : '';
     }
     /**
-     * @throws \InvalidArgumentException
      * @param bool $final
      * @return PhpMethod
      */
-    public function setFinal($final)
+    public function setFinal(bool $final): PhpMethod
     {
-        self::checkBooleanWithException('final', $final);
         $this->final = $final;
         return $this;
     }
     /**
      * @return bool
      */
-    public function getFinal()
+    public function getFinal(): bool
     {
         return $this->final;
     }
     /**
      * @return string
      */
-    protected function getPhpFinal()
+    protected function getPhpFinal(): string
     {
         return $this->getFinal() === true ? 'final ' : '';
     }
     /**
-     * @throws \InvalidArgumentException
      * @param bool $static
      * @return PhpMethod
      */
-    public function setStatic($static)
+    public function setStatic(bool $static): PhpMethod
     {
-        self::checkBooleanWithException('static', $static);
         $this->static = $static;
         return $this;
     }
     /**
      * @return bool
      */
-    public function getStatic()
+    public function getStatic(): bool
     {
         return $this->static;
     }
     /**
      * @return string
      */
-    protected function getPhpStatic()
+    protected function getPhpStatic(): string
     {
         return $this->getStatic() === true ? 'static ' : '';
     }
     /**
-     * @throws \InvalidArgumentException
      * @param bool $hasBody
      * @return PhpMethod
      */
-    public function setHasBody($hasBody)
+    public function setHasBody(bool $hasBody): PhpMethod
     {
-        self::checkBooleanWithException('hasBody', $hasBody);
         $this->hasBody = $hasBody;
         return $this;
     }
     /**
      * @return bool
      */
-    public function getHasBody()
+    public function getHasBody(): bool
     {
         return $this->hasBody;
     }
     /**
      * @return string
      */
-    protected function getPhpDeclarationEnd()
+    protected function getPhpDeclarationEnd(): string
     {
         return ($this->getHasBody() === false || $this->getAbstract() === true) ? ';' : '';
     }
@@ -142,7 +137,7 @@ class PhpMethod extends PhpFunction
      * @see \WsdlToPhp\PhpGenerator\Element\AbstractAccessRestrictedElement::getPhpDeclaration()
      * @return string
      */
-    public function getPhpDeclaration()
+    public function getPhpDeclaration(): string
     {
         return sprintf('%s%s%s%sfunction %s(%s)%s', $this->getPhpFinal(), $this->getPhpAbstract(), $this->getPhpAccess(), $this->getPhpStatic(), $this->getPhpName(), $this->getPhpParameters(), $this->getPhpDeclarationEnd());
     }
@@ -150,27 +145,16 @@ class PhpMethod extends PhpFunction
      * indicates if the current element has accessibility constraint
      * @return bool
      */
-    public function hasAccessibilityConstraint()
+    public function hasAccessibilityConstraint(): bool
     {
         return true;
-    }
-    /**
-     * @throws \InvalidArgumentException
-     * @param string $propertyName
-     * @param bool $value
-     */
-    public static function checkBooleanWithException($propertyName, $value)
-    {
-        if (!is_bool($value)) {
-            throw new \InvalidArgumentException(sprintf('%s must be a boolean, "%s" given', $propertyName, gettype($value)));
-        }
     }
     /**
      * Allows to generate content before children content is generated
      * @param int $indentation
      * @return string
      */
-    public function getLineBeforeChildren($indentation = null)
+    public function getLineBeforeChildren(int $indentation = null): string
     {
         if ($this->getHasBody() === true) {
             return parent::getLineBeforeChildren($indentation);
@@ -182,7 +166,7 @@ class PhpMethod extends PhpFunction
      * @param int $indentation
      * @return string
      */
-    public function getLineAfterChildren($indentation = null)
+    public function getLineAfterChildren(int $indentation = null): string
     {
         if ($this->getHasBody() === true) {
             return parent::getLineAfterChildren($indentation);
@@ -193,12 +177,12 @@ class PhpMethod extends PhpFunction
      * @see \WsdlToPhp\PhpGenerator\Element\AbstractElement::getChildren()
      * @return array
      */
-    public function getChildren()
+    public function getChildren(): array
     {
         if ($this->getHasBody() === true) {
             return parent::getChildren();
         }
-        return array();
+        return [];
     }
     /**
      * Allows to indicate that children are contained by brackets,
@@ -208,7 +192,7 @@ class PhpMethod extends PhpFunction
      * call the two others
      * @return bool
      */
-    public function useBracketsForChildren()
+    public function useBracketsForChildren(): bool
     {
         return $this->getHasBody();
     }

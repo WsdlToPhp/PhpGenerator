@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace WsdlToPhp\PhpGenerator\Tests\Element;
 
 use WsdlToPhp\PhpGenerator\Element\PhpVariable;
@@ -44,10 +46,10 @@ class PhpVariableTest extends TestCase
 
     public function testGetPhpDeclarationArray()
     {
-        $variable = new PhpVariable('foo', array(
+        $variable = new PhpVariable('foo', [
             '0',
             1,
-        ));
+        ]);
 
         $this->assertSame("\$foo = array (\n  0 => '0',\n  1 => 1,\n);", $variable->getPhpDeclaration());
     }
@@ -124,12 +126,11 @@ class PhpVariableTest extends TestCase
         $this->assertEquals(4, $é);
     }
 
+    /**
+     * @expectedException \TypeError
+     */
     public function testExceptionMessageOnName()
     {
-        try {
-            new PhpVariable(0);
-        } catch (\InvalidArgumentException $e) {
-            $this->assertSame('Name "0" is invalid when instantiating PhpVariable object', $e->getMessage());
-        }
+        new PhpVariable(0);
     }
 }

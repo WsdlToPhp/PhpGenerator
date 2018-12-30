@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace WsdlToPhp\PhpGenerator\Tests\Element;
 
 use WsdlToPhp\PhpGenerator\Element\PhpFunction;
@@ -11,27 +13,27 @@ class PhpAnnotationBlockTest extends TestCase
 {
     public function testGetOneLineToString()
     {
-        $annotationBlock = new PhpAnnotationBlock(array(
+        $annotationBlock = new PhpAnnotationBlock([
             'This sample annotation is on one line',
-        ));
+        ]);
 
         $this->assertSame("/**\n * This sample annotation is on one line\n */", $annotationBlock->toString());
     }
 
     public function testGetOneLineToStringWithName()
     {
-        $annotationBlock = new PhpAnnotationBlock(array(
+        $annotationBlock = new PhpAnnotationBlock([
             new PhpAnnotation('Author', 'PhpTeam'),
-        ));
+        ]);
 
         $this->assertSame("/**\n * @Author PhpTeam\n */", $annotationBlock->toString());
     }
 
     public function testGetSeveralLinesToString()
     {
-        $annotationBlock = new PhpAnnotationBlock(array(
+        $annotationBlock = new PhpAnnotationBlock([
             str_repeat('This sample annotation is on one line ', 7),
-        ));
+        ]);
 
         $this->assertSame("/**\n" .
                           " * This sample annotation is on one line This sample annotation is on one line This\n" .
@@ -43,9 +45,9 @@ class PhpAnnotationBlockTest extends TestCase
 
     public function testGetSeveralLinesWithNameToString()
     {
-        $annotationBlock = new PhpAnnotationBlock(array(
+        $annotationBlock = new PhpAnnotationBlock([
             new PhpAnnotation('description', str_repeat('This sample annotation is on one line ', 7)),
-        ));
+        ]);
 
         $this->assertSame("/**\n" .
                           " * @description This sample annotation is on one line This sample annotation is on one line This sample annotation is on one line This sample annotation is on one line This sample annotation is on one line This sample annotation is on one line This sample annotation is on one line\n" .
@@ -54,9 +56,9 @@ class PhpAnnotationBlockTest extends TestCase
 
     public function testAddChildString()
     {
-        $annotationBlock = new PhpAnnotationBlock(array(
+        $annotationBlock = new PhpAnnotationBlock([
             'Foo',
-        ));
+        ]);
 
         $annotationBlock->addChild('bar');
 
@@ -65,9 +67,9 @@ class PhpAnnotationBlockTest extends TestCase
 
     public function testAddChildAnnotation()
     {
-        $annotationBlock = new PhpAnnotationBlock(array(
+        $annotationBlock = new PhpAnnotationBlock([
             'Foo',
-        ));
+        ]);
 
         $annotationBlock->addChild(new PhpAnnotation('date', '2015-06-02'));
 
@@ -79,18 +81,18 @@ class PhpAnnotationBlockTest extends TestCase
      */
     public function testAddChildWithException()
     {
-        $annotationBlock = new PhpAnnotationBlock(array(
+        $annotationBlock = new PhpAnnotationBlock([
             'Foo',
-        ));
+        ]);
 
         $annotationBlock->addChild(new PhpFunction('test'));
     }
 
     public function testToStringSeveralLinesWithNameToString()
     {
-        $annotationBlock = new PhpAnnotationBlock(array(
+        $annotationBlock = new PhpAnnotationBlock([
             new PhpAnnotation('description', str_repeat('This sample annotation is on one line ', 7)),
-        ));
+        ]);
 
         $this->assertSame("/**\n" .
                           " * @description This sample annotation is on one line This sample annotation is on one line This sample annotation is on one line This sample annotation is on one line This sample annotation is on one line This sample annotation is on one line This sample annotation is on one line\n" .
@@ -125,19 +127,19 @@ class PhpAnnotationBlockTest extends TestCase
     {
         $annotationBlock = new PhpAnnotationBlock();
 
-        $annotationBlock->addChild(array(
+        $annotationBlock->addChild([
             'Toto',
-        ));
+        ]);
     }
 
     public function testAddChildContentOk()
     {
         $annotationBlock = new PhpAnnotationBlock();
 
-        $annotationBlock->addChild(array(
+        $annotationBlock->addChild([
             'content' => 'The content',
             'name' => 'name',
-        ));
+        ]);
 
         $this->assertCount(1, $annotationBlock->getChildren());
     }
@@ -147,8 +149,8 @@ class PhpAnnotationBlockTest extends TestCase
      */
     public function testGetConstructWithException()
     {
-        new PhpAnnotationBlock(array(
+        new PhpAnnotationBlock([
             new PhpFunction('Bar'),
-        ));
+        ]);
     }
 }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace WsdlToPhp\PhpGenerator\Element;
 
 abstract class AbstractAssignedValueElement extends AbstractAccessRestrictedElement
@@ -18,7 +20,7 @@ abstract class AbstractAssignedValueElement extends AbstractAccessRestrictedElem
      * @param mixed $value
      * @param string $access
      */
-    public function __construct($name, $value = null, $access = parent::ACCESS_PUBLIC)
+    public function __construct(string $name, $value = null, string $access = parent::ACCESS_PUBLIC)
     {
         parent::__construct($name, $access);
         $this->setValue($value);
@@ -28,7 +30,7 @@ abstract class AbstractAssignedValueElement extends AbstractAccessRestrictedElem
      * @param mixed $value
      * @return AbstractAssignedValueElement
      */
-    public function setValue($value)
+    public function setValue($value): AbstractAssignedValueElement
     {
         if ($this->getAcceptNonScalarValue() === false && !is_scalar($value) && $value !== null) {
             throw new \InvalidArgumentException(sprintf('Value of type "%s" is not a valid scalar value for %s object', gettype($value), $this->getCalledClass()));
@@ -46,7 +48,7 @@ abstract class AbstractAssignedValueElement extends AbstractAccessRestrictedElem
     /**
      * @return bool
      */
-    public function hasValue()
+    public function hasValue(): bool
     {
         return $this->getValue() !== self::NO_VALUE;
     }
@@ -79,9 +81,9 @@ abstract class AbstractAssignedValueElement extends AbstractAccessRestrictedElem
     protected function getScalarValue($value)
     {
         $scalarValue = null;
-        if (stripos($value, '::') === 0) {
+        if (stripos((string) $value, '::') === 0) {
             $scalarValue = substr($value, 2);
-        } elseif (stripos($value, '::') !== false || stripos($value, 'new ') !== false || stripos($value, '(') !== false || stripos($value, ')') !== false) {
+        } elseif (stripos((string) $value, '::') !== false || stripos((string) $value, 'new ') !== false || stripos((string) $value, '(') !== false || stripos((string) $value, ')') !== false) {
             $scalarValue = $value;
         }
         return $scalarValue;
@@ -90,11 +92,11 @@ abstract class AbstractAssignedValueElement extends AbstractAccessRestrictedElem
      * @param mixed $value
      * @return string
      */
-    protected function getAnyValue($value)
+    protected function getAnyValue($value): string
     {
         $exportedValue = var_export($value, true);
         // work around for known bug https://bugs.php.net/bug.php?id=66866
-        if (is_float($value) && strlen($value) !== strlen($exportedValue)) {
+        if (is_float($value) && strlen((string) $value) !== strlen((string) $exportedValue)) {
             $exportedValue = substr($exportedValue, 0, strlen($value));
         }
         return $exportedValue;
@@ -102,7 +104,7 @@ abstract class AbstractAssignedValueElement extends AbstractAccessRestrictedElem
     /**
      * @return string
      */
-    public function getPhpDeclaration()
+    public function getPhpDeclaration(): string
     {
         return sprintf('%s%s%s%s%s%s%s', $this->getPhpAccess(), $this->getAssignmentDeclarator(), $this->getPhpName(), $this->getAssignmentSign(), $this->getPhpValue(), $this->getAssignmentFinishing(), $this->endsWithSemicolon() === true ? ';' : '');
     }
@@ -110,25 +112,25 @@ abstract class AbstractAssignedValueElement extends AbstractAccessRestrictedElem
      * returns the way the assignment is declared
      * @return string
      */
-    abstract public function getAssignmentDeclarator();
+    abstract public function getAssignmentDeclarator(): string;
     /**
      * returns the way the value is assigned to the element
      * @returns string
      */
-    abstract public function getAssignmentSign();
+    abstract public function getAssignmentSign(): string;
     /**
      * returns the way the assignment is finished
      * @return string
      */
-    abstract public function getAssignmentFinishing();
+    abstract public function getAssignmentFinishing(): string;
     /**
      * indicates if the element accepts non scalar value
      * @return bool
      */
-    abstract public function getAcceptNonScalarValue();
+    abstract public function getAcceptNonScalarValue(): bool;
     /**
      * indicates if the element finishes with a semicolon or not
      * @return bool
      */
-    abstract public function endsWithSemicolon();
+    abstract public function endsWithSemicolon(): bool;
 }

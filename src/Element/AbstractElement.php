@@ -1,8 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace WsdlToPhp\PhpGenerator\Element;
 
-abstract class AbstractElement implements GenerableInterface
+abstract class AbstractElement implements GenerateableInterface
 {
     /**
      * @var string
@@ -19,17 +21,18 @@ abstract class AbstractElement implements GenerableInterface
     /**
      * @param string $name
      */
-    public function __construct($name)
+    public function __construct(string $name)
     {
         $this->setName($name);
-        $this->children = array();
+        $this->children = [];
         $this->indentation = 0;
     }
     /**
+     * @throws \InvalidArgumentException
      * @param string $name
      * @return AbstractElement
      */
-    public function setName($name)
+    public function setName(string $name)
     {
         if (!self::nameIsValid($name)) {
             throw new \InvalidArgumentException(sprintf('Name "%s" is invalid when instantiating %s object', $name, $this->getCalledClass()));
@@ -49,13 +52,13 @@ abstract class AbstractElement implements GenerableInterface
      * @param bool $allowBackslash
      * @return bool
      */
-    public static function nameIsValid($name, $allowBackslash = false)
+    public static function nameIsValid(string $name, bool $allowBackslash = false)
     {
         $pattern = '/[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*/';
         if ($allowBackslash === true) {
             $pattern = '/[a-zA-Z_\x7f-\xff\\\][a-zA-Z0-9_\x7f-\xff\\\]*/';
         }
-        return preg_match($pattern, $name);
+        return preg_match($pattern, (string) $name);
     }
     /**
      * @param mixed $string
@@ -63,29 +66,30 @@ abstract class AbstractElement implements GenerableInterface
      * @param bool $allowBackslash
      * @return bool
      */
-    public static function stringIsValid($string, $checkName = true, $allowBackslash = false)
+    public static function stringIsValid($string, bool $checkName = true, bool $allowBackslash = false): bool
     {
         return (is_string($string) && !empty($string) && (!$checkName || self::nameIsValid($string, $allowBackslash)));
     }
     /**
      * @param mixed $object
+     * @param mixed $checkClass
      * @return bool
      */
-    public static function objectIsValid($object, $checkClass = null)
+    public static function objectIsValid($object, ?string $checkClass = null): bool
     {
         return (is_object($object) && ($checkClass === null || get_class($object) === $checkClass));
     }
     /**
-     * @see \WsdlToPhp\PhpGenerator\Element\GenerableInterface::toString()
+     * @see \WsdlToPhp\PhpGenerator\Element\GenerateableInterface::toString()
      * @param int $indentation
      * @return string
      */
-    public function toString($indentation = null)
+    public function toString(int $indentation = null): string
     {
-        $lines = array(
+        $lines = [
             $this->getToStringDeclaration($indentation),
             $this->getToStringBeforeChildren($indentation),
-        );
+        ];
         foreach ($this->getChildren() as $child) {
             $lines[] = $this->getChildContent($child, $indentation + ($this->useBracketsForChildren() ? 1 : 0));
         }
@@ -96,7 +100,7 @@ abstract class AbstractElement implements GenerableInterface
      * @param int $indentation
      * @return string|null
      */
-    private function getToStringDeclaration($indentation = null)
+    private function getToStringDeclaration(int $indentation = null): ?string
     {
         $declaration = $this->getPhpDeclaration();
         if (!empty($declaration)) {
@@ -105,10 +109,10 @@ abstract class AbstractElement implements GenerableInterface
         return null;
     }
     /**
-     * @param string $indentation
+     * @param int $indentation
      * @return string|null
      */
-    private function getToStringBeforeChildren($indentation = null)
+    private function getToStringBeforeChildren(int $indentation = null): ?string
     {
         $before = $this->getContextualLineBeforeChildren($indentation);
         if (!empty($before)) {
@@ -117,10 +121,10 @@ abstract class AbstractElement implements GenerableInterface
         return null;
     }
     /**
-     * @param string $indentation
+     * @param int $indentation
      * @return string|null
      */
-    private function getToStringAfterChildren($indentation = null)
+    private function getToStringAfterChildren(int $indentation = null): ?string
     {
         $after = $this->getContextualLineAfterChildren($indentation);
         if (!empty($after)) {
@@ -132,9 +136,9 @@ abstract class AbstractElement implements GenerableInterface
      * @param array $array
      * @return array
      */
-    private static function cleanArrayToString($array)
+    private static function cleanArrayToString(array $array): array
     {
-        $newArray = array();
+        $newArray = [];
         foreach ($array as $line) {
             if ($line !== null) {
                 $newArray[] = $line;
@@ -148,7 +152,7 @@ abstract class AbstractElement implements GenerableInterface
      * @param int $indentation
      * @return string
      */
-    protected function getChildContent($child, $indentation = null)
+    protected function getChildContent($child, int $indentation = null): string
     {
         $content = '';
         if (is_string($child)) {
@@ -161,7 +165,7 @@ abstract class AbstractElement implements GenerableInterface
     /**
      * @return string
      */
-    public function getPhpName()
+    public function getPhpName(): string
     {
         return sprintf('%s', $this->getName());
     }
@@ -170,7 +174,7 @@ abstract class AbstractElement implements GenerableInterface
      * @param mixed $child
      * @return AbstractElement
      */
-    public function addChild($child)
+    public function addChild($child): AbstractElement
     {
         if (!$this->childIsValid($child)) {
             $types = $this->getChildrenTypes();
@@ -187,7 +191,7 @@ abstract class AbstractElement implements GenerableInterface
      * @param mixed $child
      * @return bool
      */
-    protected function childIsValid($child)
+    protected function childIsValid($child): bool
     {
         $valid = false;
         $authorizedTypes = $this->getChildrenTypes();
@@ -201,24 +205,24 @@ abstract class AbstractElement implements GenerableInterface
     /**
      * @return AbstractElement[]|mixed[]
      */
-    public function getChildren()
+    public function getChildren(): array
     {
         return $this->children;
     }
     /**
      * @return string
      */
-    abstract public function getPhpDeclaration();
+    abstract public function getPhpDeclaration(): string;
     /**
      * defines authorized children element types
      * @return string[]
      */
-    abstract public function getChildrenTypes();
+    abstract public function getChildrenTypes(): array;
     /**
      * @param int $indentation
      * @return string
      */
-    private function getContextualLineBeforeChildren($indentation = null)
+    private function getContextualLineBeforeChildren(int $indentation = null): string
     {
         if ($this->useBracketsForChildren()) {
             $line = $this->getBracketBeforeChildren($indentation);
@@ -231,7 +235,7 @@ abstract class AbstractElement implements GenerableInterface
      * @param int $indentation
      * @return string
      */
-    private function getContextualLineAfterChildren($indentation = null)
+    private function getContextualLineAfterChildren(int $indentation = null): string
     {
         if ($this->useBracketsForChildren()) {
             $line = $this->getBracketAfterChildren($indentation);
@@ -245,7 +249,7 @@ abstract class AbstractElement implements GenerableInterface
      * @param int $indentation
      * @return string
      */
-    public function getLineBeforeChildren($indentation = null)
+    public function getLineBeforeChildren(int $indentation = null): string
     {
         return '';
     }
@@ -254,7 +258,7 @@ abstract class AbstractElement implements GenerableInterface
      * @param int $indentation
      * @return string
      */
-    public function getLineAfterChildren($indentation = null)
+    public function getLineAfterChildren(int $indentation = null): string
     {
         return '';
     }
@@ -264,9 +268,9 @@ abstract class AbstractElement implements GenerableInterface
      * is called instead of getLineBeforeChildren and getBracketAfterChildren
      * is called instead of getLineAfterChildren, but be aware that these methods
      * call the two others
-     * @return boolean
+     * @return bool
      */
-    public function useBracketsForChildren()
+    public function useBracketsForChildren(): bool
     {
         return false;
     }
@@ -275,7 +279,7 @@ abstract class AbstractElement implements GenerableInterface
      * @param int $indentation
      * @return string
      */
-    public function getBracketBeforeChildren($indentation = null)
+    public function getBracketBeforeChildren(int $indentation = null): string
     {
         $line = $this->getIndentedString(self::OPEN_BRACKET, $indentation);
         $this->setIndentation(($indentation === null ? $this->getIndentation() : $indentation) + 1);
@@ -286,7 +290,7 @@ abstract class AbstractElement implements GenerableInterface
      * @param int $indentation
      * @return string
      */
-    public function getBracketAfterChildren($indentation = null)
+    public function getBracketAfterChildren(int $indentation = null): string
     {
         $this->setIndentation(($indentation === null ? $this->getIndentation() : $indentation) - 1);
         return $this->getIndentedString(self::CLOSE_BRACKET, $indentation);
@@ -295,7 +299,7 @@ abstract class AbstractElement implements GenerableInterface
      * @param int $indentation
      * @return AbstractElement
      */
-    public function setIndentation($indentation)
+    public function setIndentation(int $indentation): AbstractElement
     {
         $this->indentation = $indentation;
         return $this;
@@ -303,16 +307,16 @@ abstract class AbstractElement implements GenerableInterface
     /**
      * @return int
      */
-    public function getIndentation()
+    public function getIndentation(): int
     {
         return $this->indentation;
     }
     /**
-     * @see \WsdlToPhp\PhpGenerator\Element\GenerableInterface::getIndentationString()
+     * @see \WsdlToPhp\PhpGenerator\Element\GenerateableInterface::getIndentationString()
      * @param int $indentation
      * @return string
      */
-    public function getIndentationString($indentation = null)
+    public function getIndentationString(int $indentation = null): string
     {
         return str_repeat(self::INDENTATION_CHAR, $indentation === null ? $this->getIndentation() : $indentation);
     }
@@ -321,7 +325,7 @@ abstract class AbstractElement implements GenerableInterface
      * @param int $indentation
      * @return string
      */
-    public function getIndentedString($string, $indentation = null)
+    public function getIndentedString(string $string, int $indentation = null): string
     {
         $strings = explode(self::BREAK_LINE_CHAR, $string);
         foreach ($strings as $i => $s) {
@@ -332,7 +336,7 @@ abstract class AbstractElement implements GenerableInterface
     /**
      * @return string
      */
-    final public function getCalledClass()
+    final public function getCalledClass(): string
     {
         return substr(get_called_class(), strrpos(get_called_class(), '\\') + 1);
     }

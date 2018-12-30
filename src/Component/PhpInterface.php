@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace WsdlToPhp\PhpGenerator\Component;
 
 use WsdlToPhp\PhpGenerator\Element\PhpInterface as PhpInterfaceElement;
@@ -14,7 +16,7 @@ class PhpInterface extends PhpClass
      * @param string $extends
      * @param array $interfaces
      */
-    public function __construct($name, $abstract = false, $extends = null, array $interfaces = array())
+    public function __construct(string $name, bool $abstract = false, ?string $extends = null, array $interfaces = [])
     {
         $this->setMainElement(new PhpInterfaceElement($name, $abstract, $extends, $interfaces));
     }
@@ -22,7 +24,7 @@ class PhpInterface extends PhpClass
      * @param PhpMethodElement $method
      * @return PhpInterface
      */
-    public function addMethodElement(PhpMethodElement $method)
+    public function addMethodElement(PhpMethodElement $method): AbstractComponent
     {
         if ($method->getHasBody()) {
             $method->setHasBody(false);
@@ -30,7 +32,6 @@ class PhpInterface extends PhpClass
         return parent::addMethodElement($method);
     }
     /**
-     * @see \WsdlToPhp\PhpGenerator\Element\PhpMethod::__construct()
      * @param string $name
      * @param array $parameters
      * @param string $access
@@ -40,7 +41,7 @@ class PhpInterface extends PhpClass
      * @param bool $hasBody
      * @return PhpInterface
      */
-    public function addMethod($name, array $parameters = array(), $access = PhpMethodElement::ACCESS_PUBLIC, $abstract = false, $static = false, $final = false, $hasBody = true)
+    public function addMethod(string $name, array $parameters = [], string $access = PhpMethodElement::ACCESS_PUBLIC, bool $abstract = false, bool $static = false, bool $final = false, bool $hasBody = true): AbstractComponent
     {
         return $this->addMethodElement(new PhpMethodElement($name, $parameters, $access, $abstract, $static, $final, false));
     }
@@ -48,18 +49,17 @@ class PhpInterface extends PhpClass
      * @param PhpPropertyElement $property
      * @return PhpInterface
      */
-    public function addPropertyElement(PhpPropertyElement $property)
+    public function addPropertyElement(PhpPropertyElement $property): AbstractComponent
     {
         return $this;
     }
     /**
-     * @see \WsdlToPhp\PhpGenerator\Element\PhpProperty::__construct()
      * @param string $name
      * @param string $value
      * @param string $access
      * @return PhpInterface
      */
-    public function addProperty($name, $value = null, $access = PhpPropertyElement::ACCESS_PUBLIC)
+    public function addProperty(string $name, $value = null, string $access = PhpPropertyElement::ACCESS_PUBLIC): AbstractComponent
     {
         return $this;
     }

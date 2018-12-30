@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace WsdlToPhp\PhpGenerator\Element;
 
 class PhpConstant extends AbstractAssignedValueElement
@@ -13,17 +15,18 @@ class PhpConstant extends AbstractAssignedValueElement
      * @param mixed $value
      * @param PhpClass $class
      */
-    public function __construct($name, $value = null, PhpClass $class = null)
+    public function __construct(string $name, $value = null, PhpClass $class = null)
     {
         parent::__construct($name, $value);
-        $this->setValue($value);
-        $this->setClass($class);
+        $this
+            ->setValue($value)
+            ->setClass($class);
     }
     /**
      * @see \WsdlToPhp\PhpGenerator\Element\AbstractElement::getName()
      * @return string
      */
-    public function getPhpName()
+    public function getPhpName(): string
     {
         if ($this->getClass() instanceof PhpClass) {
             return strtoupper(parent::getPhpName());
@@ -34,7 +37,7 @@ class PhpConstant extends AbstractAssignedValueElement
      * @param PhpClass $class
      * @return PhpConstant
      */
-    public function setClass(PhpClass $class = null)
+    public function setClass(PhpClass $class = null): PhpConstant
     {
         $this->class = $class;
         return $this;
@@ -42,7 +45,7 @@ class PhpConstant extends AbstractAssignedValueElement
     /**
      * @return PhpClass
      */
-    public function getClass()
+    public function getClass(): ?PhpClass
     {
         return $this->class;
     }
@@ -50,7 +53,7 @@ class PhpConstant extends AbstractAssignedValueElement
      * returns the way the assignment is declared
      * @return string
      */
-    public function getAssignmentDeclarator()
+    public function getAssignmentDeclarator(): string
     {
         if ($this->getClass() instanceof PhpClass) {
             return 'const ';
@@ -61,7 +64,7 @@ class PhpConstant extends AbstractAssignedValueElement
      * returns the way the value is assigned to the element
      * @return string
      */
-    public function getAssignmentSign()
+    public function getAssignmentSign(): string
     {
         if ($this->getClass() instanceof PhpClass) {
             return ' = ';
@@ -72,7 +75,7 @@ class PhpConstant extends AbstractAssignedValueElement
      * retutns the way the assignment is finished
      * @return string
      */
-    public function getAssignmentFinishing()
+    public function getAssignmentFinishing(): string
     {
         if ($this->getClass() instanceof PhpClass) {
             return '';
@@ -83,7 +86,7 @@ class PhpConstant extends AbstractAssignedValueElement
      * indicates if the element accepts non scalar value
      * @return bool
      */
-    public function getAcceptNonScalarValue()
+    public function getAcceptNonScalarValue(): bool
     {
         return false;
     }
@@ -91,7 +94,7 @@ class PhpConstant extends AbstractAssignedValueElement
      * indicates if the current element has accessibility constraint
      * @return bool
      */
-    public function hasAccessibilityConstraint()
+    public function hasAccessibilityConstraint(): bool
     {
         return false;
     }
@@ -99,7 +102,7 @@ class PhpConstant extends AbstractAssignedValueElement
      * indicates if the element finishes with a semicolon or not
      * @return bool
      */
-    public function endsWithSemicolon()
+    public function endsWithSemicolon(): bool
     {
         return true;
     }
@@ -107,9 +110,9 @@ class PhpConstant extends AbstractAssignedValueElement
      * defines authorized children element types
      * @return string[]
      */
-    public function getChildrenTypes()
+    public function getChildrenTypes(): array
     {
-        return array();
+        return [];
     }
     /**
      * Always return null to avoid having value being detected as a potential function/method/variable

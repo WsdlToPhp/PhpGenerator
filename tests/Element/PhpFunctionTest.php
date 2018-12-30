@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace WsdlToPhp\PhpGenerator\Tests\Element;
 
 use WsdlToPhp\PhpGenerator\Element\PhpVariable;
@@ -12,18 +14,18 @@ class PhpFunctionTest extends TestCase
 {
     public function testGetPhpDeclaration()
     {
-        $function = new PhpFunction('foo', array(
+        $function = new PhpFunction('foo', [
             'bar',
-            array(
+            [
                 'name' => 'demo',
                 'value' => 1,
-            ),
-            array(
+            ],
+            [
                 'name' => 'sample',
                 'value' => null,
-            ),
+            ],
             new PhpFunctionParameter('deamon', true),
-        ));
+        ]);
 
         $this->assertSame('function foo($bar, $demo = 1, $sample = null, $deamon = true)', $function->getPhpDeclaration());
     }
@@ -33,7 +35,7 @@ class PhpFunctionTest extends TestCase
      */
     public function testAddChild()
     {
-        $function = new PhpFunction('foo', array());
+        $function = new PhpFunction('foo', []);
 
         $function->addChild(new PhpProperty('Bar'));
     }
@@ -43,23 +45,25 @@ class PhpFunctionTest extends TestCase
      */
     public function testSetParameters()
     {
-        $function = new PhpFunction('foo', array());
+        $function = new PhpFunction('foo', []);
 
-        $function->setParameters(array(
+        $function->setParameters([
             new PhpFunction('bar'),
-        ));
+        ]);
     }
 
     public function testSetName()
     {
-        $function = new PhpFunction('foo', array());
+        $function = new PhpFunction('foo', []);
 
-        $function->setName('Partagé');
+        $function->setName($name = 'Partagé');
+
+        $this->assertSame($name, $function->getName());
     }
 
     public function testAddChildVariable()
     {
-        $function = new PhpFunction('foo', array());
+        $function = new PhpFunction('foo', []);
 
         $function->addChild(new PhpVariable('bar'));
 
@@ -68,7 +72,7 @@ class PhpFunctionTest extends TestCase
 
     public function testAddChildString()
     {
-        $function = new PhpFunction('foo', array());
+        $function = new PhpFunction('foo', []);
 
         $function->addChild('bar');
 
@@ -77,36 +81,36 @@ class PhpFunctionTest extends TestCase
 
     public function testToStringEmptyBody()
     {
-        $function = new PhpFunction('foo', array(
+        $function = new PhpFunction('foo', [
             'bar',
-            array(
+            [
                 'name' => 'demo',
                 'value' => 1,
-            ),
-            array(
+            ],
+            [
                 'name' => 'sample',
                 'value' => null,
-            ),
+            ],
             new PhpFunctionParameter('deamon', true),
-        ));
+        ]);
 
         $this->assertSame("function foo(\$bar, \$demo = 1, \$sample = null, \$deamon = true)\n{\n}", $function->toString());
     }
 
     public function testToStringWithBody()
     {
-        $function = new PhpFunction('foo', array(
+        $function = new PhpFunction('foo', [
             'bar',
-            array(
+            [
                 'name' => 'demo',
                 'value' => 1,
-            ),
-            array(
+            ],
+            [
                 'name' => 'sample',
                 'value' => null,
-            ),
+            ],
             new PhpFunctionParameter('deamon', true),
-        ));
+        ]);
 
         $function
             ->addChild(new PhpVariable('bar', 1))
@@ -115,12 +119,11 @@ class PhpFunctionTest extends TestCase
         $this->assertSame("function foo(\$bar, \$demo = 1, \$sample = null, \$deamon = true)\n{\n    \$bar = 1;\n    return \$bar;\n}", $function->toString());
     }
 
+    /**
+     * @expectedException \TypeError
+     */
     public function testExceptionMessageOnName()
     {
-        try {
-            new PhpFunction(0);
-        } catch (\InvalidArgumentException $e) {
-            $this->assertSame('Name "0" is invalid when instantiating PhpFunction object', $e->getMessage());
-        }
+        new PhpFunction(0);
     }
 }

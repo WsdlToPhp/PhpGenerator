@@ -1,8 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace WsdlToPhp\PhpGenerator\Element;
 
-interface GenerableInterface
+interface GenerateableInterface
 {
     /**
      * @var string
@@ -37,21 +39,21 @@ interface GenerableInterface
      * @param int $indentation
      * @return string
      */
-    public function toString($indentation = 0);
+    public function toString(int $indentation = 0): string;
     /**
      * stores current indentation
      * @param int
      */
-    public function setIndentation($indentation);
+    public function setIndentation(int $indentation);
     /**
      * returns current identation
      * @return int
      */
-    public function getIndentation();
+    public function getIndentation(): int;
     /**
      * returns current indentation string to be used
      * @param int $indentation
      * @return string
      */
-    public function getIndentationString($indentation = null);
+    public function getIndentationString(int $indentation = null): string;
 }

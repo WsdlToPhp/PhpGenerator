@@ -1,4 +1,4 @@
-# WsdlToPhp Php Generator, Component
+# PhpGenerator Component
 
 This directory contains the components that are on top of element as component can contain elements and eases generation of more complex elements.
 
@@ -20,24 +20,24 @@ $class
     ->addProperty('bar', 1)
     ->addAnnotationBlock(new PhpAnnotationElement('var', 'bool'))
     ->addPropertyElement(new PhpPropertyElement('sample', true))
-    ->addAnnotationBlock(array(
+    ->addAnnotationBlock([
         new PhpAnnotationElement(PhpAnnotationElement::NO_NAME, 'This method is very useful'),
         new PhpAnnotationElement('date', '2012-03-01'),
         '@return mixed'
-    ))
-    ->addMethod('getMyValue', array(
+    ])
+    ->addMethod('getMyValue', [
         new PhpFunctionParameterElement('asString', true),
         'unusedParameter'
-    ))
-    ->addAnnotationBlock(array(
+    ])
+    ->addAnnotationBlock([
         new PhpAnnotationElement(PhpAnnotationElement::NO_NAME, 'This method is very useless'),
         new PhpAnnotationElement('date', '2012-03-01'),
         '@return void'
-    ))
-    ->addMethod('uselessMethod', array(
+    ])
+    ->addMethod('uselessMethod', [
         new PhpFunctionParameterElement('uselessParameter', null),
         'unusedParameter'
-    ));
+    ]);
 echo $class->toString();
 ```
 displays
@@ -91,24 +91,24 @@ $class
     ->addProperty('bar', 1)
     ->addAnnotationBlock(new PhpAnnotationElement('var', 'bool'))
     ->addPropertyElement(new PhpPropertyElement('sample', true))
-    ->addAnnotationBlock(array(
+    ->addAnnotationBlock([
         new PhpAnnotationElement(PhpAnnotationElement::NO_NAME, 'This method is very useful'),
         new PhpAnnotationElement('date', '2012-03-01'),
         '@return mixed'
-    ))
-    ->addMethod('getMyValue', array(
+    ])
+    ->addMethod('getMyValue', [
         new PhpFunctionParameterElement('asString', true),
         'unusedParameter'
-    ))
-    ->addAnnotationBlock(array(
+    ])
+    ->addAnnotationBlock([
         new PhpAnnotationElement(PhpAnnotationElement::NO_NAME, 'This method is very useless'),
         new PhpAnnotationElement('date', '2012-03-01'),
         '@return void'
-    ))
-    ->addMethod('uselessMethod', array(
+    ])
+    ->addMethod('uselessMethod', [
         new PhpFunctionParameterElement('uselessParameter', null),
         'unusedParameter'
-    ));
+    ]);
 $file
     ->setNamespace('My\\Testing\\NamespaceName')
     ->addUse('My\\Testing\\ParentNamespace\\Model')

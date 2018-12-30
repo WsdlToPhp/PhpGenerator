@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace WsdlToPhp\PhpGenerator\Tests\Element;
 
 use WsdlToPhp\PhpGenerator\Element\PhpAnnotationBlock;
@@ -34,9 +36,9 @@ class PhpInterfaceTest extends TestCase
 
     public function testSimpleInterfaceExtendsBarImplementsStringDemo()
     {
-        $interface = new PhpInterface('Foo', false, 'Bar', array(
+        $interface = new PhpInterface('Foo', false, 'Bar', [
             'Demo',
-        ));
+        ]);
 
         $this->assertSame('interface Foo extends Demo', $interface->getPhpDeclaration());
     }
@@ -73,9 +75,9 @@ class PhpInterfaceTest extends TestCase
     {
         $interface = new PhpInterface('Foo');
 
-        $interface->addChild(new PhpAnnotationBlock(array(
+        $interface->addChild(new PhpAnnotationBlock([
             'Bar',
-        )));
+        ]));
 
         $this->assertCount(1, $interface->getChildren());
     }
@@ -98,12 +100,11 @@ class PhpInterfaceTest extends TestCase
         $this->assertSame("interface Foo\n{\n    public function bar();\n}", $interface->toString());
     }
 
+    /**
+     * @expectedException \TypeError
+     */
     public function testExceptionMessageOnName()
     {
-        try {
-            new PhpInterface(0);
-        } catch (\InvalidArgumentException $e) {
-            $this->assertSame('Name "0" is invalid when instantiating PhpInterface object', $e->getMessage());
-        }
+        new PhpInterface(0);
     }
 }

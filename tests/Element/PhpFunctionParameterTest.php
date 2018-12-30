@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace WsdlToPhp\PhpGenerator\Tests\Element;
 
 use WsdlToPhp\PhpGenerator\Element\PhpFunctionParameter;
@@ -44,7 +46,7 @@ class PhpFunctionParameterTest extends TestCase
 
     public function testToStringEmptyArrayValue()
     {
-        $functionParameter = new PhpFunctionParameter('foo', array(), 'array');
+        $functionParameter = new PhpFunctionParameter('foo', [], 'array');
 
         $this->assertSame('array $foo = array()', $functionParameter->toString());
     }
@@ -56,12 +58,11 @@ class PhpFunctionParameterTest extends TestCase
         $this->assertSame('My\Name\Space $foo = null', $functionParameter->toString());
     }
 
+    /**
+     * @expectedException \TypeError
+     */
     public function testExceptionMessageOnName()
     {
-        try {
-            new PhpFunctionParameter(0);
-        } catch (\InvalidArgumentException $e) {
-            $this->assertSame('Name "0" is invalid when instantiating PhpFunctionParameter object', $e->getMessage());
-        }
+        new PhpFunctionParameter(0);
     }
 }

@@ -1,8 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace WsdlToPhp\PhpGenerator\Component;
 
-interface GenerableInterface
+interface GenerateableInterface
 {
     /**
      * @var string
@@ -12,5 +14,5 @@ interface GenerableInterface
      * Must return the strict representation for the current element
      * @return string
      */
-    public function toString();
+    public function toString(): string;
 }

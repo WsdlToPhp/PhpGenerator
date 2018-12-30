@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace WsdlToPhp\PhpGenerator\Tests\Element;
 
 use WsdlToPhp\PhpGenerator\Element\PhpAnnotation;
@@ -69,12 +71,11 @@ class PhpAnnotationTest extends TestCase
         $this->assertTrue($annotation->hasContent());
     }
 
+    /**
+     * @expectedException \TypeError
+     */
     public function testExceptionMessageOnName()
     {
-        try {
-            new PhpAnnotation(0, '');
-        } catch (\InvalidArgumentException $e) {
-            $this->assertSame('Name "0" is invalid when instantiating PhpAnnotation object', $e->getMessage());
-        }
+        new PhpAnnotation(0, '');
     }
 }

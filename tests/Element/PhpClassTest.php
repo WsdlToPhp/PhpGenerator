@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace WsdlToPhp\PhpGenerator\Tests\Element;
 
 use WsdlToPhp\PhpGenerator\Element\PhpVariable;
@@ -43,76 +45,76 @@ class PhpClassTest extends TestCase
 
     public function testGetPhpDeclarationSimpleClassExtendsStringBarImplementsStringDemo()
     {
-        $class = new PhpClass('Foo', false, 'Bar', array(
+        $class = new PhpClass('Foo', false, 'Bar', [
             'Demo',
-        ));
+        ]);
 
         $this->assertSame('class Foo extends Bar implements Demo', $class->getPhpDeclaration());
     }
 
     public function testGetPhpDeclarationSimpleClassExtendsStringBarImplementsArrayStringDemoSample()
     {
-        $class = new PhpClass('Foo', false, 'Bar', array(
+        $class = new PhpClass('Foo', false, 'Bar', [
             'Demo',
             'Sample',
-        ));
+        ]);
 
         $this->assertSame('class Foo extends Bar implements Demo, Sample', $class->getPhpDeclaration());
     }
 
     public function testGetPhpDeclarationAbstractClassExtendsStringBarImplementsStringDemo()
     {
-        $class = new PhpClass('Foo', true, 'Bar', array(
+        $class = new PhpClass('Foo', true, 'Bar', [
             'Demo',
-        ));
+        ]);
 
         $this->assertSame('abstract class Foo extends Bar implements Demo', $class->getPhpDeclaration());
     }
 
     public function testGetPhpDeclarationAbstractClassExtendsStringBarImplementsArrayStringDemoSample()
     {
-        $class = new PhpClass('Foo', true, 'Bar', array(
+        $class = new PhpClass('Foo', true, 'Bar', [
             'Demo',
             'Sample',
-        ));
+        ]);
 
         $this->assertSame('abstract class Foo extends Bar implements Demo, Sample', $class->getPhpDeclaration());
     }
 
     public function testGetPhpDeclarationSimpleClassExtendsStringBarImplementsPhpClassDemo()
     {
-        $class = new PhpClass('Foo', false, 'Bar', array(
+        $class = new PhpClass('Foo', false, 'Bar', [
             new PhpClass('Demo'),
-        ));
+        ]);
 
         $this->assertSame('class Foo extends Bar implements Demo', $class->getPhpDeclaration());
     }
 
     public function testGetPhpDeclarationSimpleClassExtendsStringBarImplementsArrayPhpClassDemoSample()
     {
-        $class = new PhpClass('Foo', false, 'Bar', array(
+        $class = new PhpClass('Foo', false, 'Bar', [
             new PhpClass('Demo'),
             new PhpClass('Sample'),
-        ));
+        ]);
 
         $this->assertSame('class Foo extends Bar implements Demo, Sample', $class->getPhpDeclaration());
     }
 
     public function testGetPhpDeclarationAbstractClassExtendsStringBarImplementsPhpClassDemo()
     {
-        $class = new PhpClass('Foo', true, 'Bar', array(
+        $class = new PhpClass('Foo', true, 'Bar', [
             new PhpClass('Demo'),
-        ));
+        ]);
 
         $this->assertSame('abstract class Foo extends Bar implements Demo', $class->getPhpDeclaration());
     }
 
     public function testGetPhpDeclarationAbstractClassExtendsStringBarImplementsArrayPhpClassDemoSample()
     {
-        $class = new PhpClass('Foo', true, 'Bar', array(
+        $class = new PhpClass('Foo', true, 'Bar', [
             new PhpClass('Demo'),
             new PhpClass('Sample'),
-        ));
+        ]);
 
         $this->assertSame('abstract class Foo extends Bar implements Demo, Sample', $class->getPhpDeclaration());
     }
@@ -141,16 +143,20 @@ class PhpClassTest extends TestCase
     {
         $class = new PhpClass('Foo');
 
-        $class->setExtends('Partagé');
+        $class->setExtends($extends = 'Partagé');
+
+        $this->assertSame($extends, $class->getExtends());
     }
 
     public function testSetInterfaces()
     {
         $class = new PhpClass('Foo');
 
-        $class->setInterfaces(array(
+        $class->setInterfaces($interfaces = [
             'Partagé',
-        ));
+        ]);
+
+        $this->assertSame($interfaces, $class->getInterfaces());
     }
 
     public function testAddChildMethod()
@@ -175,9 +181,9 @@ class PhpClassTest extends TestCase
     {
         $class = new PhpClass('Foo');
 
-        $class->addChild(new PhpAnnotationBlock(array(
+        $class->addChild(new PhpAnnotationBlock([
             'Bar',
-        )));
+        ]));
 
         $this->assertCount(1, $class->getChildren());
     }
@@ -220,7 +226,7 @@ class PhpClassTest extends TestCase
     {
         $class = new PhpClass('Foo');
 
-        $class->addChild(new PhpMethod('bar', array(), PhpMethod::ACCESS_PROTECTED));
+        $class->addChild(new PhpMethod('bar', [], PhpMethod::ACCESS_PROTECTED));
 
         $this->assertSame("class Foo\n{\n    protected function bar()\n    {\n    }\n}", $class->toString());
     }
@@ -229,7 +235,7 @@ class PhpClassTest extends TestCase
     {
         $class = new PhpClass('Foo');
 
-        $class->addChild(new PhpMethod('bar', array(), PhpMethod::ACCESS_PRIVATE));
+        $class->addChild(new PhpMethod('bar', [], PhpMethod::ACCESS_PRIVATE));
 
         $this->assertSame("class Foo\n{\n    private function bar()\n    {\n    }\n}", $class->toString());
     }
@@ -238,11 +244,11 @@ class PhpClassTest extends TestCase
     {
         $class = new PhpClass('Foo');
 
-        $method = new PhpMethod('bar', array(
+        $method = new PhpMethod('bar', [
             'bar',
             'foo',
             'sample',
-        ), PhpMethod::ACCESS_PRIVATE);
+        ], PhpMethod::ACCESS_PRIVATE);
         $method->addChild(new PhpVariable('foo', 1));
         $class->addChild($method);
 
@@ -256,12 +262,11 @@ class PhpClassTest extends TestCase
         $this->assertSame("class Foo extends \\DOMDocument\n{\n}", $class->toString());
     }
 
+    /**
+     * @expectedException \TypeError
+     */
     public function testExceptionMessageOnName()
     {
-        try {
-            new PhpClass(0);
-        } catch (\InvalidArgumentException $e) {
-            $this->assertSame('Name "0" is invalid when instantiating PhpClass object', $e->getMessage());
-        }
+        new PhpClass(0);
     }
 }
