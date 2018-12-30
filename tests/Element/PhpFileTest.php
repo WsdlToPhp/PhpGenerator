@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace WsdlToPhp\PhpGenerator\Tests\Element;
 
 use WsdlToPhp\PhpGenerator\Element\PhpClass;
@@ -45,11 +47,11 @@ class PhpFileTest extends TestCase
     {
         $file = new PhpFile('foo');
 
-        $file->addChild(new PhpFunction('foo', array(
+        $file->addChild(new PhpFunction('foo', [
             'foo',
             'sample',
             'demo',
-        )));
+        ]));
 
         $this->assertSame("<?php\nfunction foo(\$foo, \$sample, \$demo)\n{\n}\n", $file->toString());
     }
@@ -58,10 +60,10 @@ class PhpFileTest extends TestCase
     {
         $file = new PhpFile('foo');
 
-        $file->addChild(new PhpAnnotationBlock(array(
+        $file->addChild(new PhpAnnotationBlock([
             'date is the key',
             'time is the core key',
-        )));
+        ]));
 
         $this->assertSame("<?php\n/**\n * date is the key\n * time is the core key\n */\n", $file->toString());
     }
@@ -70,10 +72,10 @@ class PhpFileTest extends TestCase
     {
         $file = new PhpFile('foo');
 
-        $file->addChild(new PhpAnnotationBlock(array(
+        $file->addChild(new PhpAnnotationBlock([
             'date is the key',
             'time is the core key',
-        )));
+        ]));
 
         $class = new PhpClass('Foo');
         $class->addChild(new PhpMethod('Bar'));
@@ -82,12 +84,11 @@ class PhpFileTest extends TestCase
         $this->assertSame("<?php\n/**\n * date is the key\n * time is the core key\n */\nclass Foo\n{\n    public function Bar()\n    {\n    }\n}\n", $file->toString());
     }
 
+    /**
+     * @expectedException \TypeError
+     */
     public function testExceptionMessageOnName()
     {
-        try {
-            new PhpFile(0);
-        } catch (\InvalidArgumentException $e) {
-            $this->assertSame('Name "0" is invalid when instantiating PhpFile object', $e->getMessage());
-        }
+        new PhpFile(0);
     }
 }

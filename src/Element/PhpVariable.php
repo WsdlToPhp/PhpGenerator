@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace WsdlToPhp\PhpGenerator\Element;
 
 class PhpVariable extends AbstractAssignedValueElement
@@ -8,7 +10,7 @@ class PhpVariable extends AbstractAssignedValueElement
      * returns the way the assignment is declared
      * @return string
      */
-    public function getAssignmentDeclarator()
+    public function getAssignmentDeclarator(): string
     {
         return '$';
     }
@@ -16,7 +18,7 @@ class PhpVariable extends AbstractAssignedValueElement
      * returns the way the value is assigned to the element
      * @returns string
      */
-    public function getAssignmentSign()
+    public function getAssignmentSign(): string
     {
         return $this->hasValue() ? ' = ' : '';
     }
@@ -24,7 +26,7 @@ class PhpVariable extends AbstractAssignedValueElement
      * retutns the way the assignment is finished
      * @return string
      */
-    public function getAssignmentFinishing()
+    public function getAssignmentFinishing(): string
     {
         return '';
     }
@@ -32,7 +34,7 @@ class PhpVariable extends AbstractAssignedValueElement
      * indicates if the element accepts non scalar value
      * @return bool
      */
-    public function getAcceptNonScalarValue()
+    public function getAcceptNonScalarValue(): bool
     {
         return true;
     }
@@ -40,7 +42,7 @@ class PhpVariable extends AbstractAssignedValueElement
      * indicates if the current element has accessibility constraint
      * @return bool
      */
-    public function hasAccessibilityConstraint()
+    public function hasAccessibilityConstraint(): bool
     {
         return false;
     }
@@ -48,15 +50,15 @@ class PhpVariable extends AbstractAssignedValueElement
      * defines authorized children element types
      * @return string[]
      */
-    public function getChildrenTypes()
+    public function getChildrenTypes(): array
     {
-        return array();
+        return [];
     }
     /**
      * indicates if the element finishes with a semicolon or not
      * @return bool
      */
-    public function endsWithSemicolon()
+    public function endsWithSemicolon(): bool
     {
         return true;
     }

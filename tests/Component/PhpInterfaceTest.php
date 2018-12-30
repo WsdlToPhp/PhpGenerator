@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace WsdlToPhp\PhpGenerator\Tests\Component;
 
 use WsdlToPhp\PhpGenerator\Component\PhpInterface as PhpInterfaceComponent;
@@ -12,9 +14,9 @@ class PhpInterfaceTest extends AbstractComponent
 {
     public function testSimpleToString()
     {
-        $interface = new PhpInterfaceComponent('Foo', true, null, array(
+        $interface = new PhpInterfaceComponent('Foo', true, null, [
             'stdClass',
-        ));
+        ]);
 
         $interface
             ->addAnnotationBlock('@var string')
@@ -25,24 +27,24 @@ class PhpInterfaceTest extends AbstractComponent
             ->addProperty('bar', 1)
             ->addAnnotationBlock(new PhpAnnotationElement('var', 'bool'))
             ->addPropertyElement(new PhpPropertyElement('sample', true))
-            ->addAnnotationBlock(array(
+            ->addAnnotationBlock([
                 new PhpAnnotationElement(PhpAnnotationElement::NO_NAME, 'This method is very useful'),
                 new PhpAnnotationElement('date', '2012-03-01'),
-                '@return mixed'
-            ))
-            ->addMethodElement(new PhpMethod('getMyValue', array(
+                '@return mixed',
+            ])
+            ->addMethodElement(new PhpMethod('getMyValue', [
                 new PhpFunctionParameterElement('asString', true),
-                'unusedParameter'
-            )))
-            ->addAnnotationBlock(array(
+                'unusedParameter',
+            ]))
+            ->addAnnotationBlock([
                 new PhpAnnotationElement(PhpAnnotationElement::NO_NAME, 'This method is very useless'),
                 new PhpAnnotationElement('date', '2012-03-01'),
-                '@return void'
-            ))
-            ->addMethod('uselessMethod', array(
+                '@return void',
+            ])
+            ->addMethod('uselessMethod', [
                 new PhpFunctionParameterElement('uselessParameter', null),
-                'unusedParameter'
-            ));
+                'unusedParameter',
+            ]);
 
         $this->assertSameContent(__FUNCTION__, $interface);
     }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace WsdlToPhp\PhpGenerator\Element;
 
 class PhpFile extends AbstractElement
@@ -12,7 +14,7 @@ class PhpFile extends AbstractElement
      * @see \WsdlToPhp\PhpGenerator\Element\AbstractElement::getPhpDeclaration()
      * @return string
      */
-    public function getPhpDeclaration()
+    public function getPhpDeclaration(): string
     {
         return self::START_FILE;
     }
@@ -21,7 +23,7 @@ class PhpFile extends AbstractElement
      * @param int $indentation
      * @return string
      */
-    public function toString($indentation = null)
+    public function toString(int $indentation = null): string
     {
         return sprintf('%s%s', parent::toString($indentation), self::BREAK_LINE_CHAR);
     }
@@ -29,16 +31,16 @@ class PhpFile extends AbstractElement
      * @see \WsdlToPhp\PhpGenerator\Element\AbstractElement::getChildrenTypes()
      * @return string[]
      */
-    public function getChildrenTypes()
+    public function getChildrenTypes(): array
     {
-        return array(
+        return [
             'string',
-            'WsdlToPhp\\PhpGenerator\\Element\\PhpAnnotationBlock',
-            'WsdlToPhp\\PhpGenerator\\Element\\PhpClass',
-            'WsdlToPhp\\PhpGenerator\\Element\\PhpConstant',
-            'WsdlToPhp\\PhpGenerator\\Element\\PhpFunction',
-            'WsdlToPhp\\PhpGenerator\\Element\\PhpInterface',
-            'WsdlToPhp\\PhpGenerator\\Element\\PhpVariable',
-        );
+            PhpAnnotationBlock::class,
+            PhpClass::class,
+            PhpConstant::class,
+            PhpFunction::class,
+            PhpInterface::class,
+            PhpVariable::class,
+        ];
     }
 }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace WsdlToPhp\PhpGenerator\Component;
 
 use WsdlToPhp\PhpGenerator\Element\PhpFile as PhpFileElement;
@@ -13,7 +15,7 @@ class PhpFile extends AbstractComponent
     /**
      * @param string $name
      */
-    public function __construct($name)
+    public function __construct(string $name)
     {
         $this->setMainElement(new PhpFileElement($name));
     }
@@ -21,17 +23,17 @@ class PhpFile extends AbstractComponent
      * @see \WsdlToPhp\PhpGenerator\Component\AbstractComponent::getElements()
      * @return PhpFileElement[]
      */
-    public function getElements()
+    public function getElements(): array
     {
-        return array(
+        return [
             $this->getMainElement(),
-        );
+        ];
     }
     /**
      * @param PhpClassComponent $class
      * @return PhpFile
      */
-    public function addClassComponent(PhpClassComponent $class)
+    public function addClassComponent(PhpClassComponent $class): PhpFile
     {
         $this->mainElement->addChild($class->toString());
         return $this;
@@ -40,7 +42,7 @@ class PhpFile extends AbstractComponent
      * @param PhpInterfaceComponent $interface
      * @return PhpFile
      */
-    public function addInterfaceComponent(PhpInterfaceComponent $interface)
+    public function addInterfaceComponent(PhpInterfaceComponent $interface): PhpFile
     {
         $this->mainElement->addChild($interface->toString());
         return $this;
@@ -49,7 +51,7 @@ class PhpFile extends AbstractComponent
      * @param PhpVariableElement $variable
      * @return PhpFile
      */
-    public function addVariableElement(PhpVariableElement $variable)
+    public function addVariableElement(PhpVariableElement $variable): PhpFile
     {
         $this->mainElement->addChild($variable);
         return $this;
@@ -60,7 +62,7 @@ class PhpFile extends AbstractComponent
      * @param mixed $value
      * @return PhpFile
      */
-    public function addVariable($name, $value = null)
+    public function addVariable(string $name, $value = null): PhpFile
     {
         return $this->addVariableElement(new PhpVariableElement($name, $value));
     }
@@ -68,7 +70,7 @@ class PhpFile extends AbstractComponent
      * @param PhpFunctionElement $function
      * @return PhpFile
      */
-    public function addFunctionElement(PhpFunctionElement $function)
+    public function addFunctionElement(PhpFunctionElement $function): PhpFile
     {
         $this->mainElement->addChild($function);
         return $this;
@@ -79,7 +81,7 @@ class PhpFile extends AbstractComponent
      * @param array $parameters
      * @return PhpFile
      */
-    public function addFunction($name, array $parameters = array())
+    public function addFunction(string $name, array $parameters = []): PhpFile
     {
         return $this->addFunctionElement(new PhpFunctionElement($name, $parameters));
     }
@@ -89,7 +91,7 @@ class PhpFile extends AbstractComponent
      * @param bool $last
      * @return PhpFile
      */
-    public function addUse($use, $as = null, $last = false)
+    public function addUse(string $use, string $as = null, bool $last = false): PhpFile
     {
         $expression = empty($as) ? "use %1\$s;%3\$s" : "use %1\$s as %2\$s;%3\$s";
         $this->mainElement->addChild(sprintf($expression, $use, $as, $last ? self::BREAK_LINE_CHAR : ''));
@@ -99,7 +101,7 @@ class PhpFile extends AbstractComponent
      * @param string $namespace
      * @return PhpFile
      */
-    public function setNamespace($namespace)
+    public function setNamespace(string $namespace): PhpFile
     {
         $this->mainElement->addChild(sprintf("%2\$snamespace %s;%s", $namespace, self::BREAK_LINE_CHAR));
         return $this;

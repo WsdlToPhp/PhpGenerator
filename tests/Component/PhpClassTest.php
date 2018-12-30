@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace WsdlToPhp\PhpGenerator\Tests\Component;
 
 use WsdlToPhp\PhpGenerator\Component\PhpClass as PhpClassComponent;
@@ -20,31 +22,31 @@ class PhpClassTest extends AbstractComponent
             ->addConstant('BAR', 'theOtherValue')
             ->addAnnotationBlock(new PhpAnnotationElement('var', 'int'))
             ->addProperty('bar', 1)
-            ->addAnnotationBlock(array(
+            ->addAnnotationBlock([
                 '- documentation: The ID of the contact that performed the action, if available. May be blank for anonymous activity.',
                 new PhpAnnotationElement('var', 'bool'),
-            ))
+            ])
             ->addPropertyElement(new PhpPropertyElement('sample', true))
             ->addAnnotationBlock(new PhpAnnotationElement('var', 'string'))
             ->addPropertyElement(new PhpPropertyElement('noValue', PhpPropertyElement::NO_VALUE))
-            ->addAnnotationBlock(array(
+            ->addAnnotationBlock([
                 new PhpAnnotationElement(PhpAnnotationElement::NO_NAME, 'This method is very useful'),
                 new PhpAnnotationElement('date', '2012-03-01'),
-                '@return mixed'
-            ))
-            ->addMethod('getMyValue', array(
+                '@return mixed',
+            ])
+            ->addMethod('getMyValue', [
                 new PhpFunctionParameterElement('asString', true),
-                'unusedParameter'
-            ))
-            ->addAnnotationBlock(array(
+                'unusedParameter',
+            ])
+            ->addAnnotationBlock([
                 new PhpAnnotationElement(PhpAnnotationElement::NO_NAME, 'This method is very useless'),
                 new PhpAnnotationElement('date', '2012-03-01'),
-                '@return void'
-            ))
-            ->addMethod('uselessMethod', array(
+                '@return void',
+            ])
+            ->addMethod('uselessMethod', [
                 new PhpFunctionParameterElement('uselessParameter', null),
-                'unusedParameter'
-            ));
+                'unusedParameter',
+            ]);
 
         $this->assertSameContent(__FUNCTION__, $class);
     }

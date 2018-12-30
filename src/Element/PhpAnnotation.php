@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace WsdlToPhp\PhpGenerator\Element;
 
 class PhpAnnotation extends AbstractElement
@@ -36,7 +38,7 @@ class PhpAnnotation extends AbstractElement
      * @param string $content
      * @return PhpAnnotation
      */
-    public function setContent($content)
+    public function setContent($content): PhpAnnotation
     {
         $this->content = trim($content);
         return $this;
@@ -44,26 +46,26 @@ class PhpAnnotation extends AbstractElement
     /**
      * @return string
      */
-    public function getContent()
+    public function getContent(): string
     {
         return $this->content;
     }
     /**
      * @return bool
      */
-    public function hasContent()
+    public function hasContent(): bool
     {
         return !empty($this->content);
     }
     /**
      * @return string[]
      */
-    protected function getPhpContent()
+    protected function getPhpContent(): array
     {
         $fullContent = trim(sprintf('%s %s', $this->getPhpName(), $this->getContent()));
-        $content = array(
+        $content = [
             $fullContent,
-        );
+        ];
         if ($this->getPhpName() === '' && strlen($fullContent) > $this->getMaxLength()) {
             $content = explode(self::BREAK_LINE_CHAR, wordwrap($fullContent, $this->getMaxLength(), self::BREAK_LINE_CHAR, true));
         }
@@ -75,7 +77,7 @@ class PhpAnnotation extends AbstractElement
      * @see \WsdlToPhp\PhpGenerator\Element\AbstractElement::getPhpName()
      * @return string
      */
-    public function getPhpName()
+    public function getPhpName(): string
     {
         return (!empty($this->name) && $this->getName() !== static::NO_NAME) ? sprintf(' @%s', parent::getPhpName()) : '';
     }
@@ -83,7 +85,7 @@ class PhpAnnotation extends AbstractElement
      * @see \WsdlToPhp\PhpGenerator\Element\AbstractElement::getPhpDeclaration()
      * @return string
      */
-    public function getPhpDeclaration()
+    public function getPhpDeclaration(): string
     {
         return sprintf(' *%s', implode(sprintf('%s *', parent::BREAK_LINE_CHAR), $this->getPhpContent()));
     }
@@ -91,15 +93,15 @@ class PhpAnnotation extends AbstractElement
      * defines authorized children element types
      * @return string[]
      */
-    public function getChildrenTypes()
+    public function getChildrenTypes(): array
     {
-        return array();
+        return [];
     }
     /**
      * @param int $maxlength
      * @return PhpAnnotation
      */
-    public function setMaxLength($maxlength)
+    public function setMaxLength($maxlength): PhpAnnotation
     {
         $this->maxLength = $maxlength;
         return $this;
@@ -107,7 +109,7 @@ class PhpAnnotation extends AbstractElement
     /**
      * @return int
      */
-    public function getMaxLength()
+    public function getMaxLength(): int
     {
         return $this->maxLength;
     }

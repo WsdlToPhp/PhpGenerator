@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace WsdlToPhp\PhpGenerator\Element;
 
 class PhpFunctionParameter extends PhpVariable
@@ -13,7 +15,7 @@ class PhpFunctionParameter extends PhpVariable
      * @param mixed $value
      * @param string $type
      */
-    public function __construct($name, $value = null, $type = null)
+    public function __construct(string $name, $value = null, $type = null)
     {
         parent::__construct($name, $value);
         $this->setType($type);
@@ -23,7 +25,7 @@ class PhpFunctionParameter extends PhpVariable
      * @param string|PhpClass $type
      * @return PhpFunctionParameter
      */
-    public function setType($type)
+    public function setType($type): PhpFunctionParameter
     {
         if (!self::typeIsValid($type)) {
             throw new \InvalidArgumentException(sprintf('Type "%s" is not valid', gettype($type)));
@@ -35,7 +37,7 @@ class PhpFunctionParameter extends PhpVariable
      * @param string|PhpClass $type
      * @return bool
      */
-    public static function typeIsValid($type)
+    public static function typeIsValid($type): bool
     {
         return $type === null || self::stringIsValid($type, true, true) || $type instanceof PhpClass;
     }
@@ -49,7 +51,7 @@ class PhpFunctionParameter extends PhpVariable
     /**
      * @return string
      */
-    protected function getPhpType()
+    protected function getPhpType(): string
     {
         $type = $this->getType();
         return empty($type) ? '' : sprintf('%s ', $type instanceof PhpClass ? $type->getPhpName() : $type);
@@ -58,7 +60,7 @@ class PhpFunctionParameter extends PhpVariable
      * @see \WsdlToPhp\PhpGenerator\Element\AbstractAssignedValueElement::getPhpDeclaration()
      * @return string
      */
-    public function getPhpDeclaration()
+    public function getPhpDeclaration(): string
     {
         return sprintf('%s%s', $this->getPhpType(), parent::getPhpDeclaration());
     }
@@ -66,7 +68,7 @@ class PhpFunctionParameter extends PhpVariable
      * returns the way the value is assigned to the element
      * @returns string
      */
-    public function getAssignmentSign()
+    public function getAssignmentSign(): string
     {
         return $this->hasValue() ? ' = ' : '';
     }
@@ -74,7 +76,7 @@ class PhpFunctionParameter extends PhpVariable
      * indicates if the element finishes with a semicolon or not
      * @return bool
      */
-    public function endsWithSemicolon()
+    public function endsWithSemicolon(): bool
     {
         return false;
     }
@@ -82,10 +84,10 @@ class PhpFunctionParameter extends PhpVariable
      * @see \WsdlToPhp\PhpGenerator\Element\AbstractAssignedValueElement::getAnyValue()
      * @return string
      */
-    protected function getAnyValue($value)
+    protected function getAnyValue($value): string
     {
         if (is_array($value)) {
-            return str_replace(array(self::BREAK_LINE_CHAR, ' '), '', var_export($value, true));
+            return str_replace([self::BREAK_LINE_CHAR, ' '], '', var_export($value, true));
         }
         return parent::getAnyValue($value);
     }

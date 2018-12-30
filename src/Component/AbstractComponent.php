@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace WsdlToPhp\PhpGenerator\Component;
 
 use WsdlToPhp\PhpGenerator\Element\AbstractElement;
@@ -8,19 +10,19 @@ use WsdlToPhp\PhpGenerator\Element\PhpClass as PhpClassElement;
 use WsdlToPhp\PhpGenerator\Element\PhpConstant as PhpConstantElement;
 use WsdlToPhp\PhpGenerator\Element\PhpAnnotationBlock as PhpAnnotationBlockElement;
 
-abstract class AbstractComponent implements GenerableInterface
+abstract class AbstractComponent implements GenerateableInterface
 {
     /**
      * @var PhpFileElement|PhpClassElement
      */
     protected $mainElement;
     /**
-     * @see \WsdlToPhp\PhpGenerator\Component\GenerableInterface::toString()
+     * @see \WsdlToPhp\PhpGenerator\Component\GenerateableInterface::toString()
      * @return string
      */
-    public function toString()
+    public function toString(): string
     {
-        $content = array();
+        $content = [];
         foreach ($this->getElements() as $element) {
             $content[] = $this->getElementString($element);
         }
@@ -29,13 +31,13 @@ abstract class AbstractComponent implements GenerableInterface
     /**
      * @return AbstractElement[]|string[]
      */
-    abstract public function getElements();
+    abstract public function getElements(): array;
     /**
      * @throws \InvalidArgumentException
      * @param AbstractElement $element
-     * @return \WsdlToPhp\PhpGenerator\Component\AbstractComponent
+     * @return AbstractComponent
      */
-    public function setMainElement(AbstractElement $element)
+    public function setMainElement(AbstractElement $element): AbstractComponent
     {
         if ($element instanceof PhpFileElement || $element instanceof PhpClassElement) {
             $this->mainElement = $element;
@@ -47,7 +49,7 @@ abstract class AbstractComponent implements GenerableInterface
     /**
      * @return PhpFileElement|PhpClassElement
      */
-    public function getMainElement()
+    public function getMainElement(): AbstractElement
     {
         return $this->mainElement;
     }
@@ -56,7 +58,7 @@ abstract class AbstractComponent implements GenerableInterface
      * @param string|AbstractElement $element
      * @return string
      */
-    protected function getElementString($element)
+    protected function getElementString($element): string
     {
         $string = '';
         if (is_scalar($element)) {
@@ -70,7 +72,7 @@ abstract class AbstractComponent implements GenerableInterface
      * @param PhpConstantElement $constant
      * @return AbstractComponent
      */
-    public function addConstantElement(PhpConstantElement $constant)
+    public function addConstantElement(PhpConstantElement $constant): AbstractComponent
     {
         if (!$constant->getClass() instanceof PhpClassElement && $this->mainElement instanceof PhpClassElement) {
             $constant->setClass($this->mainElement);
@@ -85,7 +87,7 @@ abstract class AbstractComponent implements GenerableInterface
      * @param PhpClassElement $class
      * @return AbstractComponent
      */
-    public function addConstant($name, $value = null, PhpClassElement $class = null)
+    public function addConstant($name, $value = null, PhpClassElement $class = null): AbstractComponent
     {
         return $this->addConstantElement(new PhpConstantElement($name, $value, $class));
     }
@@ -93,7 +95,7 @@ abstract class AbstractComponent implements GenerableInterface
      * @param PhpAnnotationBlockElement $annotationBlock
      * @return AbstractComponent
      */
-    public function addAnnotationBlockElement(PhpAnnotationBlockElement $annotationBlock)
+    public function addAnnotationBlockElement(PhpAnnotationBlockElement $annotationBlock): AbstractComponent
     {
         $this->mainElement->addChild($annotationBlock);
         return $this;
@@ -103,10 +105,10 @@ abstract class AbstractComponent implements GenerableInterface
      * @param array|string|PhpAnnotationElement $annotations
      * @return AbstractComponent
      */
-    public function addAnnotationBlock($annotations)
+    public function addAnnotationBlock($annotations): AbstractComponent
     {
-        return $this->addAnnotationBlockElement(new PhpAnnotationBlockElement(is_array($annotations) ? $annotations : array(
+        return $this->addAnnotationBlockElement(new PhpAnnotationBlockElement(is_array($annotations) ? $annotations : [
             $annotations,
-        )));
+        ]));
     }
 }

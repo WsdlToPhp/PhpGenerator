@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace WsdlToPhp\PhpGenerator\Element;
 
 class PhpInterface extends PhpClass
@@ -16,7 +18,7 @@ class PhpInterface extends PhpClass
      * An interface is never abstract
      * @return bool
      */
-    public function getAbstract()
+    public function getAbstract(): bool
     {
         return false;
     }
@@ -33,21 +35,21 @@ class PhpInterface extends PhpClass
      * defines authorized children element types
      * @return string[]
      */
-    public function getChildrenTypes()
+    public function getChildrenTypes(): array
     {
-        return array(
+        return [
             'string',
-            'WsdlToPhp\\PhpGenerator\\Element\\PhpAnnotationBlock',
-            'WsdlToPhp\\PhpGenerator\\Element\\PhpMethod',
-            'WsdlToPhp\\PhpGenerator\\Element\\PhpConstant',
-        );
+            PhpAnnotationBlock::class,
+            PhpMethod::class,
+            PhpConstant::class,
+        ];
     }
     /**
      * ensure method has no body
      * @see \WsdlToPhp\PhpGenerator\Element\AbstractElement::addChild()
      * @param mixed
      */
-    public function addChild($child)
+    public function addChild($child): AbstractElement
     {
         if ($child instanceof PhpMethod) {
             $child->setHasBody(false);

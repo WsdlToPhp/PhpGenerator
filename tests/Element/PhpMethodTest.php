@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace WsdlToPhp\PhpGenerator\Tests\Element;
 
 use WsdlToPhp\PhpGenerator\Element\PhpVariable;
@@ -12,101 +14,94 @@ class PhpMethodTest extends TestCase
 {
     public function testPublicGetPhpDeclaration()
     {
-        $method = new PhpMethod('foo', array(
+        $method = new PhpMethod('foo', [
             'bar',
-            array(
+            [
                 'name' => 'demo',
                 'value' => 1,
-            ),
-            array(
+            ],
+            [
                 'name' => 'sample',
                 'value' => null,
-            ),
+            ],
             new PhpFunctionParameter('deamon', true),
-        ));
+        ]);
 
         $this->assertSame('public function foo($bar, $demo = 1, $sample = null, $deamon = true)', $method->getPhpDeclaration());
     }
 
     public function testProtectedGetPhpDeclaration()
     {
-        $method = new PhpMethod('foo', array(
+        $method = new PhpMethod('foo', [
             'bar',
-        ), PhpMethod::ACCESS_PROTECTED);
+        ], PhpMethod::ACCESS_PROTECTED);
 
         $this->assertSame('protected function foo($bar)', $method->getPhpDeclaration());
     }
 
     public function testPrivateGetPhpDeclaration()
     {
-        $method = new PhpMethod('foo', array(
+        $method = new PhpMethod('foo', [
             'bar',
-        ), PhpMethod::ACCESS_PRIVATE);
+        ], PhpMethod::ACCESS_PRIVATE);
 
         $this->assertSame('private function foo($bar)', $method->getPhpDeclaration());
     }
 
     public function testPublicStaticGetPhpDeclaration()
     {
-        $method = new PhpMethod('foo', array(
+        $method = new PhpMethod('foo', [
             'bar',
-        ), PhpMethod::ACCESS_PUBLIC, false, true);
+        ], PhpMethod::ACCESS_PUBLIC, false, true);
 
         $this->assertSame('public static function foo($bar)', $method->getPhpDeclaration());
     }
 
     public function testProtectedStaticGetPhpDeclaration()
     {
-        $method = new PhpMethod('foo', array(
+        $method = new PhpMethod('foo', [
             'bar',
-        ), PhpMethod::ACCESS_PROTECTED, false, true);
+        ], PhpMethod::ACCESS_PROTECTED, false, true);
 
         $this->assertSame('protected static function foo($bar)', $method->getPhpDeclaration());
     }
 
     public function testPublicFinalGetPhpDeclaration()
     {
-        $method = new PhpMethod('foo', array(
+        $method = new PhpMethod('foo', [
             'bar',
-        ), PhpMethod::ACCESS_PUBLIC, false, false, true);
+        ], PhpMethod::ACCESS_PUBLIC, false, false, true);
 
         $this->assertSame('final public function foo($bar)', $method->getPhpDeclaration());
     }
 
     public function testAbstractPublicGetPhpDeclaration()
     {
-        $method = new PhpMethod('foo', array(
+        $method = new PhpMethod('foo', [
             'bar',
-        ), PhpMethod::ACCESS_PUBLIC, true);
+        ], PhpMethod::ACCESS_PUBLIC, true);
 
         $this->assertSame('abstract public function foo($bar);', $method->getPhpDeclaration());
     }
 
     public function testEmptyBodyPublicGetPhpDeclaration()
     {
-        $method = new PhpMethod('foo', array(
+        $method = new PhpMethod('foo', [
             'bar',
-        ), PhpMethod::ACCESS_PUBLIC, false, false, false, false);
+        ], PhpMethod::ACCESS_PUBLIC, false, false, false, false);
 
         $this->assertSame('public function foo($bar);', $method->getPhpDeclaration());
     }
 
     /**
      * @expectedException InvalidArgumentException
+     * @expectedExceptionMessage Element of type "object:WsdlToPhp\PhpGenerator\Element\PhpInterface" is not authorized, please provide one of these types: string, WsdlToPhp\PhpGenerator\Element\PhpAnnotationBlock, WsdlToPhp\PhpGenerator\Element\PhpVariable
      */
     public function testAddChildWithException()
     {
         $method = new PhpMethod('Foo');
 
         $method->addChild(new PhpInterface('Bar'));
-    }
-
-    /**
-     * @expectedException InvalidArgumentException
-     */
-    public function testCheckBooleanWithException()
-    {
-        PhpMethod::checkBooleanWithException('myProperty', 1);
     }
 
     public function testGetLineBeforeChildren()
@@ -140,7 +135,7 @@ class PhpMethodTest extends TestCase
 
     public function testAddChildVariable()
     {
-        $method = new PhpMethod('foo', array());
+        $method = new PhpMethod('foo', []);
 
         $method->addChild(new PhpVariable('bar'));
 
@@ -149,36 +144,36 @@ class PhpMethodTest extends TestCase
 
     public function testPublicEmptyBodyToString()
     {
-        $method = new PhpMethod('foo', array(
+        $method = new PhpMethod('foo', [
             'bar',
-            array(
+            [
                 'name' => 'demo',
                 'value' => 1,
-            ),
-            array(
+            ],
+            [
                 'name' => 'sample',
                 'value' => null,
-            ),
+            ],
             new PhpFunctionParameter('deamon', true),
-        ));
+        ]);
 
         $this->assertSame("public function foo(\$bar, \$demo = 1, \$sample = null, \$deamon = true)\n{\n}", $method->toString());
     }
 
     public function testPublicWithBodyToString()
     {
-        $method = new PhpMethod('foo', array(
+        $method = new PhpMethod('foo', [
             'bar',
-            array(
+            [
                 'name' => 'demo',
                 'value' => 1,
-            ),
-            array(
+            ],
+            [
                 'name' => 'sample',
                 'value' => null,
-            ),
+            ],
             new PhpFunctionParameter('deamon', true),
-        ));
+        ]);
 
         $method
             ->addChild(new PhpVariable('bar', 1))
@@ -187,12 +182,11 @@ class PhpMethodTest extends TestCase
         $this->assertSame("public function foo(\$bar, \$demo = 1, \$sample = null, \$deamon = true)\n{\n    \$bar = 1;\n    return \$bar;\n}", $method->toString());
     }
 
+    /**
+     * @expectedException \TypeError
+     */
     public function testExceptionMessageOnName()
     {
-        try {
-            new PhpMethod(0);
-        } catch (\InvalidArgumentException $e) {
-            $this->assertSame('Name "0" is invalid when instantiating PhpMethod object', $e->getMessage());
-        }
+        new PhpMethod(0);
     }
 }

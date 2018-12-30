@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace WsdlToPhp\PhpGenerator\Element;
 
 class PhpFunction extends AbstractAccessRestrictedElement
@@ -12,7 +14,7 @@ class PhpFunction extends AbstractAccessRestrictedElement
      * @param string $name
      * @param mixed[]|PhpFunctionParameter[] $parameters
      */
-    public function __construct($name, array $parameters = array())
+    public function __construct(string $name, array $parameters = [])
     {
         parent::__construct($name);
         $this->setParameters($parameters);
@@ -22,7 +24,7 @@ class PhpFunction extends AbstractAccessRestrictedElement
      * @param array $parameters
      * @return PhpFunction
      */
-    public function setParameters(array $parameters)
+    public function setParameters(array $parameters): PhpFunction
     {
         if (!self::parametersAreValid($parameters)) {
             throw new \InvalidArgumentException('Parameters are invalid');
@@ -34,9 +36,9 @@ class PhpFunction extends AbstractAccessRestrictedElement
      * @param array $parameters
      * @return PhpFunctionParameter[]
      */
-    public static function transformParameters(array $parameters)
+    public static function transformParameters(array $parameters): array
     {
-        $finalParameters = array();
+        $finalParameters = [];
         foreach ($parameters as $parameter) {
             $finalParameters[] = self::transformParameter($parameter);
         }
@@ -46,7 +48,7 @@ class PhpFunction extends AbstractAccessRestrictedElement
      * @param mixed $parameter
      * @return PhpFunctionParameter
      */
-    public static function transformParameter($parameter)
+    public static function transformParameter($parameter): PhpFunctionParameter
     {
         if ($parameter instanceof PhpFunctionParameter) {
             return $parameter;
@@ -59,7 +61,7 @@ class PhpFunction extends AbstractAccessRestrictedElement
      * @param array $parameters
      * @return bool
      */
-    public static function parametersAreValid(array $parameters)
+    public static function parametersAreValid(array $parameters): bool
     {
         $valid = true;
         foreach ($parameters as $parameter) {
@@ -71,24 +73,24 @@ class PhpFunction extends AbstractAccessRestrictedElement
      * @param string|array|PhpFunctionParameter $parameter
      * @return bool
      */
-    public static function parameterIsValid($parameter)
+    public static function parameterIsValid($parameter): bool
     {
         return self::stringIsValid($parameter) || (is_array($parameter) && array_key_exists('name', $parameter)) || $parameter instanceof PhpFunctionParameter;
     }
     /**
      * @return string[]|PhpFunctionParameter[]
      */
-    public function getParameters()
+    public function getParameters(): array
     {
         return $this->parameters;
     }
     /**
      * @return string
      */
-    protected function getPhpParameters()
+    protected function getPhpParameters(): string
     {
         $parameters = $this->getParameters();
-        $phpParameters = array();
+        $phpParameters = [];
         if (is_array($parameters) && !empty($parameters)) {
             foreach ($parameters as $parameter) {
                 $phpParameters[] = $parameter->getPhpDeclaration();
@@ -100,7 +102,7 @@ class PhpFunction extends AbstractAccessRestrictedElement
      * @see \WsdlToPhp\PhpGenerator\Element\AbstractElement::getPhpDeclaration()
      * @return string
      */
-    public function getPhpDeclaration()
+    public function getPhpDeclaration(): string
     {
         return sprintf('%sfunction %s(%s)', $this->getPhpAccess(), $this->getPhpName(), $this->getPhpParameters());
     }
@@ -108,7 +110,7 @@ class PhpFunction extends AbstractAccessRestrictedElement
      * indicates if the current element has accessibility constraint
      * @return bool
      */
-    public function hasAccessibilityConstraint()
+    public function hasAccessibilityConstraint(): bool
     {
         return false;
     }
@@ -116,13 +118,13 @@ class PhpFunction extends AbstractAccessRestrictedElement
      * defines authorized children element types
      * @return string[]
      */
-    public function getChildrenTypes()
+    public function getChildrenTypes(): array
     {
-        return array(
+        return [
             'string',
-            'WsdlToPhp\\PhpGenerator\\Element\\PhpAnnotationBlock',
-            'WsdlToPhp\\PhpGenerator\\Element\\PhpVariable',
-        );
+            PhpAnnotationBlock::class,
+            PhpVariable::class,
+        ];
     }
     /**
      * Allows to indicate that children are contained by brackets,
@@ -130,9 +132,9 @@ class PhpFunction extends AbstractAccessRestrictedElement
      * is called instead of getLineBeforeChildren and getBracketAfterChildren
      * is called instead of getLineAfterChildren, but be aware that these methods
      * call the two others
-     * @return boolean
+     * @return bool
      */
-    public function useBracketsForChildren()
+    public function useBracketsForChildren(): bool
     {
         return true;
     }

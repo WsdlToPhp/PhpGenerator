@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace WsdlToPhp\PhpGenerator\Element;
 
 class PhpClass extends AbstractElement
@@ -38,19 +40,20 @@ class PhpClass extends AbstractElement
      * @param string|PhpClass|null $extends
      * @param string[]|PhpClass[] $interfaces
      */
-    public function __construct($name, $abstract = false, $extends = null, array $interfaces = array())
+    public function __construct($name, $abstract = false, $extends = null, array $interfaces = [])
     {
         parent::__construct($name);
-        $this->setAbstract($abstract);
-        $this->setExtends($extends);
-        $this->setInterfaces($interfaces);
+        $this
+            ->setAbstract($abstract)
+            ->setExtends($extends)
+            ->setInterfaces($interfaces);
     }
     /**
      * @throws \InvalidArgumentException
      * @param bool $abstract
      * @return PhpClass
      */
-    public function setAbstract($abstract)
+    public function setAbstract($abstract): PhpClass
     {
         if (!is_bool($abstract)) {
             throw new \InvalidArgumentException(sprintf('Abstract must be a boolean, "%s" given', gettype($abstract)));
@@ -61,14 +64,14 @@ class PhpClass extends AbstractElement
     /**
      * @return bool
      */
-    public function getAbstract()
+    public function getAbstract(): bool
     {
         return $this->abstract;
     }
     /**
      * @return string
      */
-    protected function getPhpAbstract()
+    protected function getPhpAbstract(): string
     {
         return $this->getAbstract() === false ? '' : static::PHP_ABSTRACT_KEYWORD . ' ';
     }
@@ -77,7 +80,7 @@ class PhpClass extends AbstractElement
      * @param string|PhpClass|null $extends
      * @return PhpClass
      */
-    public function setExtends($extends)
+    public function setExtends($extends): PhpClass
     {
         if (!self::extendsIsValid($extends)) {
             throw new \InvalidArgumentException('Extends must be a string or a PhpClass instance');
@@ -89,7 +92,7 @@ class PhpClass extends AbstractElement
      * @param string|PhpClass|null $extends
      * @return bool
      */
-    public static function extendsIsValid($extends)
+    public static function extendsIsValid($extends): bool
     {
         return $extends === null || self::stringIsValid($extends, true, true) || $extends instanceof PhpClass;
     }
@@ -103,7 +106,7 @@ class PhpClass extends AbstractElement
     /**
      * @return string
      */
-    protected function getPhpExtends()
+    protected function getPhpExtends(): string
     {
         $extends = $this->getExtends();
         return empty($extends) ? '' : sprintf(' %s %s', static::PHP_EXTENDS_KEYWORD, ($extends instanceof PhpClass ? $extends->getName() : $extends));
@@ -113,7 +116,7 @@ class PhpClass extends AbstractElement
      * @param string[]|PhpClass[] $interfaces
      * @return PhpClass
      */
-    public function setInterfaces(array $interfaces = array())
+    public function setInterfaces(array $interfaces = []): PhpClass
     {
         if (!self::interfacesAreValid($interfaces)) {
             throw new \InvalidArgumentException('Interfaces are not valid');
@@ -125,7 +128,7 @@ class PhpClass extends AbstractElement
      * @param string[]|PhpClass[] $interfaces
      * @return bool
      */
-    public static function interfacesAreValid(array $interfaces = array())
+    public static function interfacesAreValid(array $interfaces = []): bool
     {
         $valid = true;
         foreach ($interfaces as $interface) {
@@ -137,7 +140,7 @@ class PhpClass extends AbstractElement
      * @param string|PhpClass $interface
      * @return bool
      */
-    public static function interfaceIsValid($interface)
+    public static function interfaceIsValid($interface): bool
     {
         return self::stringIsValid($interface) || $interface instanceof PhpClass;
     }
@@ -145,16 +148,16 @@ class PhpClass extends AbstractElement
      *
      * @return string[]|PhpClass[]
      */
-    public function getInterfaces()
+    public function getInterfaces(): array
     {
         return $this->interfaces;
     }
     /**
      * @return string
      */
-    protected function getPhpInterfaces()
+    protected function getPhpInterfaces(): string
     {
-        $interfaces = array();
+        $interfaces = [];
         foreach ($this->getInterfaces() as $interface) {
             $interfaces[] = $this->getPhpInterface($interface);
         }
@@ -164,14 +167,14 @@ class PhpClass extends AbstractElement
      * @param string|PhpClass $interface
      * @return string
      */
-    protected function getPhpInterface($interface)
+    protected function getPhpInterface($interface): string
     {
         return sprintf(' %s', is_string($interface) ? $interface : $interface->getName());
     }
     /**
      * @return string
      */
-    public function getPhpDeclaration()
+    public function getPhpDeclaration(): string
     {
         return trim(sprintf('%s%s %s%s%s', $this->getPhpAbstract(), static::PHP_DECLARATION, $this->getPhpName(), $this->getPhpExtends(), $this->getPhpInterfaces()));
     }
@@ -179,15 +182,15 @@ class PhpClass extends AbstractElement
      * defines authorized children element types
      * @return string[]
      */
-    public function getChildrenTypes()
+    public function getChildrenTypes(): array
     {
-        return array(
+        return [
             'string',
-            'WsdlToPhp\\PhpGenerator\\Element\\PhpAnnotationBlock',
-            'WsdlToPhp\\PhpGenerator\\Element\\PhpMethod',
-            'WsdlToPhp\\PhpGenerator\\Element\\PhpConstant',
-            'WsdlToPhp\\PhpGenerator\\Element\\PhpProperty',
-        );
+            PhpAnnotationBlock::class,
+            PhpMethod::class,
+            PhpConstant::class,
+            PhpProperty::class,
+        ];
     }
     /**
      * Allows to indicate that children are contained by brackets,
@@ -197,7 +200,7 @@ class PhpClass extends AbstractElement
      * call the two others
      * @return bool
      */
-    public function useBracketsForChildren()
+    public function useBracketsForChildren(): bool
     {
         return true;
     }

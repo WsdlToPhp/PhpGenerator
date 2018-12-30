@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace WsdlToPhp\PhpGenerator\Tests\Element;
 
 use WsdlToPhp\PhpGenerator\Element\PhpVariable;
@@ -45,10 +47,10 @@ class PhpPropertyTest extends TestCase
 
     public function testPublicGetPhpDeclarationArray()
     {
-        $property = new PhpProperty('foo', array(
+        $property = new PhpProperty('foo', [
             '0',
             1,
-        ));
+        ]);
 
         $this->assertSame("public \$foo = array (\n  0 => '0',\n  1 => 1,\n);", $property->getPhpDeclaration());
     }
@@ -101,12 +103,11 @@ class PhpPropertyTest extends TestCase
         $property->setAccess(' public');
     }
 
+    /**
+     * @expectedException \TypeError
+     */
     public function testExceptionMessageOnName()
     {
-        try {
-            new PhpProperty(0);
-        } catch (\InvalidArgumentException $e) {
-            $this->assertSame('Name "0" is invalid when instantiating PhpProperty object', $e->getMessage());
-        }
+        new PhpProperty(0);
     }
 }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace WsdlToPhp\PhpGenerator\Tests\Element;
 
 use WsdlToPhp\PhpGenerator\Element\PhpVariable;
@@ -56,7 +58,7 @@ class PhpConstantTest extends TestCase
      */
     public function testExceptionForNonScalerValue()
     {
-        new PhpConstant('Foo', array());
+        new PhpConstant('Foo', []);
     }
 
     public function testGetPhpDeclarationNullValueForClass()
@@ -129,24 +131,23 @@ class PhpConstantTest extends TestCase
     {
         $constant = new PhpConstant('foo', null, new PhpClass('bar'));
 
-        $this->assertSame(array(), $constant->getChildrenTypes());
+        $this->assertSame([], $constant->getChildrenTypes());
     }
 
+    /**
+     * @expectedException \TypeError
+     */
     public function testExceptionMessageOnName()
     {
-        try {
-            new PhpConstant(0);
-        } catch (\InvalidArgumentException $e) {
-            $this->assertSame('Name "0" is invalid when instantiating PhpConstant object', $e->getMessage());
-        }
+        new PhpConstant(0);
     }
 
+    /**
+     * @expectedException \InvalidArgumentException
+     * @expectedExceptionMessage Value of type "object" is not a valid scalar value for PhpConstant object
+     */
     public function testExceptionMessageOnValue()
     {
-        try {
-            new PhpConstant('Foo', new \stdClass());
-        } catch (\InvalidArgumentException $e) {
-            $this->assertSame('Value of type "object" is not a valid scalar value for PhpConstant object', $e->getMessage());
-        }
+        new PhpConstant('Foo', new \stdClass());
     }
 }
