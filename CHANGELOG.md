@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## 2.0.0
+- Use PHP 7.1 features
+- Refactore code
+- Fix typos
+
 ## 1.2.1
 - Review filemode, add SensioLabs Insight badge
 
