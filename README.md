@@ -1,4 +1,7 @@
-# WsdlToPhp Php Generator, a Real PHP source code generator
+# PhpGenerator, a Real PHP source code generator
+
+> PhpGenerator helps generating PHP source code
+
 [![License](https://poser.pugx.org/wsdltophp/phpgenerator/license)](https://packagist.org/packages/wsdltophp/phpgenerator)
 [![Latest Stable Version](https://poser.pugx.org/wsdltophp/phpgenerator/version.png)](https://packagist.org/packages/wsdltophp/phpgenerator)
 [![Build Status](https://api.travis-ci.org/WsdlToPhp/PhpGenerator.svg)](https://travis-ci.org/WsdlToPhp/PhpGenerator)
@@ -12,7 +15,7 @@ Even if this project is yet another PHP source code generator, its main goal is 
 Rest assured that it is not tweaked for the purpose of the [PackageGenerator](https://github.com/WsdlToPhp/PackageGenerator) project.
 
 ## Main features
-This projet contains two main features:
+This project contains two main features:
 
 - [Element](src/Element/README.md): generate basic elements
 - [Component](src/Component/README.md): generate structured complex elements
@@ -20,7 +23,7 @@ This projet contains two main features:
 ## Unit tests
 You can run the unit tests with the following command:
 ```
-    $ cd /path/to/src/WsdlToPhp/PhpGenerator/
-    $ composer install
-    $ composer test
+$ cd /path/to/src/WsdlToPhp/PhpGenerator/
+$ composer install
+$ composer test
 ```

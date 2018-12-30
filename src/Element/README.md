@@ -1,4 +1,4 @@
-# WsdlToPhp Php Generator, Element
+# PhpGenerator Element
 
 This directory contains the basics. Any element contained by a PHP file should be here.
 
@@ -95,9 +95,9 @@ const FOO = true;
 #### Create an annotation block
 ##### Simple
 ```php
-$annotationBlock = new PhpAnnotationBlock(array(
+$annotationBlock = new PhpAnnotationBlock([
     'This sample annotation is on one line',
-));
+]);
 echo $annotationBlock->toString();
 ```
 displays
@@ -127,18 +127,18 @@ displays
 #### Create a function
 ##### Simple function without any body
 ```php
-$function = new PhpFunction('foo', array(
+$function = new PhpFunction('foo', [
     'bar',
-    array(
+    [
         'name' => 'demo',
         'value' => 1,
-    ),
-    array(
+    ],
+    [
         'name' => 'sample',
         'value' => null,
-    ),
+    ],
     new PhpFunctionParameter('deamon', true),
-));
+]);
 echo $function->toString();
 ```
 displays
@@ -149,18 +149,18 @@ function foo($bar, $demo = 1, $sample = NULL, $deamon = true)
 ```
 ##### Function with a body
 ```php
-$function = new PhpFunction('foo', array(
+$function = new PhpFunction('foo', [
     'bar',
-    array(
+    [
         'name' => 'demo',
         'value' => 1,
-    ),
-    array(
+    ],
+    [
         'name' => 'sample',
         'value' => null,
-    ),
+    ],
     new PhpFunctionParameter('deamon', true),
-));
+]);
 
 $function
     ->addChild(new PhpVariable('bar', 1))
@@ -179,18 +179,18 @@ function foo($bar, $demo = 1, $sample = NULL, $deamon = true)
 #### Create a method
 ##### Simple public method without any body
 ```php
-$method = new PhpMethod('foo', array(
+$method = new PhpMethod('foo', [
     'bar',
-    array(
+    [
         'name' => 'demo',
         'value' => 1,
-    ),
-    array(
+    ],
+    [
         'name' => 'sample',
         'value' => null,
-    ),
+    ],
     new PhpFunctionParameter('deamon', true),
-));
+]);
 echo $method->toString();
 ```
 displays
@@ -201,18 +201,18 @@ public function foo($bar, $demo = 1, $sample = NULL, $deamon = true)
 ```
 ##### Simple public method with a body
 ```php
-$method = new PhpMethod('foo', array(
+$method = new PhpMethod('foo', [
     'bar',
-    array(
+    [
         'name' => 'demo',
         'value' => 1,
-    ),
-    array(
+    ],
+    [
         'name' => 'sample',
         'value' => null,
-    ),
+    ],
     new PhpFunctionParameter('deamon', true),
-));
+]);
 
 $method
     ->addChild(new PhpVariable('bar', 1))
@@ -229,9 +229,9 @@ public function foo($bar, $demo = 1, $sample = NULL, $deamon = true)
 ```
 ##### Simple protected method without any body
 ```php
-$method = new PhpMethod('foo', array(
+$method = new PhpMethod('foo', [
     'bar',
-), PhpMethod::ACCESS_PROTECTED);
+], PhpMethod::ACCESS_PROTECTED);
 echo $method->toString();
 ```
 displays
@@ -242,9 +242,9 @@ protected function foo($bar)
 ```
 ##### Simple private method without any body
 ```php
-$method = new PhpMethod('foo', array(
+$method = new PhpMethod('foo', [
     'bar',
-), PhpMethod::ACCESS_PRIVATE);
+], PhpMethod::ACCESS_PRIVATE);
 echo $method->toString();
 ```
 displays
@@ -255,9 +255,9 @@ private function foo($bar)
 ```
 ##### Simple abstract public method without any body
 ```php
-$method = new PhpMethod('foo', array(
+$method = new PhpMethod('foo', [
     'bar',
-), PhpMethod::ACCESS_PUBLIC, true);
+], PhpMethod::ACCESS_PUBLIC, true);
 echo $method->toString();
 ```
 displays
@@ -266,9 +266,9 @@ abstract public function foo($bar);
 ```
 ##### Simple static public method without any body
 ```php
-$method = new PhpMethod('foo', array(
+$method = new PhpMethod('foo', [
     'bar',
-), PhpMethod::ACCESS_PUBLIC, false, true);
+], PhpMethod::ACCESS_PUBLIC, false, true);
 echo $method->toString();
 ```
 displays
@@ -279,9 +279,9 @@ public static function foo($bar)
 ```
 ##### Simple final public method without any body
 ```php
-$method = new PhpMethod('foo', array(
+$method = new PhpMethod('foo', [
     'bar',
-), PhpMethod::ACCESS_PUBLIC, false, false, true);
+], PhpMethod::ACCESS_PUBLIC, false, false, true);
 echo $method->toString();
 ```
 displays
@@ -292,9 +292,9 @@ final public function foo($bar)
 ```
 ##### Simple public method with no body asked
 ```php
-$method = new PhpMethod('foo', array(
+$method = new PhpMethod('foo', [
     'bar',
-), PhpMethod::ACCESS_PUBLIC, false, false, false, false);
+], PhpMethod::ACCESS_PUBLIC, false, false, false, false);
 echo $method->toString();
 ```
 displays
@@ -338,15 +338,15 @@ class Foo extends Bar
 ```
 ##### Simple class without any method with implementation
 ```php
-$class = new PhpClass('Foo', false, 'Bar', array(
+$class = new PhpClass('Foo', false, 'Bar', [
     'Demo',
     'Sample',
-));
+]);
 // equivalent to:
-$class = new PhpClass('Foo', false, 'Bar', array(
+$class = new PhpClass('Foo', false, 'Bar', [
     new PhpClass('Demo'),
     new PhpClass('Sample'),
-));
+]);
 echo $class->toString();
 ```
 displays
@@ -373,11 +373,11 @@ class Foo
 ##### Class with one method
 ```php
 $class = new PhpClass('Foo');
-$method = new PhpMethod('bar', array(
+$method = new PhpMethod('bar', [
     'bar',
     'foo',
     'sample',
-), PhpMethod::ACCESS_PRIVATE);
+], PhpMethod::ACCESS_PRIVATE);
 $method->addChild(new PhpVariable('foo', 1));
 $class->addChild($method);
 echo $class->toString();
@@ -423,7 +423,7 @@ interface Foo
 $interface = new PhpInterface('Foo');
 $class->addChild(new PhpProperty('Bar'));
 ```
-throws an ```\InvaliddArgumentException``` exception.
+throws an ```\InvalidArgumentException``` exception.
 
 ### Generate a file from a simple file to a class file
 #### Containing one variable
@@ -451,11 +451,11 @@ define('foo', 1);
 #### Containing one function
 ```php
 $file = new PhpFile('foo');
-$file->addChild(new PhpFunction('foo', array(
+$file->addChild(new PhpFunction('foo', [
     'foo',
     'sample',
     'demo',
-)));
+]));
 echo $file->toString();
 ```
 displays
@@ -468,10 +468,10 @@ function foo($foo, $sample, $demo)
 #### Containing one annotation block
 ```php
 $file = new PhpFile('foo');
-$file->addChild(new PhpAnnotationBlock(array(
+$file->addChild(new PhpAnnotationBlock([
     'date is the key',
     'time is the core key',
-)));
+]));
 echo $file->toString();
 ```
 displays
@@ -485,10 +485,10 @@ displays
 #### Containing an annotation block and a class
 ```php
 $file = new PhpFile('foo');
-$file->addChild(new PhpAnnotationBlock(array(
+$file->addChild(new PhpAnnotationBlock([
     'date is the key',
     'time is the core key',
-)));
+]));
 $class = new PhpClass('Foo');
 $class->addChild(new PhpMethod('Bar'));
 $file->addChild($class);
