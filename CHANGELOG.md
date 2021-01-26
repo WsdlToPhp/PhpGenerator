@@ -7,8 +7,8 @@
 - BC:
     - `WsdlToPhp\PhpGenerator\Element\PhpFunction::__construct` has a new parameter after the `$parameters` parameter named `$returnType` which is a string allowing to set the function return type
     - `WsdlToPhp\PhpGenerator\Element\PhpMethod::__construct` has a new parameter after the `$parameters` parameter named `$returnType` which is a string allowing to set the method return type
-    - `WsdlToPhp\PhpGenerator\Component\PhpClass::__addMethod` has a new parameter after the `$parameters` parameter named `$returnType` which is a string allowing to set the method return type
-    - `WsdlToPhp\PhpGenerator\Component\PhpInterface::__addMethod` has a new parameter after the `$parameters` parameter named `$returnType` which is a string allowing to set the method return type
+    - `WsdlToPhp\PhpGenerator\Component\PhpClass::addMethod` has a new parameter after the `$parameters` parameter named `$returnType` which is a string allowing to set the method return type
+    - `WsdlToPhp\PhpGenerator\Component\PhpInterface::addMethod` has a new parameter after the `$parameters` parameter named `$returnType` which is a string allowing to set the method return type
 - Implementation of the PHP `declare` statement
 - `GenerateableInterface` elements and components now implement the `__toString` method
 - Update READMEs
