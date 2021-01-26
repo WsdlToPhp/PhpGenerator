@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace WsdlToPhp\PhpGenerator\Tests\Element;
 
+use InvalidArgumentException;
+use TypeError;
 use WsdlToPhp\PhpGenerator\Element\PhpVariable;
 use WsdlToPhp\PhpGenerator\Tests\TestCase;
 
@@ -82,11 +84,10 @@ class PhpVariableTest extends TestCase
         $this->assertSame("\$foo = XML_ELEMENT_NODE;", $variable->getPhpDeclaration());
     }
 
-    /**
-     * @expectedException InvalidArgumentException
-     */
     public function testAddChild()
     {
+        $this->expectException(InvalidArgumentException::class);
+
         $variable = new PhpVariable('Foo', 'bar');
 
         $variable->addChild(new PhpVariable('Bar', 'foo'));
@@ -113,6 +114,13 @@ class PhpVariableTest extends TestCase
         $this->assertSame('$foo = 0.4;', $variable->toString());
     }
 
+    public function test__toStringFloatValue()
+    {
+        $variable = new PhpVariable('foo', 0.4);
+
+        $this->assertSame('$foo = 0.4;', (string) $variable);
+    }
+
     public function testCyrillic()
     {
         $variable = new PhpVariable('КонтактнаяИнформация', 0.4);
@@ -126,11 +134,10 @@ class PhpVariableTest extends TestCase
         $this->assertEquals(4, $é);
     }
 
-    /**
-     * @expectedException \TypeError
-     */
     public function testExceptionMessageOnName()
     {
+        $this->expectException(TypeError::class);
+
         new PhpVariable(0);
     }
 }

@@ -4,29 +4,31 @@ declare(strict_types=1);
 
 namespace WsdlToPhp\PhpGenerator\Element;
 
+use InvalidArgumentException;
+
 class PhpAnnotationBlock extends AbstractElement
 {
-    /**
-     * @param array $annotations
-     */
     public function __construct(array $annotations = [])
     {
         parent::__construct('_');
         $this->setAnnotations($annotations);
     }
+
     /**
-     * @throws \InvalidArgumentException
+     * @throws InvalidArgumentException
      * @param string[]|array[]|PhpAnnotation[] $annotations
      * @return PhpAnnotationBlock
      */
-    protected function setAnnotations(array $annotations): PhpAnnotationBlock
+    protected function setAnnotations(array $annotations): self
     {
-        if (!self::annotationsAreValid($annotations)) {
-            throw new \InvalidArgumentException('Annotations are not valid');
+        if (!static::annotationsAreValid($annotations)) {
+            throw new InvalidArgumentException('Annotations are not valid');
         }
-        $this->children = self::transformAnnotations($annotations);
+        $this->children = static::transformAnnotations($annotations);
+
         return $this;
     }
+
     /**
      * @param string[]|array[]|PhpAnnotation[] $annotations
      * @return PhpAnnotation[]
@@ -37,10 +39,12 @@ class PhpAnnotationBlock extends AbstractElement
         foreach ($annotations as $annotation) {
             $finalAnnotations[] = self::transformAnnotation($annotation);
         }
+
         return $finalAnnotations;
     }
+
     /**
-     * @throws \InvalidArgumentException
+     * @throws InvalidArgumentException
      * @param string|array|PhpAnnotation $annotation
      * @return PhpAnnotation
      */
@@ -53,9 +57,10 @@ class PhpAnnotationBlock extends AbstractElement
         } elseif (is_array($annotation) && array_key_exists('content', $annotation)) {
             return new PhpAnnotation(array_key_exists('name', $annotation) ? $annotation['name'] : PhpAnnotation::NO_NAME, $annotation['content']);
         } else {
-            throw new \InvalidArgumentException(sprintf('Annotation parameter "%s" is invalid', gettype($annotation)));
+            throw new InvalidArgumentException(sprintf('Annotation parameter "%s" is invalid', gettype($annotation)));
         }
     }
+
     /**
      * @param string[]|array[]|PhpAnnotation[] $annotations
      * @return bool
@@ -64,20 +69,23 @@ class PhpAnnotationBlock extends AbstractElement
     {
         $valid = true;
         foreach ($annotations as $annotation) {
-            $valid &= self::annotationIsValid($annotation);
+            $valid &= static::annotationIsValid($annotation);
         }
+
         return (bool) $valid;
     }
+
     /**
      * @param string|array|PhpAnnotation $annotation
      * @return bool
      */
     protected static function annotationIsValid($annotation): bool
     {
-        return self::stringIsValid($annotation, false) || (is_array($annotation) && array_key_exists('content', $annotation)) || $annotation instanceof PhpAnnotation;
+        return static::stringIsValid($annotation, false) || (is_array($annotation) && array_key_exists('content', $annotation)) || $annotation instanceof PhpAnnotation;
     }
+
     /**
-     * @throws \InvalidArgumentException
+     * @throws InvalidArgumentException
      * @param mixed $child
      * @return PhpAnnotationBlock
      */
@@ -87,20 +95,15 @@ class PhpAnnotationBlock extends AbstractElement
             return parent::addChild($child);
         }
         $this->children[] = $this->transformAnnotation($child);
+
         return $this;
     }
-    /**
-     * @see \WsdlToPhp\PhpGenerator\Element\AbstractElement::getPhpDeclaration()
-     * @return string
-     */
+
     public function getPhpDeclaration(): string
     {
         return '';
     }
-    /**
-     * defines authorized children element types
-     * @return string[]
-     */
+
     public function getChildrenTypes(): array
     {
         return [
@@ -109,21 +112,23 @@ class PhpAnnotationBlock extends AbstractElement
             PhpAnnotation::class,
         ];
     }
+
     /**
      * Allows to generate content before children content is generated
-     * @param int $indentation
+     * @param int|null $indentation
      * @return string
      */
-    public function getLineBeforeChildren(int $indentation = null): string
+    public function getLineBeforeChildren(?int $indentation = null): string
     {
         return $this->getIndentedString(parent::OPEN_ANNOTATION, $indentation);
     }
+
     /**
      * Allows to generate content after children content is generated
-     * @param int $indentation
+     * @param int|null $indentation
      * @return string
      */
-    public function getLineAfterChildren(int $indentation = null): string
+    public function getLineAfterChildren(?int $indentation = null): string
     {
         return $this->getIndentedString(parent::CLOSE_ANNOTATION, $indentation);
     }

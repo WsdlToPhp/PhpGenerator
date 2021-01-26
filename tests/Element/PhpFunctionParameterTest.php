@@ -4,17 +4,18 @@ declare(strict_types=1);
 
 namespace WsdlToPhp\PhpGenerator\Tests\Element;
 
+use InvalidArgumentException;
+use TypeError;
 use WsdlToPhp\PhpGenerator\Element\PhpFunctionParameter;
 use WsdlToPhp\PhpGenerator\Tests\TestCase;
 use WsdlToPhp\PhpGenerator\Element\PhpMethod;
 
 class PhpFunctionParameterTest extends TestCase
 {
-    /**
-     * @expectedException InvalidArgumentException
-     */
     public function testSetType()
     {
+        $this->expectException(InvalidArgumentException::class);
+
         $functionParameter = new PhpFunctionParameter('foo', true);
 
         $functionParameter->setType(new PhpMethod('Bar'));
@@ -30,6 +31,11 @@ class PhpFunctionParameterTest extends TestCase
     public function testTypeIsValid()
     {
         $this->assertTrue(PhpFunctionParameter::typeIsValid('string'));
+    }
+
+    public function testNullableTypeIsValid()
+    {
+        $this->assertTrue(PhpFunctionParameter::typeIsValid('?string'));
     }
 
     public function testTypeIsValidAccentuated()
@@ -58,11 +64,17 @@ class PhpFunctionParameterTest extends TestCase
         $this->assertSame('My\Name\Space $foo = null', $functionParameter->toString());
     }
 
-    /**
-     * @expectedException \TypeError
-     */
+    public function testToStringWithNamespacedNullableParameter()
+    {
+        $functionParameter = new PhpFunctionParameter('foo', null, '?My\Name\Space');
+
+        $this->assertSame('?My\Name\Space $foo = null', $functionParameter->toString());
+    }
+
     public function testExceptionMessageOnName()
     {
+        $this->expectException(TypeError::class);
+
         new PhpFunctionParameter(0);
     }
 }

@@ -6,13 +6,13 @@ namespace WsdlToPhp\PhpGenerator\Component;
 
 interface GenerateableInterface
 {
-    /**
-     * @var string
-     */
     const BREAK_LINE_CHAR = "\n";
+
     /**
      * Must return the strict representation for the current element
      * @return string
      */
     public function toString(): string;
+
+    public function __toString(): string;
 }

@@ -12,9 +12,33 @@ Using one of these elements, you can generate the content of a basic element:
 - property class
 - constant
 - annotation block
+- directive
 
 ## Main features
 ### Generate any basic PHP source code you want using a flexible PHP library
+
+#### Create a directive
+##### With one directive
+```php
+$declare = new PhpDeclare(PhpDeclare::DIRECTIVE_STRICT_TYPES, 1);
+echo $declare->toString();
+```
+displays
+```php
+declare(strict_types=1);
+```
+
+##### With multiple directives
+```php
+$declare = new PhpDeclare(PhpDeclare::DIRECTIVE_STRICT_TYPES, 1);
+$declare->addChild(new PhpDeclare(PhpDeclare::DIRECTIVE_TICKS, 1));
+$declare->addChild(new PhpDeclare(PhpDeclare::DIRECTIVE_ENCODING, 'UTF-8'));
+echo $declare->toString();
+```
+displays
+```php
+declare(strict_types=1, ticks=1, encoding='UTF-8');
+```
 
 #### Create a variable of any type
 ##### An integer
@@ -485,6 +509,7 @@ displays
 #### Containing an annotation block and a class
 ```php
 $file = new PhpFile('foo');
+$file->addChild(new PhpDeclare(PhpDeclare::DIRECTIVE_STRICT_TYPES, 1));
 $file->addChild(new PhpAnnotationBlock([
     'date is the key',
     'time is the core key',
@@ -497,6 +522,9 @@ echo $file->toString();
 displays
 ```php
 <?php
+
+declare(strict_types=1);
+
 /**
  * date is the key
  * time is the core key
@@ -512,7 +540,7 @@ class Foo
 ## Main constraints
 Each element must only have access to its sub content, this means a class does not care of its annotations:
 
-- a file contains: constants, variables, annotation blocks, empty string lines, classes, functions, interfaces
+- a file contains: directives, constants, variables, annotation blocks, empty string lines, classes, functions, interfaces
 - a class contains/an abstract class: constants, properties, methods, annotation blocks, empty string lines
 - an interface contains: constants, methods, annotation blocks, empty string lines
 - a method contains: variables, annotation blocks, string code lines, empty string lines

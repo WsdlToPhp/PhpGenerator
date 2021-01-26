@@ -1,5 +1,22 @@
 # CHANGELOG
 
+## 3.0.0 - 2021/01/26
+- use `splitbrain/phpfarm:jessie` as Docker image and fix docker image settings
+- Code requires PHP >= 7.4
+- Code cleaning
+- BC:
+    - `WsdlToPhp\PhpGenerator\Element\PhpFunction::__construct` has a new parameter after the `$parameters` parameter named `$returnType` which is a string allowing to set the function return type
+    - `WsdlToPhp\PhpGenerator\Element\PhpMethod::__construct` has a new parameter after the `$parameters` parameter named `$returnType` which is a string allowing to set the method return type
+    - `WsdlToPhp\PhpGenerator\Component\PhpClass::addMethod` has a new parameter after the `$parameters` parameter named `$returnType` which is a string allowing to set the method return type
+    - `WsdlToPhp\PhpGenerator\Component\PhpInterface::addMethod` has a new parameter after the `$parameters` parameter named `$returnType` which is a string allowing to set the method return type
+- Implementation of the PHP `declare` statement
+- `GenerateableInterface` elements and components now implement the `__toString` method
+- Update READMEs
+- Update Travis CI settings
+- Update PHPUnit settings
+- Update LICENSE file
+- Version 2.0 is no more maintained
+
 ## 2.0.0
 - Use PHP 7.1 features
 - Refactore code

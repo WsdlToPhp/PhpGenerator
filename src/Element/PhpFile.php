@@ -6,31 +6,23 @@ namespace WsdlToPhp\PhpGenerator\Element;
 
 class PhpFile extends AbstractElement
 {
-    /**
-     * @var string
-     */
     const START_FILE = '<?php';
-    /**
-     * @see \WsdlToPhp\PhpGenerator\Element\AbstractElement::getPhpDeclaration()
-     * @return string
-     */
+
     public function getPhpDeclaration(): string
     {
         return self::START_FILE;
     }
-    /**
-     * @see \WsdlToPhp\PhpGenerator\Element\AbstractElement::toString()
-     * @param int $indentation
-     * @return string
-     */
-    public function toString(int $indentation = null): string
+
+    public function getLineBeforeChildren(?int $indentation = null): string
+    {
+        return '';//self::BREAK_LINE_CHAR;
+    }
+
+    public function toString(?int $indentation = null): string
     {
         return sprintf('%s%s', parent::toString($indentation), self::BREAK_LINE_CHAR);
     }
-    /**
-     * @see \WsdlToPhp\PhpGenerator\Element\AbstractElement::getChildrenTypes()
-     * @return string[]
-     */
+
     public function getChildrenTypes(): array
     {
         return [
@@ -38,6 +30,7 @@ class PhpFile extends AbstractElement
             PhpAnnotationBlock::class,
             PhpClass::class,
             PhpConstant::class,
+            PhpDeclare::class,
             PhpFunction::class,
             PhpInterface::class,
             PhpVariable::class,

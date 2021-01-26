@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace WsdlToPhp\PhpGenerator\Tests\Element;
 
+use InvalidArgumentException;
+use TypeError;
 use WsdlToPhp\PhpGenerator\Element\PhpVariable;
 use WsdlToPhp\PhpGenerator\Element\PhpProperty;
 use WsdlToPhp\PhpGenerator\Tests\TestCase;
@@ -83,31 +85,28 @@ class PhpPropertyTest extends TestCase
         $this->assertSame('protected $foo = null;', $property->getPhpDeclaration());
     }
 
-    /**
-     * @expectedException InvalidArgumentException
-     */
     public function testAddChild()
     {
+        $this->expectException(InvalidArgumentException::class);
+
         $property = new PhpProperty('Foo');
 
         $property->addChild(new PhpVariable('Bar'));
     }
 
-    /**
-     * @expectedException InvalidArgumentException
-     */
     public function testSetAccess()
     {
+        $this->expectException(InvalidArgumentException::class);
+
         $property = new PhpProperty('Foo');
 
         $property->setAccess(' public');
     }
 
-    /**
-     * @expectedException \TypeError
-     */
     public function testExceptionMessageOnName()
     {
+        $this->expectException(TypeError::class);
+
         new PhpProperty(0);
     }
 }

@@ -1,14 +1,3 @@
-<?php
-
-declare(strict_types=1);
-
-namespace My\Testing\NamespaceName;
-
-use My\Testing\ParentNamespace\Model;
-use My\Testing\ParentNamespace\Repository;
-use My\Testing\ParentNamespace\Generator;
-use My\Testing\ParentNamespace\Foo as FooType;
-
 interface Foo extends stdClass
 {
     /**
@@ -36,5 +25,5 @@ interface Foo extends stdClass
      * @date 2012-03-01
      * @return void
      */
-    public function uselessMethod($uselessParameter = null, $unusedParameter);
+    public function uselessMethod($uselessParameter = null, $unusedParameter): void;
 }

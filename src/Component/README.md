@@ -110,6 +110,7 @@ $class
         'unusedParameter'
     ]);
 $file
+    ->setDeclare(PhpDeclare::DIRECTIVE_STRICT_TYPES, 1)
     ->setNamespace('My\\Testing\\NamespaceName')
     ->addUse('My\\Testing\\ParentNamespace\\Model')
     ->addUse('My\\Testing\\ParentNamespace\\Repository')
@@ -121,6 +122,8 @@ echo $file->toString();
 displays
 ```php
 <?php
+
+declare(strict_types=1);
 
 namespace My\Testing\NamespaceName;
 
