@@ -31,6 +31,7 @@ class PhpFunctionTest extends TestCase
 
         $this->assertSame('function foo($bar, $demo = 1, $sample = null, $deamon = true)', $function->getPhpDeclaration());
     }
+
     public function testGetPhpDeclarationWithReturnType()
     {
         $function = new PhpFunction('foo', [
@@ -165,6 +166,28 @@ class PhpFunctionTest extends TestCase
             ->addChild('return $bar;');
 
         $this->assertSame("function foo(\$bar, \$demo = 1, \$sample = null, \$deamon = true): int\n{\n    \$bar = 1;\n    return \$bar;\n}", $function->toString());
+    }
+
+    public function testToStringWithBodyWithNullableReturnType()
+    {
+        $function = new PhpFunction('foo', [
+            'bar',
+            [
+                'name' => 'demo',
+                'value' => 1,
+            ],
+            [
+                'name' => 'sample',
+                'value' => null,
+            ],
+            new PhpFunctionParameter('deamon', true),
+        ], '?int');
+
+        $function
+            ->addChild(new PhpVariable('bar', 1))
+            ->addChild('return $bar;');
+
+        $this->assertSame("function foo(\$bar, \$demo = 1, \$sample = null, \$deamon = true): ?int\n{\n    \$bar = 1;\n    return \$bar;\n}", $function->toString());
     }
 
     public function testExceptionMessageOnName()

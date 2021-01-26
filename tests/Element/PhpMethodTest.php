@@ -196,6 +196,24 @@ class PhpMethodTest extends TestCase
         $this->assertSame("public function foo(\$bar, \$demo = 1, \$sample = null, \$deamon = true): App\\Entity\n{\n}", $method->toString());
     }
 
+    public function testPublicEmptyBodyToStringWithNullableReturnType()
+    {
+        $method = new PhpMethod('foo', [
+            'bar',
+            [
+                'name' => 'demo',
+                'value' => 1,
+            ],
+            [
+                'name' => 'sample',
+                'value' => null,
+            ],
+            new PhpFunctionParameter('deamon', true),
+        ], '?App\\Entity');
+
+        $this->assertSame("public function foo(\$bar, \$demo = 1, \$sample = null, \$deamon = true): ?App\\Entity\n{\n}", $method->toString());
+    }
+
     public function testPublicWithBodyToString()
     {
         $method = new PhpMethod('foo', [
