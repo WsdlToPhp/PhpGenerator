@@ -40,7 +40,7 @@ $ docker exec -it php_generator php-7.4 -dmemory_limit=-1 vendor/bin/phpunit
 
 ## FAQ
 
-If you have a question, feel free to [create an issue](https://github.com/WsdlToPhp/PackageGenerator/issues/new).
+If you have a question, feel free to [create an issue](https://github.com/WsdlToPhp/PhpGenerator/issues/new).
 
 ## License
 
