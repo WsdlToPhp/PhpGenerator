@@ -11,6 +11,10 @@
     - `WsdlToPhp\PhpGenerator\Component\PhpInterface::__addMethod` has a new parameter after the `$parameters` parameter named `$returnType` which is a string allowing to set the method return type
 - Implementation of the PHP `declare` statement
 - `GenerateableInterface` elements and components now implement the `__toString` method
+- Update READMEs
+- Update Travis CI settings
+- Update PHPUnit settings
+- Update LICENSE file
 
 ## 2.0.0
 - Use PHP 7.1 features

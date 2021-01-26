@@ -7,6 +7,7 @@
 [![Build Status](https://api.travis-ci.org/WsdlToPhp/PhpGenerator.svg)](https://travis-ci.org/WsdlToPhp/PhpGenerator)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/WsdlToPhp/PhpGenerator/badges/quality-score.png)](https://scrutinizer-ci.com/g/WsdlToPhp/PhpGenerator/)
 [![Code Coverage](https://scrutinizer-ci.com/g/WsdlToPhp/PhpGenerator/badges/coverage.png)](https://scrutinizer-ci.com/g/WsdlToPhp/PhpGenerator/)
+[![Total Downloads](https://poser.pugx.org/wsdltophp/phpgenerator/downloads)](https://packagist.org/packages/wsdltophp/phpgenerator)
 [![StyleCI](https://styleci.io/repos/36832375/shield)](https://styleci.io/repos/36832375)
 [![SensioLabsInsight](https://insight.sensiolabs.com/projects/e55e9115-5a3f-4d37-bfd5-b01c8de579f9/mini.png)](https://insight.sensiolabs.com/projects/e55e9115-5a3f-4d37-bfd5-b01c8de579f9)
 
