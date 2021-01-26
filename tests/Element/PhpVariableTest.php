@@ -114,6 +114,13 @@ class PhpVariableTest extends TestCase
         $this->assertSame('$foo = 0.4;', $variable->toString());
     }
 
+    public function test__toStringFloatValue()
+    {
+        $variable = new PhpVariable('foo', 0.4);
+
+        $this->assertSame('$foo = 0.4;', (string) $variable);
+    }
+
     public function testCyrillic()
     {
         $variable = new PhpVariable('КонтактнаяИнформация', 0.4);
