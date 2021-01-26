@@ -4,7 +4,10 @@ declare(strict_types=1);
 
 namespace WsdlToPhp\PhpGenerator\Tests\Element;
 
+use InvalidArgumentException;
+use TypeError;
 use WsdlToPhp\PhpGenerator\Element\PhpClass;
+use WsdlToPhp\PhpGenerator\Element\PhpDeclare;
 use WsdlToPhp\PhpGenerator\Element\PhpFunction;
 use WsdlToPhp\PhpGenerator\Element\PhpVariable;
 use WsdlToPhp\PhpGenerator\Element\PhpMethod;
@@ -15,11 +18,10 @@ use WsdlToPhp\PhpGenerator\Tests\TestCase;
 
 class PhpFileTest extends TestCase
 {
-    /**
-     * @expectedException InvalidArgumentException
-     */
     public function testException()
     {
+        $this->expectException(InvalidArgumentException::class);
+
         $file = new PhpFile('foo');
 
         $file->addChild(new PhpMethod('Foo'));
@@ -68,6 +70,15 @@ class PhpFileTest extends TestCase
         $this->assertSame("<?php\n/**\n * date is the key\n * time is the core key\n */\n", $file->toString());
     }
 
+    public function testAddDeclareToString()
+    {
+        $file = new PhpFile('foo');
+
+        $file->addChild(new PhpDeclare(PhpDeclare::DIRECTIVE_STRICT_TYPES, 1));
+
+        $this->assertSame("<?php\ndeclare(strict_types=1);\n", $file->toString());
+    }
+
     public function testAnnotationClassMethodBlockToString()
     {
         $file = new PhpFile('foo');
@@ -84,11 +95,10 @@ class PhpFileTest extends TestCase
         $this->assertSame("<?php\n/**\n * date is the key\n * time is the core key\n */\nclass Foo\n{\n    public function Bar()\n    {\n    }\n}\n", $file->toString());
     }
 
-    /**
-     * @expectedException \TypeError
-     */
     public function testExceptionMessageOnName()
     {
+        $this->expectException(TypeError::class);
+
         new PhpFile(0);
     }
 }

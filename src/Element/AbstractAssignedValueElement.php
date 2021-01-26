@@ -4,40 +4,40 @@ declare(strict_types=1);
 
 namespace WsdlToPhp\PhpGenerator\Element;
 
+use InvalidArgumentException;
+
 abstract class AbstractAssignedValueElement extends AbstractAccessRestrictedElement
 {
     /**
      * Use this constant as value to ensure element has not assigned value
-     * @var unknown
      */
     const NO_VALUE = '##NO_VALUE##';
+
     /**
      * @var mixed
      */
     protected $value;
-    /**
-     * @param string $name
-     * @param mixed $value
-     * @param string $access
-     */
+
     public function __construct(string $name, $value = null, string $access = parent::ACCESS_PUBLIC)
     {
         parent::__construct($name, $access);
         $this->setValue($value);
     }
+
     /**
-     * @throws \InvalidArgumentException
+     * @throws InvalidArgumentException
      * @param mixed $value
      * @return AbstractAssignedValueElement
      */
     public function setValue($value): AbstractAssignedValueElement
     {
         if ($this->getAcceptNonScalarValue() === false && !is_scalar($value) && $value !== null) {
-            throw new \InvalidArgumentException(sprintf('Value of type "%s" is not a valid scalar value for %s object', gettype($value), $this->getCalledClass()));
+            throw new InvalidArgumentException(sprintf('Value of type "%s" is not a valid scalar value for %s object', gettype($value), $this->getCalledClass()));
         }
         $this->value = $value;
         return $this;
     }
+
     /**
      * @return mixed
      */
@@ -45,27 +45,21 @@ abstract class AbstractAssignedValueElement extends AbstractAccessRestrictedElem
     {
         return $this->value;
     }
-    /**
-     * @return bool
-     */
+
     public function hasValue(): bool
     {
         return $this->getValue() !== self::NO_VALUE;
     }
-    /**
-     * @return mixed
-     */
-    public function getPhpValue()
+
+    public function getPhpValue(): ?string
     {
         if (!$this->hasValue()) {
             return '';
         }
         return $this->getFinalValue();
     }
-    /**
-     * @return mixed
-     */
-    protected function getFinalValue()
+
+    protected function getFinalValue(): ?string
     {
         if (is_scalar($this->getValue()) && ($scalarValue = $this->getScalarValue($this->getValue())) !== null) {
             return $scalarValue;
@@ -74,6 +68,7 @@ abstract class AbstractAssignedValueElement extends AbstractAccessRestrictedElem
         }
         return $this->getAnyValue($this->getValue());
     }
+
     /**
      * @param mixed $value
      * @return mixed
@@ -88,6 +83,7 @@ abstract class AbstractAssignedValueElement extends AbstractAccessRestrictedElem
         }
         return $scalarValue;
     }
+
     /**
      * @param mixed $value
      * @return string
@@ -101,33 +97,36 @@ abstract class AbstractAssignedValueElement extends AbstractAccessRestrictedElem
         }
         return $exportedValue;
     }
-    /**
-     * @return string
-     */
+
     public function getPhpDeclaration(): string
     {
         return sprintf('%s%s%s%s%s%s%s', $this->getPhpAccess(), $this->getAssignmentDeclarator(), $this->getPhpName(), $this->getAssignmentSign(), $this->getPhpValue(), $this->getAssignmentFinishing(), $this->endsWithSemicolon() === true ? ';' : '');
     }
+
     /**
      * returns the way the assignment is declared
      * @return string
      */
     abstract public function getAssignmentDeclarator(): string;
+
     /**
      * returns the way the value is assigned to the element
      * @returns string
      */
     abstract public function getAssignmentSign(): string;
+
     /**
      * returns the way the assignment is finished
      * @return string
      */
     abstract public function getAssignmentFinishing(): string;
+
     /**
      * indicates if the element accepts non scalar value
      * @return bool
      */
     abstract public function getAcceptNonScalarValue(): bool;
+
     /**
      * indicates if the element finishes with a semicolon or not
      * @return bool

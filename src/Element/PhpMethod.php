@@ -6,164 +6,140 @@ namespace WsdlToPhp\PhpGenerator\Element;
 
 class PhpMethod extends PhpFunction
 {
-    /**
-     * @var bool
-     */
-    protected $final;
-    /**
-     * @var bool
-     */
-    protected $static;
-    /**
-     * @var bool
-     */
-    protected $abstract;
-    /**
-     * @var bool
-     */
-    protected $hasBody;
+    protected bool $final;
+
+    protected bool $static;
+
+    protected bool $abstract;
+
+    protected bool $hasBody;
+
     /**
      * @param string $name
      * @param string[]|PhpFunctionParameter[] $parameters
+     * @param string|null $returnType
      * @param string $access
      * @param bool $abstract
      * @param bool $static
      * @param bool $final
      * @param bool $hasBody
      */
-    public function __construct(string $name, array $parameters = [], string $access = parent::ACCESS_PUBLIC, bool $abstract = false, bool $static = false, bool $final = false, bool $hasBody = true)
+    public function __construct(string $name, array $parameters = [], ?string $returnType = null, string $access = parent::ACCESS_PUBLIC, bool $abstract = false, bool $static = false, bool $final = false, bool $hasBody = true)
     {
-        parent::__construct($name, $parameters);
+        parent::__construct($name, $parameters, $returnType);
         $this
-            ->setAccess($access)
             ->setAbstract($abstract)
             ->setStatic($static)
             ->setFinal($final)
-            ->setHasBody($hasBody);
+            ->setHasBody($hasBody)
+            ->setAccess($access);
     }
-    /**
-     * @param bool $abstract
-     * @return PhpMethod
-     */
-    public function setAbstract(bool $abstract): PhpMethod
+
+    public function setAbstract(bool $abstract): self
     {
         $this->abstract = $abstract;
         return $this;
     }
-    /**
-     * @return bool
-     */
+
     public function getAbstract(): bool
     {
         return $this->abstract;
     }
-    /**
-     * @return string
-     */
+
     protected function getPhpAbstract(): string
     {
         return $this->getAbstract() === true ? 'abstract ' : '';
     }
-    /**
-     * @param bool $final
-     * @return PhpMethod
-     */
-    public function setFinal(bool $final): PhpMethod
+
+    public function setFinal(bool $final): self
     {
         $this->final = $final;
         return $this;
     }
-    /**
-     * @return bool
-     */
+
     public function getFinal(): bool
     {
         return $this->final;
     }
-    /**
-     * @return string
-     */
+
     protected function getPhpFinal(): string
     {
         return $this->getFinal() === true ? 'final ' : '';
     }
-    /**
-     * @param bool $static
-     * @return PhpMethod
-     */
-    public function setStatic(bool $static): PhpMethod
+
+    public function setStatic(bool $static): self
     {
         $this->static = $static;
         return $this;
     }
-    /**
-     * @return bool
-     */
+
     public function getStatic(): bool
     {
         return $this->static;
     }
-    /**
-     * @return string
-     */
+
     protected function getPhpStatic(): string
     {
         return $this->getStatic() === true ? 'static ' : '';
     }
-    /**
-     * @param bool $hasBody
-     * @return PhpMethod
-     */
-    public function setHasBody(bool $hasBody): PhpMethod
+
+    public function setHasBody(bool $hasBody): self
     {
         $this->hasBody = $hasBody;
         return $this;
     }
-    /**
-     * @return bool
-     */
+
     public function getHasBody(): bool
     {
         return $this->hasBody;
     }
-    /**
-     * @return string
-     */
+
+    protected function getPhpReturnType(): string
+    {
+        return $this->getReturnType() ? sprintf(': %s', $this->getReturnType()) : '';
+    }
+
     protected function getPhpDeclarationEnd(): string
     {
         return ($this->getHasBody() === false || $this->getAbstract() === true) ? ';' : '';
     }
-    /**
-     * @see \WsdlToPhp\PhpGenerator\Element\AbstractAccessRestrictedElement::getPhpDeclaration()
-     * @return string
-     */
+
     public function getPhpDeclaration(): string
     {
-        return sprintf('%s%s%s%sfunction %s(%s)%s', $this->getPhpFinal(), $this->getPhpAbstract(), $this->getPhpAccess(), $this->getPhpStatic(), $this->getPhpName(), $this->getPhpParameters(), $this->getPhpDeclarationEnd());
+        return sprintf(
+            '%s%s%s%sfunction %s(%s)%s%s',
+            $this->getPhpFinal(),
+            $this->getPhpAbstract(),
+            $this->getPhpAccess(),
+            $this->getPhpStatic(),
+            $this->getPhpName(),
+            $this->getPhpParameters(),
+            $this->getPhpReturnType(),
+            $this->getPhpDeclarationEnd()
+        );
     }
-    /**
-     * indicates if the current element has accessibility constraint
-     * @return bool
-     */
+
     public function hasAccessibilityConstraint(): bool
     {
         return true;
     }
+
     /**
      * Allows to generate content before children content is generated
-     * @param int $indentation
+     * @param int|null $indentation
      * @return string
      */
-    public function getLineBeforeChildren(int $indentation = null): string
+    public function getLineBeforeChildren(?int $indentation = null): string
     {
         if ($this->getHasBody() === true) {
             return parent::getLineBeforeChildren($indentation);
         }
         return '';
     }
+
     /**
      * Allows to generate content after children content is generated
-     * @param int $indentation
+     * @param int|null $indentation
      * @return string
      */
     public function getLineAfterChildren(int $indentation = null): string
@@ -173,10 +149,7 @@ class PhpMethod extends PhpFunction
         }
         return '';
     }
-    /**
-     * @see \WsdlToPhp\PhpGenerator\Element\AbstractElement::getChildren()
-     * @return array
-     */
+
     public function getChildren(): array
     {
         if ($this->getHasBody() === true) {
@@ -184,6 +157,7 @@ class PhpMethod extends PhpFunction
         }
         return [];
     }
+
     /**
      * Allows to indicate that children are contained by brackets,
      * in the case the method returns true, getBracketBeforeChildren

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace WsdlToPhp\PhpGenerator\Tests\Element;
 
+use InvalidArgumentException;
 use WsdlToPhp\PhpGenerator\Element\PhpFunction;
 use WsdlToPhp\PhpGenerator\Element\PhpAnnotation;
 use WsdlToPhp\PhpGenerator\Element\PhpAnnotationBlock;
@@ -76,11 +77,10 @@ class PhpAnnotationBlockTest extends TestCase
         $this->assertCount(2, $annotationBlock->getChildren());
     }
 
-    /**
-     * @expectedException InvalidArgumentException
-     */
     public function testAddChildWithException()
     {
+        $this->expectException(InvalidArgumentException::class);
+
         $annotationBlock = new PhpAnnotationBlock([
             'Foo',
         ]);
@@ -120,11 +120,10 @@ class PhpAnnotationBlockTest extends TestCase
         $this->assertSame("/**\n * @date 2015-01-01\n * @author PhpTeam\n * This annotation is useful!\n */", $annotationBlock->toString());
     }
 
-    /**
-     * @expectedException InvalidArgumentException
-     */
     public function testAddChildContentWithException()
     {
+        $this->expectException(InvalidArgumentException::class);
+
         $annotationBlock = new PhpAnnotationBlock();
 
         $annotationBlock->addChild([
@@ -144,11 +143,10 @@ class PhpAnnotationBlockTest extends TestCase
         $this->assertCount(1, $annotationBlock->getChildren());
     }
 
-    /**
-     * @expectedException InvalidArgumentException
-     */
     public function testGetConstructWithException()
     {
+        $this->expectException(InvalidArgumentException::class);
+
         new PhpAnnotationBlock([
             new PhpFunction('Bar'),
         ]);

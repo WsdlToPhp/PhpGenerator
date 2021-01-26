@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace WsdlToPhp\PhpGenerator\Tests\Element;
 
+use InvalidArgumentException;
+use TypeError;
 use WsdlToPhp\PhpGenerator\Element\PhpVariable;
 use WsdlToPhp\PhpGenerator\Element\PhpProperty;
 use WsdlToPhp\PhpGenerator\Element\PhpAnnotationBlock;
@@ -119,24 +121,31 @@ class PhpClassTest extends TestCase
         $this->assertSame('abstract class Foo extends Bar implements Demo, Sample', $class->getPhpDeclaration());
     }
 
-    /**
-     * @expectedException InvalidArgumentException
-     */
     public function testAddChildWithException()
     {
+        $this->expectException(InvalidArgumentException::class);
+
         $class = new PhpClass('Foo');
 
         $class->addChild(new PhpInterface('Bar'));
     }
 
-    /**
-     * @expectedException InvalidArgumentException
-     */
     public function testSetAbstract()
     {
+        $this->expectException(TypeError::class);
+
         $class = new PhpClass('Foo');
 
         $class->setAbstract(1);
+    }
+
+    public function testSetExtendsWithException()
+    {
+        $this->expectException(InvalidArgumentException::class);
+
+        $class = new PhpClass('Foo');
+
+        $class->setExtends(0);
     }
 
     public function testSetExtends()
@@ -146,6 +155,17 @@ class PhpClassTest extends TestCase
         $class->setExtends($extends = 'Partagé');
 
         $this->assertSame($extends, $class->getExtends());
+    }
+
+    public function testSetInterfacesWithException()
+    {
+        $this->expectException(InvalidArgumentException::class);
+
+        $class = new PhpClass('Foo');
+
+        $class->setInterfaces($interfaces = [
+            0,
+        ]);
     }
 
     public function testSetInterfaces()
@@ -226,7 +246,7 @@ class PhpClassTest extends TestCase
     {
         $class = new PhpClass('Foo');
 
-        $class->addChild(new PhpMethod('bar', [], PhpMethod::ACCESS_PROTECTED));
+        $class->addChild(new PhpMethod('bar', [], null, PhpMethod::ACCESS_PROTECTED));
 
         $this->assertSame("class Foo\n{\n    protected function bar()\n    {\n    }\n}", $class->toString());
     }
@@ -235,7 +255,7 @@ class PhpClassTest extends TestCase
     {
         $class = new PhpClass('Foo');
 
-        $class->addChild(new PhpMethod('bar', [], PhpMethod::ACCESS_PRIVATE));
+        $class->addChild(new PhpMethod('bar', [], null, PhpMethod::ACCESS_PRIVATE));
 
         $this->assertSame("class Foo\n{\n    private function bar()\n    {\n    }\n}", $class->toString());
     }
@@ -248,7 +268,7 @@ class PhpClassTest extends TestCase
             'bar',
             'foo',
             'sample',
-        ], PhpMethod::ACCESS_PRIVATE);
+        ], null, PhpMethod::ACCESS_PRIVATE);
         $method->addChild(new PhpVariable('foo', 1));
         $class->addChild($method);
 
@@ -262,11 +282,10 @@ class PhpClassTest extends TestCase
         $this->assertSame("class Foo extends \\DOMDocument\n{\n}", $class->toString());
     }
 
-    /**
-     * @expectedException \TypeError
-     */
     public function testExceptionMessageOnName()
     {
+        $this->expectException(TypeError::class);
+
         new PhpClass(0);
     }
 }

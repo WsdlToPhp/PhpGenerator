@@ -4,9 +4,11 @@ declare(strict_types=1);
 
 namespace WsdlToPhp\PhpGenerator\Tests\Component;
 
+use InvalidArgumentException;
 use WsdlToPhp\PhpGenerator\Component\PhpClass as PhpClassComponent;
 use WsdlToPhp\PhpGenerator\Component\PhpFile as PhpFileComponent;
 use WsdlToPhp\PhpGenerator\Component\PhpInterface as PhpInterfaceComponent;
+use WsdlToPhp\PhpGenerator\Element\PhpDeclare;
 use WsdlToPhp\PhpGenerator\Element\PhpFunctionParameter as PhpFunctionParameterElement;
 use WsdlToPhp\PhpGenerator\Element\PhpAnnotation as PhpAnnotationElement;
 use WsdlToPhp\PhpGenerator\Element\PhpProperty as PhpPropertyElement;
@@ -46,7 +48,11 @@ class PhpFileTest extends AbstractComponent
                 'unusedParameter',
             ]);
 
+        $declare = (new PhpDeclare(PhpDeclare::DIRECTIVE_STRICT_TYPES, 1))
+            ->addChild(new PhpDeclare(PhpDeclare::DIRECTIVE_ENCODING, 'UTF-8'));
+
         $file
+            ->setDeclareElement($declare)
             ->setNamespace('My\\Testing\\NamespaceName')
             ->addUse('My\\Testing\\ParentNamespace\\Model')
             ->addUse('My\\Testing\\ParentNamespace\\Repository')
@@ -57,11 +63,62 @@ class PhpFileTest extends AbstractComponent
         $this->assertSameContent(__FUNCTION__, $file);
     }
 
-    /**
-     * @expectedException InvalidArgumentException
-     */
+    public function testSimpleClassToStringWithReturnType()
+    {
+        $file = new PhpFileComponent('Foo');
+        $class = new PhpClassComponent('Foo', true, 'stdClass');
+
+        $class
+            ->addAnnotationBlock('@var string')
+            ->addConstant('FOO', 'theValue')
+            ->addAnnotationBlock('@var string')
+            ->addConstant('BAR', 'theOtherValue')
+            ->addAnnotationBlock(new PhpAnnotationElement('var', 'int'))
+            ->addProperty('bar', 1)
+            ->addAnnotationBlock(new PhpAnnotationElement('var', 'bool'))
+            ->addPropertyElement(new PhpPropertyElement('sample', true))
+            ->addAnnotationBlock([
+                new PhpAnnotationElement(PhpAnnotationElement::NO_NAME, 'This method is very useful'),
+                new PhpAnnotationElement('date', '2012-03-01'),
+                '@return mixed',
+            ])
+            ->addMethod('getMyValue', [
+                new PhpFunctionParameterElement('asString', true),
+                'unusedParameter',
+            ])
+            ->addAnnotationBlock([
+                new PhpAnnotationElement(PhpAnnotationElement::NO_NAME, 'This method is very useless'),
+                new PhpAnnotationElement('date', '2012-03-01'),
+                '@return void',
+            ])
+            ->addMethod('uselessMethod', [
+                new PhpFunctionParameterElement('uselessParameter', null),
+                'unusedParameter',
+            ], 'void')
+            ->addMethod('getMyEntity', [
+                new PhpFunctionParameterElement('entityId', PhpFunctionParameterElement::NO_VALUE, 'string'),
+            ], 'My\\Testing\\ParentNamespace\\Entity');
+
+        $declare = (new PhpDeclare(PhpDeclare::DIRECTIVE_STRICT_TYPES, 1))
+            ->addChild(new PhpDeclare(PhpDeclare::DIRECTIVE_ENCODING, 'UTF-8'));
+
+        $file
+            ->setDeclareElement($declare)
+            ->setNamespace('My\\Testing\\NamespaceName')
+            ->addUse('My\\Testing\\ParentNamespace\\Model')
+            ->addUse('My\\Testing\\ParentNamespace\\Repository')
+            ->addUse('My\\Testing\\ParentNamespace\\Entity')
+            ->addUse('My\\Testing\\ParentNamespace\\Generator')
+            ->addUse('My\\Testing\\ParentNamespace\\Foo', 'FooType', true)
+            ->addClassComponent($class);
+
+        $this->assertSameContent(__FUNCTION__, $file);
+    }
+
     public function testSetMainElementWithException()
     {
+        $this->expectException(InvalidArgumentException::class);
+
         $file = new PhpFileComponent('Foo');
 
         $file->setMainElement(new PhpFunctionParameterElement('bar'));
@@ -86,6 +143,7 @@ class PhpFileTest extends AbstractComponent
 
         $this->assertSame("<?php\nfunction name(\$bar)\n{\n}\n", $file->toString());
     }
+
     public function testSimpleInterfaceToString()
     {
         $file = new PhpFileComponent('Foo');
@@ -122,6 +180,7 @@ class PhpFileTest extends AbstractComponent
             ]);
 
         $file
+            ->setDeclare(PhpDeclare::DIRECTIVE_STRICT_TYPES, 1)
             ->setNamespace('My\\Testing\\NamespaceName')
             ->addUse('My\\Testing\\ParentNamespace\\Model')
             ->addUse('My\\Testing\\ParentNamespace\\Repository')

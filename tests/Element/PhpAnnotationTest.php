@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace WsdlToPhp\PhpGenerator\Tests\Element;
 
+use InvalidArgumentException;
+use TypeError;
 use WsdlToPhp\PhpGenerator\Element\PhpAnnotation;
 use WsdlToPhp\PhpGenerator\Tests\TestCase;
 
@@ -47,11 +49,10 @@ class PhpAnnotationTest extends TestCase
         $this->assertSame(" * @description This sample annotation is on one line This sample annotation is on one line This sample annotation is on one line This sample annotation is on one line This sample annotation is on one line This sample annotation is on one line This sample annotation is on one line", $annotation->getPhpDeclaration());
     }
 
-    /**
-     * @expectedException InvalidArgumentException
-     */
     public function testAddChildWithException()
     {
+        $this->expectException(InvalidArgumentException::class);
+
         $annotation = new PhpAnnotation('date', '2015-06-02');
 
         $annotation->addChild($annotation);
@@ -71,11 +72,10 @@ class PhpAnnotationTest extends TestCase
         $this->assertTrue($annotation->hasContent());
     }
 
-    /**
-     * @expectedException \TypeError
-     */
     public function testExceptionMessageOnName()
     {
+        $this->expectException(TypeError::class);
+
         new PhpAnnotation(0, '');
     }
 }

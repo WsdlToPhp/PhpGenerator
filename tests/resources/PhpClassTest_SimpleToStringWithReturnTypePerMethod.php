@@ -1,14 +1,3 @@
-<?php
-
-declare(strict_types=1, encoding='UTF-8');
-
-namespace My\Testing\NamespaceName;
-
-use My\Testing\ParentNamespace\Model;
-use My\Testing\ParentNamespace\Repository;
-use My\Testing\ParentNamespace\Generator;
-use My\Testing\ParentNamespace\Foo as FooType;
-
 abstract class Foo extends stdClass
 {
     /**
@@ -24,9 +13,15 @@ abstract class Foo extends stdClass
      */
     public $bar = 1;
     /**
+     * - documentation: The ID of the contact that performed the action, if available.
+     * May be blank for anonymous activity.
      * @var bool
      */
     public $sample = true;
+    /**
+     * @var string
+     */
+    public $noValue;
     /**
      * This method is very useful
      * @date 2012-03-01
@@ -40,7 +35,7 @@ abstract class Foo extends stdClass
      * @date 2012-03-01
      * @return void
      */
-    public function uselessMethod($uselessParameter = null, $unusedParameter)
+    public function uselessMethod($uselessParameter = null, $unusedParameter): void
     {
     }
 }

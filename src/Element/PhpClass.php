@@ -4,43 +4,31 @@ declare(strict_types=1);
 
 namespace WsdlToPhp\PhpGenerator\Element;
 
+use InvalidArgumentException;
+
 class PhpClass extends AbstractElement
 {
-    /**
-     * @var string
-     */
     const PHP_DECLARATION = 'class';
-    /**
-     * @var string
-     */
+
     const PHP_ABSTRACT_KEYWORD = 'abstract';
-    /**
-     * @var string
-     */
+
     const PHP_IMPLEMENTS_KEYWORD = 'implements';
-    /**
-     * @var string
-     */
+
     const PHP_EXTENDS_KEYWORD = 'extends';
-    /**
-     * @var bool
-     */
-    protected $abstract;
+
+    protected bool $abstract;
+
     /**
      * @var string|PhpClass
      */
     protected $extends;
+
     /**
      * @var string[]|PhpClass[]
      */
-    protected $interfaces;
-    /**
-     * @param string $name
-     * @param bool $abstract
-     * @param string|PhpClass|null $extends
-     * @param string[]|PhpClass[] $interfaces
-     */
-    public function __construct($name, $abstract = false, $extends = null, array $interfaces = [])
+    protected array $interfaces;
+
+    public function __construct(string $name, bool $abstract = false, $extends = null, array $interfaces = [])
     {
         parent::__construct($name);
         $this
@@ -48,46 +36,40 @@ class PhpClass extends AbstractElement
             ->setExtends($extends)
             ->setInterfaces($interfaces);
     }
-    /**
-     * @throws \InvalidArgumentException
-     * @param bool $abstract
-     * @return PhpClass
-     */
-    public function setAbstract($abstract): PhpClass
+
+    public function setAbstract(bool $abstract): self
     {
         if (!is_bool($abstract)) {
-            throw new \InvalidArgumentException(sprintf('Abstract must be a boolean, "%s" given', gettype($abstract)));
+            throw new InvalidArgumentException(sprintf('Abstract must be a boolean, "%s" given', gettype($abstract)));
         }
         $this->abstract = $abstract;
         return $this;
     }
-    /**
-     * @return bool
-     */
+
     public function getAbstract(): bool
     {
         return $this->abstract;
     }
-    /**
-     * @return string
-     */
+
     protected function getPhpAbstract(): string
     {
         return $this->getAbstract() === false ? '' : static::PHP_ABSTRACT_KEYWORD . ' ';
     }
+
     /**
-     * @throws \InvalidArgumentException
+     * @throws InvalidArgumentException
      * @param string|PhpClass|null $extends
      * @return PhpClass
      */
-    public function setExtends($extends): PhpClass
+    public function setExtends($extends): self
     {
         if (!self::extendsIsValid($extends)) {
-            throw new \InvalidArgumentException('Extends must be a string or a PhpClass instance');
+            throw new InvalidArgumentException('Extends must be a string or a PhpClass instance');
         }
         $this->extends = $extends;
         return $this;
     }
+
     /**
      * @param string|PhpClass|null $extends
      * @return bool
@@ -96,6 +78,7 @@ class PhpClass extends AbstractElement
     {
         return $extends === null || self::stringIsValid($extends, true, true) || $extends instanceof PhpClass;
     }
+
     /**
      * @return string|PhpClass
      */
@@ -103,27 +86,27 @@ class PhpClass extends AbstractElement
     {
         return $this->extends;
     }
-    /**
-     * @return string
-     */
+
     protected function getPhpExtends(): string
     {
         $extends = $this->getExtends();
         return empty($extends) ? '' : sprintf(' %s %s', static::PHP_EXTENDS_KEYWORD, ($extends instanceof PhpClass ? $extends->getName() : $extends));
     }
+
     /**
-     * @throws \InvalidArgumentException
+     * @throws InvalidArgumentException
      * @param string[]|PhpClass[] $interfaces
      * @return PhpClass
      */
-    public function setInterfaces(array $interfaces = []): PhpClass
+    public function setInterfaces(array $interfaces = []): self
     {
         if (!self::interfacesAreValid($interfaces)) {
-            throw new \InvalidArgumentException('Interfaces are not valid');
+            throw new InvalidArgumentException('Interfaces are not valid');
         }
         $this->interfaces = $interfaces;
         return $this;
     }
+
     /**
      * @param string[]|PhpClass[] $interfaces
      * @return bool
@@ -136,6 +119,7 @@ class PhpClass extends AbstractElement
         }
         return (bool) $valid;
     }
+
     /**
      * @param string|PhpClass $interface
      * @return bool
@@ -144,6 +128,7 @@ class PhpClass extends AbstractElement
     {
         return self::stringIsValid($interface) || $interface instanceof PhpClass;
     }
+
     /**
      *
      * @return string[]|PhpClass[]
@@ -152,6 +137,7 @@ class PhpClass extends AbstractElement
     {
         return $this->interfaces;
     }
+
     /**
      * @return string
      */
@@ -163,6 +149,7 @@ class PhpClass extends AbstractElement
         }
         return empty($interfaces) ? '' : sprintf(' %s%s', static::PHP_IMPLEMENTS_KEYWORD, implode(',', $interfaces));
     }
+
     /**
      * @param string|PhpClass $interface
      * @return string
@@ -171,13 +158,12 @@ class PhpClass extends AbstractElement
     {
         return sprintf(' %s', is_string($interface) ? $interface : $interface->getName());
     }
-    /**
-     * @return string
-     */
+
     public function getPhpDeclaration(): string
     {
         return trim(sprintf('%s%s %s%s%s', $this->getPhpAbstract(), static::PHP_DECLARATION, $this->getPhpName(), $this->getPhpExtends(), $this->getPhpInterfaces()));
     }
+
     /**
      * defines authorized children element types
      * @return string[]
@@ -192,6 +178,7 @@ class PhpClass extends AbstractElement
             PhpProperty::class,
         ];
     }
+
     /**
      * Allows to indicate that children are contained by brackets,
      * in the case the method returns true, getBracketBeforeChildren

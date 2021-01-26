@@ -4,50 +4,46 @@ declare(strict_types=1);
 
 namespace WsdlToPhp\PhpGenerator\Element;
 
+use InvalidArgumentException;
+
 class PhpFunction extends AbstractAccessRestrictedElement
 {
     /**
      * @var string[]|PhpFunctionParameter[]
      */
-    protected $parameters;
-    /**
-     * @param string $name
-     * @param mixed[]|PhpFunctionParameter[] $parameters
-     */
-    public function __construct(string $name, array $parameters = [])
+    protected array $parameters;
+
+    protected ?string $returnType;
+
+    public function __construct(string $name, array $parameters = [], ?string $returnType = null)
     {
         parent::__construct($name);
-        $this->setParameters($parameters);
+        $this
+            ->setParameters($parameters)
+            ->setReturnType($returnType);
     }
-    /**
-     * @throws \InvalidArgumentException
-     * @param array $parameters
-     * @return PhpFunction
-     */
-    public function setParameters(array $parameters): PhpFunction
+
+    public function setParameters(array $parameters): self
     {
-        if (!self::parametersAreValid($parameters)) {
-            throw new \InvalidArgumentException('Parameters are invalid');
+        if (!static::parametersAreValid($parameters)) {
+            throw new InvalidArgumentException('Parameters are invalid');
         }
-        $this->parameters = self::transformParameters($parameters);
+
+        $this->parameters = static::transformParameters($parameters);
+
         return $this;
     }
-    /**
-     * @param array $parameters
-     * @return PhpFunctionParameter[]
-     */
+
     public static function transformParameters(array $parameters): array
     {
         $finalParameters = [];
         foreach ($parameters as $parameter) {
-            $finalParameters[] = self::transformParameter($parameter);
+            $finalParameters[] = static::transformParameter($parameter);
         }
+
         return $finalParameters;
     }
-    /**
-     * @param mixed $parameter
-     * @return PhpFunctionParameter
-     */
+
     public static function transformParameter($parameter): PhpFunctionParameter
     {
         if ($parameter instanceof PhpFunctionParameter) {
@@ -55,28 +51,29 @@ class PhpFunction extends AbstractAccessRestrictedElement
         } elseif (is_array($parameter)) {
             return new PhpFunctionParameter($parameter['name'], array_key_exists('value', $parameter) ? $parameter['value'] : null, array_key_exists('type', $parameter) ? $parameter['type'] : null);
         }
+
         return new PhpFunctionParameter($parameter, PhpFunctionParameter::NO_VALUE);
     }
-    /**
-     * @param array $parameters
-     * @return bool
-     */
+
     public static function parametersAreValid(array $parameters): bool
     {
         $valid = true;
         foreach ($parameters as $parameter) {
-            $valid &= self::parameterIsValid($parameter);
+            $valid &= static::parameterIsValid($parameter);
         }
+
         return (bool) $valid;
     }
+
     /**
      * @param string|array|PhpFunctionParameter $parameter
      * @return bool
      */
     public static function parameterIsValid($parameter): bool
     {
-        return self::stringIsValid($parameter) || (is_array($parameter) && array_key_exists('name', $parameter)) || $parameter instanceof PhpFunctionParameter;
+        return static::stringIsValid($parameter) || (is_array($parameter) && array_key_exists('name', $parameter)) || $parameter instanceof PhpFunctionParameter;
     }
+
     /**
      * @return string[]|PhpFunctionParameter[]
      */
@@ -84,9 +81,19 @@ class PhpFunction extends AbstractAccessRestrictedElement
     {
         return $this->parameters;
     }
-    /**
-     * @return string
-     */
+
+    public function setReturnType(?string $returnType): self
+    {
+        $this->returnType = $returnType;
+
+        return $this;
+    }
+
+    public function getReturnType(): ?string
+    {
+        return $this->returnType;
+    }
+
     protected function getPhpParameters(): string
     {
         $parameters = $this->getParameters();
@@ -96,28 +103,26 @@ class PhpFunction extends AbstractAccessRestrictedElement
                 $phpParameters[] = $parameter->getPhpDeclaration();
             }
         }
+
         return implode(', ', $phpParameters);
     }
-    /**
-     * @see \WsdlToPhp\PhpGenerator\Element\AbstractElement::getPhpDeclaration()
-     * @return string
-     */
+
     public function getPhpDeclaration(): string
     {
-        return sprintf('%sfunction %s(%s)', $this->getPhpAccess(), $this->getPhpName(), $this->getPhpParameters());
+        return sprintf(
+            '%sfunction %s(%s)%s',
+            $this->getPhpAccess(),
+            $this->getPhpName(),
+            $this->getPhpParameters(),
+            $this->returnType ? sprintf(': %s', $this->returnType) : ''
+        );
     }
-    /**
-     * indicates if the current element has accessibility constraint
-     * @return bool
-     */
+
     public function hasAccessibilityConstraint(): bool
     {
         return false;
     }
-    /**
-     * defines authorized children element types
-     * @return string[]
-     */
+
     public function getChildrenTypes(): array
     {
         return [
@@ -126,6 +131,7 @@ class PhpFunction extends AbstractAccessRestrictedElement
             PhpVariable::class,
         ];
     }
+
     /**
      * Allows to indicate that children are contained by brackets,
      * in the case the method returns true, getBracketBeforeChildren

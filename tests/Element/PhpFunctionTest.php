@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace WsdlToPhp\PhpGenerator\Tests\Element;
 
+use InvalidArgumentException;
+use TypeError;
 use WsdlToPhp\PhpGenerator\Element\PhpVariable;
 use WsdlToPhp\PhpGenerator\Element\PhpProperty;
 use WsdlToPhp\PhpGenerator\Element\PhpFunctionParameter;
@@ -29,22 +31,37 @@ class PhpFunctionTest extends TestCase
 
         $this->assertSame('function foo($bar, $demo = 1, $sample = null, $deamon = true)', $function->getPhpDeclaration());
     }
+    public function testGetPhpDeclarationWithReturnType()
+    {
+        $function = new PhpFunction('foo', [
+            'bar',
+            [
+                'name' => 'demo',
+                'value' => 1,
+            ],
+            [
+                'name' => 'sample',
+                'value' => null,
+            ],
+            new PhpFunctionParameter('deamon', true),
+        ], 'void');
 
-    /**
-     * @expectedException InvalidArgumentException
-     */
+        $this->assertSame('function foo($bar, $demo = 1, $sample = null, $deamon = true): void', $function->getPhpDeclaration());
+    }
+
     public function testAddChild()
     {
+        $this->expectException(InvalidArgumentException::class);
+
         $function = new PhpFunction('foo', []);
 
         $function->addChild(new PhpProperty('Bar'));
     }
 
-    /**
-     * @expectedException InvalidArgumentException
-     */
     public function testSetParameters()
     {
+        $this->expectException(InvalidArgumentException::class);
+
         $function = new PhpFunction('foo', []);
 
         $function->setParameters([
@@ -68,6 +85,15 @@ class PhpFunctionTest extends TestCase
         $function->addChild(new PhpVariable('bar'));
 
         $this->assertCount(1, $function->getChildren());
+    }
+
+    public function testSetReturnType()
+    {
+        $function = new PhpFunction('foo', []);
+
+        $function->setReturnType($returnType = 'int');
+
+        $this->assertSame($returnType, $function->getReturnType());
     }
 
     public function testAddChildString()
@@ -119,11 +145,32 @@ class PhpFunctionTest extends TestCase
         $this->assertSame("function foo(\$bar, \$demo = 1, \$sample = null, \$deamon = true)\n{\n    \$bar = 1;\n    return \$bar;\n}", $function->toString());
     }
 
-    /**
-     * @expectedException \TypeError
-     */
+    public function testToStringWithBodyWithReturnType()
+    {
+        $function = new PhpFunction('foo', [
+            'bar',
+            [
+                'name' => 'demo',
+                'value' => 1,
+            ],
+            [
+                'name' => 'sample',
+                'value' => null,
+            ],
+            new PhpFunctionParameter('deamon', true),
+        ], 'int');
+
+        $function
+            ->addChild(new PhpVariable('bar', 1))
+            ->addChild('return $bar;');
+
+        $this->assertSame("function foo(\$bar, \$demo = 1, \$sample = null, \$deamon = true): int\n{\n    \$bar = 1;\n    return \$bar;\n}", $function->toString());
+    }
+
     public function testExceptionMessageOnName()
     {
+        $this->expectException(TypeError::class);
+
         new PhpFunction(0);
     }
 }
