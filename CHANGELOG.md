@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## X.0.0 - 2021/xx/xx
+## 3.0.0 - 2021/01/26
 - use `splitbrain/phpfarm:jessie` as Docker image and fix docker image settings
 - Code requires PHP >= 7.4
 - Code cleaning
@@ -15,6 +15,7 @@
 - Update Travis CI settings
 - Update PHPUnit settings
 - Update LICENSE file
+- Version 2.0 is no more maintained
 
 ## 2.0.0
 - Use PHP 7.1 features
