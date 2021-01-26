@@ -20,10 +20,27 @@ This project contains two main features:
 - [Element](src/Element/README.md): generate basic elements
 - [Component](src/Component/README.md): generate structured complex elements
 
-## Unit tests
-You can run the unit tests with the following command:
+## Testing using [Docker](https://www.docker.com/)
+Thanks to the [Docker image](https://hub.docker.com/r/splitbrain/phpfarm) of [phpfarm](https://github.com/fpoirotte/phpfarm), tests can be run locally under *any* PHP version using the cli:
+- php-7.4
+
+First of all, you need to create your container which you can do using [docker-compose](https://docs.docker.com/compose/) by running the below command line from the root directory of the project:
+```bash
+$ docker-compose up -d --build
 ```
-$ cd /path/to/src/WsdlToPhp/PhpGenerator/
-$ composer install
-$ composer test
+
+You then have a container named `php_generator` in which you can run `composer` commands and `php cli` commands such as:
+```bash
+# install deps in container (using update ensure it does use the composer.lock file if there is any)
+$ docker exec -it php_generator php-7.4 /usr/bin/composer update
+# run tests in container
+$ docker exec -it php_generator php-7.4 -dmemory_limit=-1 vendor/bin/phpunit
 ```
+
+## FAQ
+
+If you have a question, feel free to [create an issue](https://github.com/WsdlToPhp/PackageGenerator/issues/new).
+
+## License
+
+The MIT License (MIT). Please see [License File](LICENSE) for more information.
