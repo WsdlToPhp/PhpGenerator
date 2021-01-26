@@ -38,6 +38,7 @@ class PhpMethod extends PhpFunction
     public function setAbstract(bool $abstract): self
     {
         $this->abstract = $abstract;
+
         return $this;
     }
 
@@ -54,6 +55,7 @@ class PhpMethod extends PhpFunction
     public function setFinal(bool $final): self
     {
         $this->final = $final;
+
         return $this;
     }
 
@@ -70,6 +72,7 @@ class PhpMethod extends PhpFunction
     public function setStatic(bool $static): self
     {
         $this->static = $static;
+
         return $this;
     }
 
@@ -86,6 +89,7 @@ class PhpMethod extends PhpFunction
     public function setHasBody(bool $hasBody): self
     {
         $this->hasBody = $hasBody;
+
         return $this;
     }
 
@@ -134,6 +138,7 @@ class PhpMethod extends PhpFunction
         if ($this->getHasBody() === true) {
             return parent::getLineBeforeChildren($indentation);
         }
+
         return '';
     }
 
@@ -147,6 +152,7 @@ class PhpMethod extends PhpFunction
         if ($this->getHasBody() === true) {
             return parent::getLineAfterChildren($indentation);
         }
+
         return '';
     }
 
@@ -155,6 +161,7 @@ class PhpMethod extends PhpFunction
         if ($this->getHasBody() === true) {
             return parent::getChildren();
         }
+
         return [];
     }
 

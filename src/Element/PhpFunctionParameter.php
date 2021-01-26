@@ -30,6 +30,7 @@ class PhpFunctionParameter extends PhpVariable
             throw new InvalidArgumentException(sprintf('Type "%s" is not valid', gettype($type)));
         }
         $this->type = $type;
+
         return $this;
     }
 
@@ -53,6 +54,7 @@ class PhpFunctionParameter extends PhpVariable
     protected function getPhpType(): string
     {
         $type = $this->getType();
+
         return empty($type) ? '' : sprintf('%s ', $type instanceof PhpClass ? $type->getPhpName() : $type);
     }
 
@@ -76,6 +78,7 @@ class PhpFunctionParameter extends PhpVariable
         if (is_array($value)) {
             return str_replace([self::BREAK_LINE_CHAR, ' '], '', var_export($value, true));
         }
+
         return parent::getAnyValue($value);
     }
 }

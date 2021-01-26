@@ -25,6 +25,7 @@ class PhpAnnotation extends AbstractElement
     public function setContent(string $content): self
     {
         $this->content = trim($content);
+
         return $this;
     }
 
@@ -47,6 +48,7 @@ class PhpAnnotation extends AbstractElement
         if ($this->getPhpName() === '' && strlen($fullContent) > $this->getMaxLength()) {
             $content = explode(self::BREAK_LINE_CHAR, wordwrap($fullContent, $this->getMaxLength(), self::BREAK_LINE_CHAR, true));
         }
+
         return array_map(function ($element) {
             return sprintf(' %s', $element);
         }, $content);
@@ -70,6 +72,7 @@ class PhpAnnotation extends AbstractElement
     public function setMaxLength(int $maxlength): self
     {
         $this->maxLength = $maxlength;
+
         return $this;
     }
 

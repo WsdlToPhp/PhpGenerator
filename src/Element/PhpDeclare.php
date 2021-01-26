@@ -92,7 +92,7 @@ class PhpDeclare extends AbstractElement
     public function addChild($child): AbstractElement
     {
         /** @var AbstractElement $child */
-        if (static::childIsValid($child) && $child->getName() === $this->getName()) {
+        if ($this->childIsValid($child) && $child->getName() === $this->getName()) {
             throw new InvalidArgumentException(sprintf('The current directive named %s can\'t contain a child of same directive name', $this->getName()));
         }
 

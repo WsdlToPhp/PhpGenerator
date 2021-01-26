@@ -39,10 +39,8 @@ class PhpClass extends AbstractElement
 
     public function setAbstract(bool $abstract): self
     {
-        if (!is_bool($abstract)) {
-            throw new InvalidArgumentException(sprintf('Abstract must be a boolean, "%s" given', gettype($abstract)));
-        }
         $this->abstract = $abstract;
+
         return $this;
     }
 
@@ -67,6 +65,7 @@ class PhpClass extends AbstractElement
             throw new InvalidArgumentException('Extends must be a string or a PhpClass instance');
         }
         $this->extends = $extends;
+
         return $this;
     }
 
@@ -90,6 +89,7 @@ class PhpClass extends AbstractElement
     protected function getPhpExtends(): string
     {
         $extends = $this->getExtends();
+
         return empty($extends) ? '' : sprintf(' %s %s', static::PHP_EXTENDS_KEYWORD, ($extends instanceof PhpClass ? $extends->getName() : $extends));
     }
 
@@ -104,6 +104,7 @@ class PhpClass extends AbstractElement
             throw new InvalidArgumentException('Interfaces are not valid');
         }
         $this->interfaces = $interfaces;
+
         return $this;
     }
 
@@ -117,6 +118,7 @@ class PhpClass extends AbstractElement
         foreach ($interfaces as $interface) {
             $valid &= self::interfaceIsValid($interface);
         }
+
         return (bool) $valid;
     }
 
@@ -147,6 +149,7 @@ class PhpClass extends AbstractElement
         foreach ($this->getInterfaces() as $interface) {
             $interfaces[] = $this->getPhpInterface($interface);
         }
+
         return empty($interfaces) ? '' : sprintf(' %s%s', static::PHP_IMPLEMENTS_KEYWORD, implode(',', $interfaces));
     }
 

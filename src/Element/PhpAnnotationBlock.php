@@ -25,6 +25,7 @@ class PhpAnnotationBlock extends AbstractElement
             throw new InvalidArgumentException('Annotations are not valid');
         }
         $this->children = static::transformAnnotations($annotations);
+
         return $this;
     }
 
@@ -38,6 +39,7 @@ class PhpAnnotationBlock extends AbstractElement
         foreach ($annotations as $annotation) {
             $finalAnnotations[] = self::transformAnnotation($annotation);
         }
+
         return $finalAnnotations;
     }
 
@@ -69,6 +71,7 @@ class PhpAnnotationBlock extends AbstractElement
         foreach ($annotations as $annotation) {
             $valid &= static::annotationIsValid($annotation);
         }
+
         return (bool) $valid;
     }
 
@@ -92,6 +95,7 @@ class PhpAnnotationBlock extends AbstractElement
             return parent::addChild($child);
         }
         $this->children[] = $this->transformAnnotation($child);
+
         return $this;
     }
 

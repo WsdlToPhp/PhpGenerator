@@ -35,6 +35,7 @@ abstract class AbstractAssignedValueElement extends AbstractAccessRestrictedElem
             throw new InvalidArgumentException(sprintf('Value of type "%s" is not a valid scalar value for %s object', gettype($value), $this->getCalledClass()));
         }
         $this->value = $value;
+
         return $this;
     }
 
@@ -56,6 +57,7 @@ abstract class AbstractAssignedValueElement extends AbstractAccessRestrictedElem
         if (!$this->hasValue()) {
             return '';
         }
+
         return $this->getFinalValue();
     }
 
@@ -66,6 +68,7 @@ abstract class AbstractAssignedValueElement extends AbstractAccessRestrictedElem
         } elseif (is_null($this->getValue())) {
             return 'null';
         }
+
         return $this->getAnyValue($this->getValue());
     }
 
@@ -81,6 +84,7 @@ abstract class AbstractAssignedValueElement extends AbstractAccessRestrictedElem
         } elseif (stripos((string) $value, '::') !== false || stripos((string) $value, 'new ') !== false || stripos((string) $value, '(') !== false || stripos((string) $value, ')') !== false) {
             $scalarValue = $value;
         }
+
         return $scalarValue;
     }
 
@@ -95,6 +99,7 @@ abstract class AbstractAssignedValueElement extends AbstractAccessRestrictedElem
         if (is_float($value) && strlen((string) $value) !== strlen((string) $exportedValue)) {
             $exportedValue = substr($exportedValue, 0, strlen($value));
         }
+
         return $exportedValue;
     }
 

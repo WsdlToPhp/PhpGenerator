@@ -35,6 +35,7 @@ class PhpInterface extends PhpClass
         if ($child instanceof PhpMethod) {
             $child->setHasBody(false);
         }
+
         return parent::addChild($child);
     }
 }

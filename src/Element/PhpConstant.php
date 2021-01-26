@@ -21,6 +21,7 @@ class PhpConstant extends AbstractAssignedValueElement
         if ($this->getClass() instanceof PhpClass) {
             return strtoupper(parent::getPhpName());
         }
+
         return parent::getPhpName();
     }
 
@@ -40,6 +41,7 @@ class PhpConstant extends AbstractAssignedValueElement
         if ($this->getClass() instanceof PhpClass) {
             return 'const ';
         }
+
         return 'define(\'';
     }
 
@@ -48,6 +50,7 @@ class PhpConstant extends AbstractAssignedValueElement
         if ($this->getClass() instanceof PhpClass) {
             return ' = ';
         }
+
         return '\', ';
     }
 
@@ -56,6 +59,7 @@ class PhpConstant extends AbstractAssignedValueElement
         if ($this->getClass() instanceof PhpClass) {
             return '';
         }
+
         return ')';
     }
 

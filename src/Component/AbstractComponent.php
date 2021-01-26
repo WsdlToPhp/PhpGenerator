@@ -29,6 +29,7 @@ abstract class AbstractComponent implements GenerateableInterface
         foreach ($this->getElements() as $element) {
             $content[] = $this->getElementString($element);
         }
+
         return implode('', $content);
     }
 
@@ -44,6 +45,7 @@ abstract class AbstractComponent implements GenerateableInterface
         } else {
             throw new InvalidArgumentException(sprintf('Element of type "%s" must be of type Element\PhpClass or Element\PhpFile', get_class($element)));
         }
+
         return $this;
     }
 
@@ -68,6 +70,7 @@ abstract class AbstractComponent implements GenerateableInterface
         } elseif ($element instanceof AbstractElement) {
             $string = $element->toString();
         }
+
         return $string;
     }
 
@@ -77,6 +80,7 @@ abstract class AbstractComponent implements GenerateableInterface
             $constant->setClass($this->mainElement);
         }
         $this->mainElement->addChild($constant);
+
         return $this;
     }
 
@@ -94,11 +98,12 @@ abstract class AbstractComponent implements GenerateableInterface
     public function addAnnotationBlockElement(PhpAnnotationBlockElement $annotationBlock): self
     {
         $this->mainElement->addChild($annotationBlock);
+
         return $this;
     }
 
     /**
-     * @param array|string|PhpAnnotationElement $annotations
+     * @param array|string|PhpAnnotationBlockElement $annotations
      * @return AbstractComponent
      */
     public function addAnnotationBlock($annotations): self

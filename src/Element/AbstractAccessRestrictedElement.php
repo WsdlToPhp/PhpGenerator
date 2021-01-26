@@ -28,6 +28,7 @@ abstract class AbstractAccessRestrictedElement extends AbstractElement
             throw new InvalidArgumentException(sprintf('Access "%s" is invalid, please provide one of these accesses: %s', $access, implode(', ', self::getAccesses())));
         }
         $this->access = $access;
+
         return $this;
     }
 
@@ -55,6 +56,7 @@ abstract class AbstractAccessRestrictedElement extends AbstractElement
         if ($this->hasAccessibilityConstraint()) {
             return $this->getAccess() === null ? '' : sprintf('%s ', $this->getAccess());
         }
+
         return '';
     }
 

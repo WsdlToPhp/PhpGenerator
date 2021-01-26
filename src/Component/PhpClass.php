@@ -35,6 +35,7 @@ class PhpClass extends AbstractComponent
     public function addPropertyElement(PhpPropertyElement $property): AbstractComponent
     {
         $this->mainElement->addChild($property);
+
         return $this;
     }
 

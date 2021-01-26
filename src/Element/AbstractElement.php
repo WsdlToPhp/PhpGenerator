@@ -35,6 +35,7 @@ abstract class AbstractElement implements GenerateableInterface
             throw new InvalidArgumentException(sprintf('Name "%s" is invalid when instantiating %s object', $name, $this->getCalledClass()));
         }
         $this->name = $name;
+
         return $this;
     }
 
@@ -76,6 +77,7 @@ abstract class AbstractElement implements GenerateableInterface
             $lines[] = $childContent;
         }
         $lines[] = $this->getToStringAfterChildren($indentation);
+
         return implode(self::BREAK_LINE_CHAR, self::cleanArrayToString($lines));
     }
 
@@ -85,6 +87,7 @@ abstract class AbstractElement implements GenerateableInterface
         if (!empty($declaration)) {
             return $this->getIndentedString($declaration, $indentation);
         }
+
         return null;
     }
 
@@ -94,6 +97,7 @@ abstract class AbstractElement implements GenerateableInterface
         if (!empty($before)) {
             return $before;
         }
+
         return null;
     }
 
@@ -103,6 +107,7 @@ abstract class AbstractElement implements GenerateableInterface
         if (!empty($after)) {
             return $after;
         }
+
         return null;
     }
 
@@ -114,6 +119,7 @@ abstract class AbstractElement implements GenerateableInterface
                 $newArray[] = $line;
             }
         }
+
         return $newArray;
     }
 
@@ -125,6 +131,7 @@ abstract class AbstractElement implements GenerateableInterface
         } elseif ($child instanceof AbstractElement) {
             $content = $child->toString($indentation === null ? $this->getIndentation() : $indentation);
         }
+
         return $content;
     }
 
@@ -144,6 +151,7 @@ abstract class AbstractElement implements GenerateableInterface
             }
         }
         $this->children[] = $child;
+
         return $this;
     }
 
@@ -156,6 +164,7 @@ abstract class AbstractElement implements GenerateableInterface
                 $valid |= (gettype($child) === $authorizedType) || static::objectIsValid($child, $authorizedType);
             }
         }
+
         return (bool) $valid;
     }
 
@@ -182,6 +191,7 @@ abstract class AbstractElement implements GenerateableInterface
         } else {
             $line = $this->getLineBeforeChildren($indentation);
         }
+
         return $line;
     }
 
@@ -192,6 +202,7 @@ abstract class AbstractElement implements GenerateableInterface
         } else {
             $line = $this->getLineAfterChildren($indentation);
         }
+
         return $line;
     }
 
@@ -237,6 +248,7 @@ abstract class AbstractElement implements GenerateableInterface
     {
         $line = $this->getIndentedString(self::OPEN_BRACKET, $indentation);
         $this->setIndentation(($indentation === null ? $this->getIndentation() : $indentation) + 1);
+
         return $line;
     }
 
@@ -248,12 +260,14 @@ abstract class AbstractElement implements GenerateableInterface
     public function getBracketAfterChildren(?int $indentation = null): string
     {
         $this->setIndentation(($indentation === null ? $this->getIndentation() : $indentation) - 1);
+
         return $this->getIndentedString(self::CLOSE_BRACKET, $indentation);
     }
 
     public function setIndentation(int $indentation): self
     {
         $this->indentation = $indentation;
+
         return $this;
     }
 
@@ -273,6 +287,7 @@ abstract class AbstractElement implements GenerateableInterface
         foreach ($strings as $i => $s) {
             $strings[$i] = sprintf('%s%s', $this->getIndentationString($indentation), $s);
         }
+
         return implode(self::BREAK_LINE_CHAR, $strings);
     }
 

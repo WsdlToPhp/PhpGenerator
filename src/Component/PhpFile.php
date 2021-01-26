@@ -96,6 +96,7 @@ class PhpFile extends AbstractComponent
                 self::BREAK_LINE_CHAR
             )
         );
+
         return $this;
     }
 }
