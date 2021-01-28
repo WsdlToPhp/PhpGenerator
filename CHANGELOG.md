@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## 3.0.2 - 2021/01/28
+- Update Travis CI badge and settings
+
+## 3.0.1 - 2021/01/26
+- Fix typo
+
 ## 3.0.0 - 2021/01/26
 - use `splitbrain/phpfarm:jessie` as Docker image and fix docker image settings
 - Code requires PHP >= 7.4
