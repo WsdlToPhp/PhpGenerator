@@ -25,7 +25,7 @@
 
 ## 2.0.0
 - Use PHP 7.1 features
-- Refactore code
+- Refactor code
 - Fix typos
 
 ## 1.2.1
@@ -44,7 +44,7 @@
 - First major release
 
 ## 1.0.0RC01
-- Major: update source code structure, put Component and Element fodlers under ```src``` fodler, update composer and phpunit accordingly
+- Major: update source code structure, put Component and Element folders under ```src``` folder, update composer and phpunit accordingly
 
 ## 0.0.16
 - Minor: correct annotation
@@ -62,13 +62,13 @@
 - Refactoring : Use statements and Namespace are contained by a file not a class as each element should only knows what it contains not what that is around itself.
 
 ## 0.0.11
-- Issue : allow backslash within class name for namespace
+- Issue : allow a backslash within class name for namespace
 
 ## 0.0.10
-- Allow to provide annotation max length to use
+- Allow providing annotation max length to use
 
 ## 0.0.9
-- Fix issue : within a class, the additonal multi lines are not indented correcly
+- Fix issue : within a class, the additional multi lines are not indented correctly
 
 ## 0.0.8
 - Fix issue: workaround for known var_export issue with float value
@@ -80,7 +80,7 @@
 - Improvement: improve lisiblity and extensibility for PhpVariable and PhpFunctionParameter
 
 ## 0.0.5
-- Fix issue: function parameter type is not tooken into account
+- Fix issue: function parameter type is not token into account
 
 ## 0.0.4
 - Fix issue regarding property/variable that has no value but always has a null value assigned with an assignment sign
