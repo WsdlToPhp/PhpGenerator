@@ -15,14 +15,7 @@ class PhpMethod extends PhpFunction
     protected bool $hasBody;
 
     /**
-     * @param string $name
-     * @param string[]|PhpFunctionParameter[] $parameters
-     * @param string|null $returnType
-     * @param string $access
-     * @param bool $abstract
-     * @param bool $static
-     * @param bool $final
-     * @param bool $hasBody
+     * @param PhpFunctionParameter[]|string[] $parameters
      */
     public function __construct(string $name, array $parameters = [], ?string $returnType = null, string $access = parent::ACCESS_PUBLIC, bool $abstract = false, bool $static = false, bool $final = false, bool $hasBody = true)
     {
@@ -32,7 +25,8 @@ class PhpMethod extends PhpFunction
             ->setStatic($static)
             ->setFinal($final)
             ->setHasBody($hasBody)
-            ->setAccess($access);
+            ->setAccess($access)
+        ;
     }
 
     public function setAbstract(bool $abstract): self
@@ -47,11 +41,6 @@ class PhpMethod extends PhpFunction
         return $this->abstract;
     }
 
-    protected function getPhpAbstract(): string
-    {
-        return $this->getAbstract() === true ? 'abstract ' : '';
-    }
-
     public function setFinal(bool $final): self
     {
         $this->final = $final;
@@ -62,11 +51,6 @@ class PhpMethod extends PhpFunction
     public function getFinal(): bool
     {
         return $this->final;
-    }
-
-    protected function getPhpFinal(): string
-    {
-        return $this->getFinal() === true ? 'final ' : '';
     }
 
     public function setStatic(bool $static): self
@@ -81,11 +65,6 @@ class PhpMethod extends PhpFunction
         return $this->static;
     }
 
-    protected function getPhpStatic(): string
-    {
-        return $this->getStatic() === true ? 'static ' : '';
-    }
-
     public function setHasBody(bool $hasBody): self
     {
         $this->hasBody = $hasBody;
@@ -96,16 +75,6 @@ class PhpMethod extends PhpFunction
     public function getHasBody(): bool
     {
         return $this->hasBody;
-    }
-
-    protected function getPhpReturnType(): string
-    {
-        return $this->getReturnType() ? sprintf(': %s', $this->getReturnType()) : '';
-    }
-
-    protected function getPhpDeclarationEnd(): string
-    {
-        return ($this->getHasBody() === false || $this->getAbstract() === true) ? ';' : '';
     }
 
     public function getPhpDeclaration(): string
@@ -129,13 +98,11 @@ class PhpMethod extends PhpFunction
     }
 
     /**
-     * Allows to generate content before children content is generated
-     * @param int|null $indentation
-     * @return string
+     * Allows to generate content before children content is generated.
      */
     public function getLineBeforeChildren(?int $indentation = null): string
     {
-        if ($this->getHasBody() === true) {
+        if (true === $this->getHasBody()) {
             return parent::getLineBeforeChildren($indentation);
         }
 
@@ -143,13 +110,11 @@ class PhpMethod extends PhpFunction
     }
 
     /**
-     * Allows to generate content after children content is generated
-     * @param int|null $indentation
-     * @return string
+     * Allows to generate content after children content is generated.
      */
     public function getLineAfterChildren(int $indentation = null): string
     {
-        if ($this->getHasBody() === true) {
+        if (true === $this->getHasBody()) {
             return parent::getLineAfterChildren($indentation);
         }
 
@@ -158,7 +123,7 @@ class PhpMethod extends PhpFunction
 
     public function getChildren(): array
     {
-        if ($this->getHasBody() === true) {
+        if (true === $this->getHasBody()) {
             return parent::getChildren();
         }
 
@@ -170,11 +135,35 @@ class PhpMethod extends PhpFunction
      * in the case the method returns true, getBracketBeforeChildren
      * is called instead of getLineBeforeChildren and getBracketAfterChildren
      * is called instead of getLineAfterChildren, but be aware that these methods
-     * call the two others
-     * @return bool
+     * call the two others.
      */
     public function useBracketsForChildren(): bool
     {
         return $this->getHasBody();
+    }
+
+    protected function getPhpAbstract(): string
+    {
+        return true === $this->getAbstract() ? 'abstract ' : '';
+    }
+
+    protected function getPhpFinal(): string
+    {
+        return true === $this->getFinal() ? 'final ' : '';
+    }
+
+    protected function getPhpStatic(): string
+    {
+        return true === $this->getStatic() ? 'static ' : '';
+    }
+
+    protected function getPhpReturnType(): string
+    {
+        return $this->getReturnType() ? sprintf(': %s', $this->getReturnType()) : '';
+    }
+
+    protected function getPhpDeclarationEnd(): string
+    {
+        return (false === $this->getHasBody() || true === $this->getAbstract()) ? ';' : '';
     }
 }

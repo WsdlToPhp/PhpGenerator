@@ -48,21 +48,20 @@ abstract class AbstractAccessRestrictedElement extends AbstractElement
 
     public static function accessIsValid(?string $access): bool
     {
-        return $access === null || in_array($access, self::getAccesses(), true);
+        return null === $access || in_array($access, self::getAccesses(), true);
     }
+
+    /**
+     * indicates if the current element has accessibility constraint.
+     */
+    abstract public function hasAccessibilityConstraint(): bool;
 
     protected function getPhpAccess(): string
     {
         if ($this->hasAccessibilityConstraint()) {
-            return $this->getAccess() === null ? '' : sprintf('%s ', $this->getAccess());
+            return null === $this->getAccess() ? '' : sprintf('%s ', $this->getAccess());
         }
 
         return '';
     }
-
-    /**
-     * indicates if the current element has accessibility constraint
-     * @return bool
-     */
-    abstract public function hasAccessibilityConstraint(): bool;
 }

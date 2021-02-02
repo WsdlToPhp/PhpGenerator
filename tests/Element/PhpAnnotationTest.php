@@ -9,6 +9,10 @@ use TypeError;
 use WsdlToPhp\PhpGenerator\Element\PhpAnnotation;
 use WsdlToPhp\PhpGenerator\Tests\TestCase;
 
+/**
+ * @internal
+ * @coversDefaultClass
+ */
 class PhpAnnotationTest extends TestCase
 {
     public function testGetOneLinePhpDeclaration()
@@ -29,24 +33,24 @@ class PhpAnnotationTest extends TestCase
     {
         $annotation = new PhpAnnotation(PhpAnnotation::NO_NAME, str_repeat('This sample annotation is on one line ', 7));
 
-        $this->assertSame(" * This sample annotation is on one line This sample annotation is on one line This\n" .
-                          " * sample annotation is on one line This sample annotation is on one line This\n" .
-                          " * sample annotation is on one line This sample annotation is on one line This\n" .
-                          " * sample annotation is on one line", $annotation->getPhpDeclaration());
+        $this->assertSame(" * This sample annotation is on one line This sample annotation is on one line This\n".
+                          " * sample annotation is on one line This sample annotation is on one line This\n".
+                          " * sample annotation is on one line This sample annotation is on one line This\n".
+                          ' * sample annotation is on one line', $annotation->getPhpDeclaration());
     }
 
     public function testGetSeveralLinesWithNamePhpDeclaration()
     {
         $annotation = new PhpAnnotation('description', str_repeat('This sample annotation is on one line ', 7));
 
-        $this->assertSame(" * @description This sample annotation is on one line This sample annotation is on one line This sample annotation is on one line This sample annotation is on one line This sample annotation is on one line This sample annotation is on one line This sample annotation is on one line", $annotation->getPhpDeclaration());
+        $this->assertSame(' * @description This sample annotation is on one line This sample annotation is on one line This sample annotation is on one line This sample annotation is on one line This sample annotation is on one line This sample annotation is on one line This sample annotation is on one line', $annotation->getPhpDeclaration());
     }
 
     public function testGetSeveralLinesLargerWithNamePhpDeclaration()
     {
         $annotation = new PhpAnnotation('description', str_repeat('This sample annotation is on one line ', 7));
 
-        $this->assertSame(" * @description This sample annotation is on one line This sample annotation is on one line This sample annotation is on one line This sample annotation is on one line This sample annotation is on one line This sample annotation is on one line This sample annotation is on one line", $annotation->getPhpDeclaration());
+        $this->assertSame(' * @description This sample annotation is on one line This sample annotation is on one line This sample annotation is on one line This sample annotation is on one line This sample annotation is on one line This sample annotation is on one line This sample annotation is on one line', $annotation->getPhpDeclaration());
     }
 
     public function testAddChildWithException()

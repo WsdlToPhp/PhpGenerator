@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace WsdlToPhp\PhpGenerator\Component;
 
-use WsdlToPhp\PhpGenerator\Element\PhpDeclare;
-use WsdlToPhp\PhpGenerator\Element\PhpFile as PhpFileElement;
-use WsdlToPhp\PhpGenerator\Element\PhpVariable as PhpVariableElement;
-use WsdlToPhp\PhpGenerator\Element\PhpFunction as PhpFunctionElement;
 use WsdlToPhp\PhpGenerator\Component\PhpClass as PhpClassComponent;
 use WsdlToPhp\PhpGenerator\Component\PhpInterface as PhpInterfaceComponent;
+use WsdlToPhp\PhpGenerator\Element\PhpDeclare;
+use WsdlToPhp\PhpGenerator\Element\PhpFile as PhpFileElement;
+use WsdlToPhp\PhpGenerator\Element\PhpFunction as PhpFunctionElement;
+use WsdlToPhp\PhpGenerator\Element\PhpVariable as PhpVariableElement;
 
 class PhpFile extends AbstractComponent
 {
@@ -68,7 +68,7 @@ class PhpFile extends AbstractComponent
 
     public function addUse(string $use, string $as = null, bool $last = false): self
     {
-        $expression = empty($as) ? "use %1\$s;%3\$s" : "use %1\$s as %2\$s;%3\$s";
+        $expression = empty($as) ? 'use %1$s;%3$s' : 'use %1$s as %2$s;%3$s';
         $this->mainElement->addChild(sprintf($expression, $use, $as, $last ? self::BREAK_LINE_CHAR : ''));
 
         return $this;
@@ -90,7 +90,7 @@ class PhpFile extends AbstractComponent
     {
         $this->mainElement->addChild(
             sprintf(
-                "%snamespace %s;%s",
+                '%snamespace %s;%s',
                 self::BREAK_LINE_CHAR,
                 $namespace,
                 self::BREAK_LINE_CHAR

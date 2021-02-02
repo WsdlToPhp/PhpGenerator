@@ -8,11 +8,15 @@ use InvalidArgumentException;
 use TypeError;
 use WsdlToPhp\PhpGenerator\Element\PhpAnnotationBlock;
 use WsdlToPhp\PhpGenerator\Element\PhpConstant;
+use WsdlToPhp\PhpGenerator\Element\PhpInterface;
 use WsdlToPhp\PhpGenerator\Element\PhpMethod;
 use WsdlToPhp\PhpGenerator\Element\PhpProperty;
-use WsdlToPhp\PhpGenerator\Element\PhpInterface;
 use WsdlToPhp\PhpGenerator\Tests\TestCase;
 
+/**
+ * @internal
+ * @coversDefaultClass
+ */
 class PhpInterfaceTest extends TestCase
 {
     public function testSimpleInterface()

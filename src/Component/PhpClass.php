@@ -5,17 +5,11 @@ declare(strict_types=1);
 namespace WsdlToPhp\PhpGenerator\Component;
 
 use WsdlToPhp\PhpGenerator\Element\PhpClass as PhpClassElement;
-use WsdlToPhp\PhpGenerator\Element\PhpProperty as PhpPropertyElement;
 use WsdlToPhp\PhpGenerator\Element\PhpMethod as PhpMethodElement;
+use WsdlToPhp\PhpGenerator\Element\PhpProperty as PhpPropertyElement;
 
 class PhpClass extends AbstractComponent
 {
-    /**
-     * @param string $name
-     * @param bool $abstract
-     * @param string|null $extends
-     * @param array $interfaces
-     */
     public function __construct(string $name, bool $abstract = false, ?string $extends = null, array $interfaces = [])
     {
         $this->setMainElement(new PhpClassElement($name, $abstract, $extends, $interfaces));
@@ -24,6 +18,7 @@ class PhpClass extends AbstractComponent
     public function addMethodElement(PhpMethodElement $method): AbstractComponent
     {
         $this->mainElement->addChild($method);
+
         return $this;
     }
 

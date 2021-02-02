@@ -5,11 +5,15 @@ declare(strict_types=1);
 namespace WsdlToPhp\PhpGenerator\Tests\Element;
 
 use InvalidArgumentException;
-use WsdlToPhp\PhpGenerator\Element\PhpFunction;
 use WsdlToPhp\PhpGenerator\Element\PhpAnnotation;
 use WsdlToPhp\PhpGenerator\Element\PhpAnnotationBlock;
+use WsdlToPhp\PhpGenerator\Element\PhpFunction;
 use WsdlToPhp\PhpGenerator\Tests\TestCase;
 
+/**
+ * @internal
+ * @coversDefaultClass
+ */
 class PhpAnnotationBlockTest extends TestCase
 {
     public function testGetOneLineToString()
@@ -36,12 +40,12 @@ class PhpAnnotationBlockTest extends TestCase
             str_repeat('This sample annotation is on one line ', 7),
         ]);
 
-        $this->assertSame("/**\n" .
-                          " * This sample annotation is on one line This sample annotation is on one line This\n" .
-                          " * sample annotation is on one line This sample annotation is on one line This\n" .
-                          " * sample annotation is on one line This sample annotation is on one line This\n" .
-                          " * sample annotation is on one line\n" .
-                          " */", $annotationBlock->toString());
+        $this->assertSame("/**\n".
+                          " * This sample annotation is on one line This sample annotation is on one line This\n".
+                          " * sample annotation is on one line This sample annotation is on one line This\n".
+                          " * sample annotation is on one line This sample annotation is on one line This\n".
+                          " * sample annotation is on one line\n".
+                          ' */', $annotationBlock->toString());
     }
 
     public function testGetSeveralLinesWithNameToString()
@@ -50,9 +54,9 @@ class PhpAnnotationBlockTest extends TestCase
             new PhpAnnotation('description', str_repeat('This sample annotation is on one line ', 7)),
         ]);
 
-        $this->assertSame("/**\n" .
-                          " * @description This sample annotation is on one line This sample annotation is on one line This sample annotation is on one line This sample annotation is on one line This sample annotation is on one line This sample annotation is on one line This sample annotation is on one line\n" .
-                          " */", $annotationBlock->toString());
+        $this->assertSame("/**\n".
+                          " * @description This sample annotation is on one line This sample annotation is on one line This sample annotation is on one line This sample annotation is on one line This sample annotation is on one line This sample annotation is on one line This sample annotation is on one line\n".
+                          ' */', $annotationBlock->toString());
     }
 
     public function testAddChildString()
@@ -94,9 +98,9 @@ class PhpAnnotationBlockTest extends TestCase
             new PhpAnnotation('description', str_repeat('This sample annotation is on one line ', 7)),
         ]);
 
-        $this->assertSame("/**\n" .
-                          " * @description This sample annotation is on one line This sample annotation is on one line This sample annotation is on one line This sample annotation is on one line This sample annotation is on one line This sample annotation is on one line This sample annotation is on one line\n" .
-                          " */", $annotationBlock->toString());
+        $this->assertSame("/**\n".
+                          " * @description This sample annotation is on one line This sample annotation is on one line This sample annotation is on one line This sample annotation is on one line This sample annotation is on one line This sample annotation is on one line This sample annotation is on one line\n".
+                          ' */', $annotationBlock->toString());
     }
 
     public function testToStringChildAnnotation()
@@ -115,7 +119,8 @@ class PhpAnnotationBlockTest extends TestCase
         $annotationBlock
             ->addChild(new PhpAnnotation('date', '2015-01-01'))
             ->addChild(new PhpAnnotation('author', 'PhpTeam'))
-            ->addChild('This annotation is useful!');
+            ->addChild('This annotation is useful!')
+        ;
 
         $this->assertSame("/**\n * @date 2015-01-01\n * @author PhpTeam\n * This annotation is useful!\n */", $annotationBlock->toString());
     }

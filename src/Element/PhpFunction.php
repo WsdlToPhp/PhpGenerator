@@ -9,7 +9,7 @@ use InvalidArgumentException;
 class PhpFunction extends AbstractAccessRestrictedElement
 {
     /**
-     * @var string[]|PhpFunctionParameter[]
+     * @var PhpFunctionParameter[]|string[]
      */
     protected array $parameters;
 
@@ -20,7 +20,8 @@ class PhpFunction extends AbstractAccessRestrictedElement
         parent::__construct($name);
         $this
             ->setParameters($parameters)
-            ->setReturnType($returnType);
+            ->setReturnType($returnType)
+        ;
     }
 
     public function setParameters(array $parameters): self
@@ -48,7 +49,8 @@ class PhpFunction extends AbstractAccessRestrictedElement
     {
         if ($parameter instanceof PhpFunctionParameter) {
             return $parameter;
-        } elseif (is_array($parameter)) {
+        }
+        if (is_array($parameter)) {
             return new PhpFunctionParameter($parameter['name'], array_key_exists('value', $parameter) ? $parameter['value'] : null, array_key_exists('type', $parameter) ? $parameter['type'] : null);
         }
 
@@ -66,8 +68,7 @@ class PhpFunction extends AbstractAccessRestrictedElement
     }
 
     /**
-     * @param string|array|PhpFunctionParameter $parameter
-     * @return bool
+     * @param array|PhpFunctionParameter|string $parameter
      */
     public static function parameterIsValid($parameter): bool
     {
@@ -75,7 +76,7 @@ class PhpFunction extends AbstractAccessRestrictedElement
     }
 
     /**
-     * @return string[]|PhpFunctionParameter[]
+     * @return PhpFunctionParameter[]|string[]
      */
     public function getParameters(): array
     {
@@ -92,19 +93,6 @@ class PhpFunction extends AbstractAccessRestrictedElement
     public function getReturnType(): ?string
     {
         return $this->returnType;
-    }
-
-    protected function getPhpParameters(): string
-    {
-        $parameters = $this->getParameters();
-        $phpParameters = [];
-        if (is_array($parameters) && !empty($parameters)) {
-            foreach ($parameters as $parameter) {
-                $phpParameters[] = $parameter->getPhpDeclaration();
-            }
-        }
-
-        return implode(', ', $phpParameters);
     }
 
     public function getPhpDeclaration(): string
@@ -137,11 +125,23 @@ class PhpFunction extends AbstractAccessRestrictedElement
      * in the case the method returns true, getBracketBeforeChildren
      * is called instead of getLineBeforeChildren and getBracketAfterChildren
      * is called instead of getLineAfterChildren, but be aware that these methods
-     * call the two others
-     * @return bool
+     * call the two others.
      */
     public function useBracketsForChildren(): bool
     {
         return true;
+    }
+
+    protected function getPhpParameters(): string
+    {
+        $parameters = $this->getParameters();
+        $phpParameters = [];
+        if (is_array($parameters) && !empty($parameters)) {
+            foreach ($parameters as $parameter) {
+                $phpParameters[] = $parameter->getPhpDeclaration();
+            }
+        }
+
+        return implode(', ', $phpParameters);
     }
 }

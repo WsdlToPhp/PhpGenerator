@@ -47,7 +47,7 @@ abstract class AbstractElement implements GenerateableInterface
     public static function nameIsValid(string $name, bool $allowBackslash = false): bool
     {
         $pattern = '/[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*/';
-        if ($allowBackslash === true) {
+        if (true === $allowBackslash) {
             $pattern = '/[a-zA-Z_\x7f-\xff\\\][a-zA-Z0-9_\x7f-\xff\\\]*/';
         }
 
@@ -56,12 +56,12 @@ abstract class AbstractElement implements GenerateableInterface
 
     public static function stringIsValid($string, bool $checkName = true, bool $allowBackslash = false): bool
     {
-        return (is_string($string) && !empty($string) && (!$checkName || static::nameIsValid($string, $allowBackslash)));
+        return is_string($string) && !empty($string) && (!$checkName || static::nameIsValid($string, $allowBackslash));
     }
 
     public static function objectIsValid($object, ?string $checkClass = null): bool
     {
-        return (is_object($object) && ($checkClass === null || get_class($object) === $checkClass));
+        return is_object($object) && (null === $checkClass || get_class($object) === $checkClass);
     }
 
     public function toString(?int $indentation = null): string
@@ -79,6 +79,149 @@ abstract class AbstractElement implements GenerateableInterface
         $lines[] = $this->getToStringAfterChildren($indentation);
 
         return implode(self::BREAK_LINE_CHAR, self::cleanArrayToString($lines));
+    }
+
+    public function getPhpName(): string
+    {
+        return sprintf('%s', $this->getName());
+    }
+
+    public function addChild($child): self
+    {
+        if (!$this->childIsValid($child)) {
+            $types = $this->getChildrenTypes();
+            if (empty($types)) {
+                throw new InvalidArgumentException('This element does not accept any child element');
+            }
+
+            throw new InvalidArgumentException(sprintf('Element of type "%s:%s" is not authorized, please provide one of these types: %s', gettype($child), is_object($child) ? get_class($child) : 'unknown', implode(', ', $this->getChildrenTypes())));
+        }
+        $this->children[] = $child;
+
+        return $this;
+    }
+
+    /**
+     * @return AbstractElement[]|mixed[]
+     */
+    public function getChildren(): array
+    {
+        return $this->children;
+    }
+
+    abstract public function getPhpDeclaration(): string;
+
+    /**
+     * defines authorized children element types.
+     *
+     * @return string[]
+     */
+    abstract public function getChildrenTypes(): array;
+
+    /**
+     * Allows to generate content before children content is generated.
+     */
+    public function getLineBeforeChildren(?int $indentation = null): string
+    {
+        return '';
+    }
+
+    /**
+     * Allows to generate content after children content is generated.
+     */
+    public function getLineAfterChildren(?int $indentation = null): string
+    {
+        return '';
+    }
+
+    /**
+     * Allows to indicate that children are contained by brackets,
+     * in the case the method returns true, getBracketBeforeChildren
+     * is called instead of getLineBeforeChildren and getBracketAfterChildren
+     * is called instead of getLineAfterChildren, but be aware that these methods
+     * call the two others.
+     */
+    public function useBracketsForChildren(): bool
+    {
+        return false;
+    }
+
+    /**
+     * Allows to generate content before children content is generated.
+     */
+    public function getBracketBeforeChildren(?int $indentation = null): string
+    {
+        $line = $this->getIndentedString(self::OPEN_BRACKET, $indentation);
+        $this->setIndentation((null === $indentation ? $this->getIndentation() : $indentation) + 1);
+
+        return $line;
+    }
+
+    /**
+     * Allows to generate content after children content is generated.
+     */
+    public function getBracketAfterChildren(?int $indentation = null): string
+    {
+        $this->setIndentation((null === $indentation ? $this->getIndentation() : $indentation) - 1);
+
+        return $this->getIndentedString(self::CLOSE_BRACKET, $indentation);
+    }
+
+    public function setIndentation(int $indentation): self
+    {
+        $this->indentation = $indentation;
+
+        return $this;
+    }
+
+    public function getIndentation(): int
+    {
+        return $this->indentation;
+    }
+
+    public function getIndentationString(?int $indentation = null): string
+    {
+        return str_repeat(self::INDENTATION_CHAR, null === $indentation ? $this->getIndentation() : $indentation);
+    }
+
+    public function getIndentedString(string $string, ?int $indentation = null): string
+    {
+        $strings = explode(self::BREAK_LINE_CHAR, $string);
+        foreach ($strings as $i => $s) {
+            $strings[$i] = sprintf('%s%s', $this->getIndentationString($indentation), $s);
+        }
+
+        return implode(self::BREAK_LINE_CHAR, $strings);
+    }
+
+    final public function getCalledClass(): string
+    {
+        return substr(get_called_class(), strrpos(get_called_class(), '\\') + 1);
+    }
+
+    protected function getChildContent($child, int $indentation = null): string
+    {
+        $content = '';
+        if (is_string($child)) {
+            $content = $this->getIndentedString($child, $indentation);
+        } elseif ($child instanceof AbstractElement) {
+            $content = $child->toString(null === $indentation ? $this->getIndentation() : $indentation);
+        }
+
+        return $content;
+    }
+
+    protected function childIsValid($child): bool
+    {
+        $valid = false;
+        $authorizedTypes = $this->getChildrenTypes();
+        if (!empty($authorizedTypes)) {
+            foreach ($authorizedTypes as $authorizedType) {
+                $valid |= (gettype($child) === $authorizedType) || static::objectIsValid($child, $authorizedType);
+            }
+        }
+
+        return (bool) $valid;
     }
 
     private function getToStringDeclaration(int $indentation = null): ?string
@@ -115,74 +258,13 @@ abstract class AbstractElement implements GenerateableInterface
     {
         $newArray = [];
         foreach ($array as $line) {
-            if ($line !== null) {
+            if (null !== $line) {
                 $newArray[] = $line;
             }
         }
 
         return $newArray;
     }
-
-    protected function getChildContent($child, int $indentation = null): string
-    {
-        $content = '';
-        if (is_string($child)) {
-            $content = $this->getIndentedString($child, $indentation);
-        } elseif ($child instanceof AbstractElement) {
-            $content = $child->toString($indentation === null ? $this->getIndentation() : $indentation);
-        }
-
-        return $content;
-    }
-
-    public function getPhpName(): string
-    {
-        return sprintf('%s', $this->getName());
-    }
-
-    public function addChild($child): self
-    {
-        if (!$this->childIsValid($child)) {
-            $types = $this->getChildrenTypes();
-            if (empty($types)) {
-                throw new InvalidArgumentException('This element does not accept any child element');
-            } else {
-                throw new InvalidArgumentException(sprintf('Element of type "%s:%s" is not authorized, please provide one of these types: %s', gettype($child), is_object($child) ? get_class($child) : 'unknown', implode(', ', $this->getChildrenTypes())));
-            }
-        }
-        $this->children[] = $child;
-
-        return $this;
-    }
-
-    protected function childIsValid($child): bool
-    {
-        $valid = false;
-        $authorizedTypes = $this->getChildrenTypes();
-        if (!empty($authorizedTypes)) {
-            foreach ($authorizedTypes as $authorizedType) {
-                $valid |= (gettype($child) === $authorizedType) || static::objectIsValid($child, $authorizedType);
-            }
-        }
-
-        return (bool) $valid;
-    }
-
-    /**
-     * @return AbstractElement[]|mixed[]
-     */
-    public function getChildren(): array
-    {
-        return $this->children;
-    }
-
-    abstract public function getPhpDeclaration(): string;
-
-    /**
-     * defines authorized children element types
-     * @return string[]
-     */
-    abstract public function getChildrenTypes(): array;
 
     private function getContextualLineBeforeChildren(int $indentation = null): string
     {
@@ -204,95 +286,5 @@ abstract class AbstractElement implements GenerateableInterface
         }
 
         return $line;
-    }
-
-    /**
-     * Allows to generate content before children content is generated
-     * @param int|null $indentation
-     * @return string
-     */
-    public function getLineBeforeChildren(?int $indentation = null): string
-    {
-        return '';
-    }
-
-    /**
-     * Allows to generate content after children content is generated
-     * @param int|null $indentation
-     * @return string
-     */
-    public function getLineAfterChildren(?int $indentation = null): string
-    {
-        return '';
-    }
-
-    /**
-     * Allows to indicate that children are contained by brackets,
-     * in the case the method returns true, getBracketBeforeChildren
-     * is called instead of getLineBeforeChildren and getBracketAfterChildren
-     * is called instead of getLineAfterChildren, but be aware that these methods
-     * call the two others
-     * @return bool
-     */
-    public function useBracketsForChildren(): bool
-    {
-        return false;
-    }
-
-    /**
-     * Allows to generate content before children content is generated
-     * @param int|null $indentation
-     * @return string
-     */
-    public function getBracketBeforeChildren(?int $indentation = null): string
-    {
-        $line = $this->getIndentedString(self::OPEN_BRACKET, $indentation);
-        $this->setIndentation(($indentation === null ? $this->getIndentation() : $indentation) + 1);
-
-        return $line;
-    }
-
-    /**
-     * Allows to generate content after children content is generated
-     * @param int|null $indentation
-     * @return string
-     */
-    public function getBracketAfterChildren(?int $indentation = null): string
-    {
-        $this->setIndentation(($indentation === null ? $this->getIndentation() : $indentation) - 1);
-
-        return $this->getIndentedString(self::CLOSE_BRACKET, $indentation);
-    }
-
-    public function setIndentation(int $indentation): self
-    {
-        $this->indentation = $indentation;
-
-        return $this;
-    }
-
-    public function getIndentation(): int
-    {
-        return $this->indentation;
-    }
-
-    public function getIndentationString(?int $indentation = null): string
-    {
-        return str_repeat(self::INDENTATION_CHAR, $indentation === null ? $this->getIndentation() : $indentation);
-    }
-
-    public function getIndentedString(string $string, ?int $indentation = null): string
-    {
-        $strings = explode(self::BREAK_LINE_CHAR, $string);
-        foreach ($strings as $i => $s) {
-            $strings[$i] = sprintf('%s%s', $this->getIndentationString($indentation), $s);
-        }
-
-        return implode(self::BREAK_LINE_CHAR, $strings);
-    }
-
-    final public function getCalledClass(): string
-    {
-        return substr(get_called_class(), strrpos(get_called_class(), '\\') + 1);
     }
 }

@@ -10,6 +10,10 @@ use WsdlToPhp\PhpGenerator\Element\PhpClass;
 use WsdlToPhp\PhpGenerator\Element\PhpDeclare;
 use WsdlToPhp\PhpGenerator\Tests\TestCase;
 
+/**
+ * @internal
+ * @coversDefaultClass
+ */
 class PhpDeclareTest extends TestCase
 {
     public function testConstructWithInvalidStringNameMustThrowAnException()
@@ -94,7 +98,8 @@ class PhpDeclareTest extends TestCase
         $phpDeclare = new PhpDeclare($name = PhpDeclare::DIRECTIVE_STRICT_TYPES, 1);
         $phpDeclare
             ->addChild(new PhpDeclare($name = PhpDeclare::DIRECTIVE_ENCODING, 'UTF-8'))
-            ->addChild(new PhpDeclare($name = PhpDeclare::DIRECTIVE_TICKS, 0));
+            ->addChild(new PhpDeclare($name = PhpDeclare::DIRECTIVE_TICKS, 0))
+        ;
 
         $this->assertSame('declare(strict_types=1, encoding=\'UTF-8\', ticks=0);', $phpDeclare->getPhpDeclaration());
     }

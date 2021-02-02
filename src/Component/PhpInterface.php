@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace WsdlToPhp\PhpGenerator\Component;
 
 use WsdlToPhp\PhpGenerator\Element\PhpInterface as PhpInterfaceElement;
-use WsdlToPhp\PhpGenerator\Element\PhpProperty as PhpPropertyElement;
 use WsdlToPhp\PhpGenerator\Element\PhpMethod as PhpMethodElement;
+use WsdlToPhp\PhpGenerator\Element\PhpProperty as PhpPropertyElement;
 
 class PhpInterface extends PhpClass
 {
@@ -20,6 +20,7 @@ class PhpInterface extends PhpClass
         if ($method->getHasBody()) {
             $method->setHasBody(false);
         }
+
         return parent::addMethodElement($method);
     }
 

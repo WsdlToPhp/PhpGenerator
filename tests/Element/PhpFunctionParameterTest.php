@@ -7,9 +7,13 @@ namespace WsdlToPhp\PhpGenerator\Tests\Element;
 use InvalidArgumentException;
 use TypeError;
 use WsdlToPhp\PhpGenerator\Element\PhpFunctionParameter;
-use WsdlToPhp\PhpGenerator\Tests\TestCase;
 use WsdlToPhp\PhpGenerator\Element\PhpMethod;
+use WsdlToPhp\PhpGenerator\Tests\TestCase;
 
+/**
+ * @internal
+ * @coversDefaultClass
+ */
 class PhpFunctionParameterTest extends TestCase
 {
     public function testSetType()

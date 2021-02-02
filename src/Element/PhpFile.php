@@ -15,7 +15,7 @@ class PhpFile extends AbstractElement
 
     public function getLineBeforeChildren(?int $indentation = null): string
     {
-        return '';//self::BREAK_LINE_CHAR;
+        return ''; //self::BREAK_LINE_CHAR;
     }
 
     public function toString(?int $indentation = null): string

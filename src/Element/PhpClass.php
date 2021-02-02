@@ -19,12 +19,12 @@ class PhpClass extends AbstractElement
     protected bool $abstract;
 
     /**
-     * @var string|PhpClass
+     * @var PhpClass|string
      */
     protected $extends;
 
     /**
-     * @var string[]|PhpClass[]
+     * @var PhpClass[]|string[]
      */
     protected array $interfaces;
 
@@ -34,7 +34,8 @@ class PhpClass extends AbstractElement
         $this
             ->setAbstract($abstract)
             ->setExtends($extends)
-            ->setInterfaces($interfaces);
+            ->setInterfaces($interfaces)
+        ;
     }
 
     public function setAbstract(bool $abstract): self
@@ -49,14 +50,11 @@ class PhpClass extends AbstractElement
         return $this->abstract;
     }
 
-    protected function getPhpAbstract(): string
-    {
-        return $this->getAbstract() === false ? '' : static::PHP_ABSTRACT_KEYWORD . ' ';
-    }
-
     /**
+     * @param null|PhpClass|string $extends
+     *
      * @throws InvalidArgumentException
-     * @param string|PhpClass|null $extends
+     *
      * @return PhpClass
      */
     public function setExtends($extends): self
@@ -70,32 +68,26 @@ class PhpClass extends AbstractElement
     }
 
     /**
-     * @param string|PhpClass|null $extends
-     * @return bool
+     * @param null|PhpClass|string $extends
      */
     public static function extendsIsValid($extends): bool
     {
-        return $extends === null || self::stringIsValid($extends, true, true) || $extends instanceof PhpClass;
+        return null === $extends || self::stringIsValid($extends, true, true) || $extends instanceof PhpClass;
     }
 
     /**
-     * @return string|PhpClass
+     * @return PhpClass|string
      */
     public function getExtends()
     {
         return $this->extends;
     }
 
-    protected function getPhpExtends(): string
-    {
-        $extends = $this->getExtends();
-
-        return empty($extends) ? '' : sprintf(' %s %s', static::PHP_EXTENDS_KEYWORD, ($extends instanceof PhpClass ? $extends->getName() : $extends));
-    }
-
     /**
+     * @param PhpClass[]|string[] $interfaces
+     *
      * @throws InvalidArgumentException
-     * @param string[]|PhpClass[] $interfaces
+     *
      * @return PhpClass
      */
     public function setInterfaces(array $interfaces = []): self
@@ -109,8 +101,7 @@ class PhpClass extends AbstractElement
     }
 
     /**
-     * @param string[]|PhpClass[] $interfaces
-     * @return bool
+     * @param PhpClass[]|string[] $interfaces
      */
     public static function interfacesAreValid(array $interfaces = []): bool
     {
@@ -123,8 +114,7 @@ class PhpClass extends AbstractElement
     }
 
     /**
-     * @param string|PhpClass $interface
-     * @return bool
+     * @param PhpClass|string $interface
      */
     public static function interfaceIsValid($interface): bool
     {
@@ -132,34 +122,11 @@ class PhpClass extends AbstractElement
     }
 
     /**
-     *
-     * @return string[]|PhpClass[]
+     * @return PhpClass[]|string[]
      */
     public function getInterfaces(): array
     {
         return $this->interfaces;
-    }
-
-    /**
-     * @return string
-     */
-    protected function getPhpInterfaces(): string
-    {
-        $interfaces = [];
-        foreach ($this->getInterfaces() as $interface) {
-            $interfaces[] = $this->getPhpInterface($interface);
-        }
-
-        return empty($interfaces) ? '' : sprintf(' %s%s', static::PHP_IMPLEMENTS_KEYWORD, implode(',', $interfaces));
-    }
-
-    /**
-     * @param string|PhpClass $interface
-     * @return string
-     */
-    protected function getPhpInterface($interface): string
-    {
-        return sprintf(' %s', is_string($interface) ? $interface : $interface->getName());
     }
 
     public function getPhpDeclaration(): string
@@ -168,7 +135,8 @@ class PhpClass extends AbstractElement
     }
 
     /**
-     * defines authorized children element types
+     * defines authorized children element types.
+     *
      * @return string[]
      */
     public function getChildrenTypes(): array
@@ -187,11 +155,40 @@ class PhpClass extends AbstractElement
      * in the case the method returns true, getBracketBeforeChildren
      * is called instead of getLineBeforeChildren and getBracketAfterChildren
      * is called instead of getLineAfterChildren, but be aware that these methods
-     * call the two others
-     * @return bool
+     * call the two others.
      */
     public function useBracketsForChildren(): bool
     {
         return true;
+    }
+
+    protected function getPhpAbstract(): string
+    {
+        return false === $this->getAbstract() ? '' : static::PHP_ABSTRACT_KEYWORD.' ';
+    }
+
+    protected function getPhpExtends(): string
+    {
+        $extends = $this->getExtends();
+
+        return empty($extends) ? '' : sprintf(' %s %s', static::PHP_EXTENDS_KEYWORD, ($extends instanceof PhpClass ? $extends->getName() : $extends));
+    }
+
+    protected function getPhpInterfaces(): string
+    {
+        $interfaces = [];
+        foreach ($this->getInterfaces() as $interface) {
+            $interfaces[] = $this->getPhpInterface($interface);
+        }
+
+        return empty($interfaces) ? '' : sprintf(' %s%s', static::PHP_IMPLEMENTS_KEYWORD, implode(',', $interfaces));
+    }
+
+    /**
+     * @param PhpClass|string $interface
+     */
+    protected function getPhpInterface($interface): string
+    {
+        return sprintf(' %s', is_string($interface) ? $interface : $interface->getName());
     }
 }

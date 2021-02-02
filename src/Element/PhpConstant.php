@@ -13,7 +13,8 @@ class PhpConstant extends AbstractAssignedValueElement
         parent::__construct($name, $value);
         $this
             ->setValue($value)
-            ->setClass($class);
+            ->setClass($class)
+        ;
     }
 
     public function getPhpName(): string
@@ -28,6 +29,7 @@ class PhpConstant extends AbstractAssignedValueElement
     public function setClass(?PhpClass $class): self
     {
         $this->class = $class;
+
         return $this;
     }
 
@@ -84,9 +86,9 @@ class PhpConstant extends AbstractAssignedValueElement
     }
 
     /**
-     * Always return null to avoid having value being detected as a potential function/method/variable
+     * Always return null to avoid having value being detected as a potential function/method/variable.
+     *
      * @param $value
-     * @return null
      */
     protected function getScalarValue($value)
     {

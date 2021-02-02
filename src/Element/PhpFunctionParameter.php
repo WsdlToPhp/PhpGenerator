@@ -9,7 +9,7 @@ use InvalidArgumentException;
 class PhpFunctionParameter extends PhpVariable
 {
     /**
-     * @var string|PhpClass
+     * @var PhpClass|string
      */
     protected $type;
 
@@ -20,8 +20,10 @@ class PhpFunctionParameter extends PhpVariable
     }
 
     /**
+     * @param PhpClass|string $type
+     *
      * @throws InvalidArgumentException
-     * @param string|PhpClass $type
+     *
      * @return PhpFunctionParameter
      */
     public function setType($type): self
@@ -35,27 +37,19 @@ class PhpFunctionParameter extends PhpVariable
     }
 
     /**
-     * @param string|PhpClass $type
-     * @return bool
+     * @param PhpClass|string $type
      */
     public static function typeIsValid($type): bool
     {
-        return $type === null || static::stringIsValid($type, true, true) || $type instanceof PhpClass;
+        return null === $type || static::stringIsValid($type, true, true) || $type instanceof PhpClass;
     }
 
     /**
-     * @return string|PhpClass
+     * @return PhpClass|string
      */
     public function getType()
     {
         return $this->type;
-    }
-
-    protected function getPhpType(): string
-    {
-        $type = $this->getType();
-
-        return empty($type) ? '' : sprintf('%s ', $type instanceof PhpClass ? $type->getPhpName() : $type);
     }
 
     public function getPhpDeclaration(): string
@@ -71,6 +65,13 @@ class PhpFunctionParameter extends PhpVariable
     public function endsWithSemicolon(): bool
     {
         return false;
+    }
+
+    protected function getPhpType(): string
+    {
+        $type = $this->getType();
+
+        return empty($type) ? '' : sprintf('%s ', $type instanceof PhpClass ? $type->getPhpName() : $type);
     }
 
     protected function getAnyValue($value): string

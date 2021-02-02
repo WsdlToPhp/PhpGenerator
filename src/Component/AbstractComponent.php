@@ -6,15 +6,15 @@ namespace WsdlToPhp\PhpGenerator\Component;
 
 use InvalidArgumentException;
 use WsdlToPhp\PhpGenerator\Element\AbstractElement;
-use WsdlToPhp\PhpGenerator\Element\PhpFile as PhpFileElement;
+use WsdlToPhp\PhpGenerator\Element\PhpAnnotationBlock as PhpAnnotationBlockElement;
 use WsdlToPhp\PhpGenerator\Element\PhpClass as PhpClassElement;
 use WsdlToPhp\PhpGenerator\Element\PhpConstant as PhpConstantElement;
-use WsdlToPhp\PhpGenerator\Element\PhpAnnotationBlock as PhpAnnotationBlockElement;
+use WsdlToPhp\PhpGenerator\Element\PhpFile as PhpFileElement;
 
 abstract class AbstractComponent implements GenerateableInterface
 {
     /**
-     * @var PhpFileElement|PhpClassElement
+     * @var PhpClassElement|PhpFileElement
      */
     protected $mainElement;
 
@@ -50,28 +50,11 @@ abstract class AbstractComponent implements GenerateableInterface
     }
 
     /**
-     * @return PhpFileElement|PhpClassElement
+     * @return PhpClassElement|PhpFileElement
      */
     public function getMainElement(): AbstractElement
     {
         return $this->mainElement;
-    }
-
-    /**
-     * @throws InvalidArgumentException
-     * @param string|AbstractElement $element
-     * @return string
-     */
-    protected function getElementString($element): string
-    {
-        $string = '';
-        if (is_scalar($element)) {
-            $string = $element;
-        } elseif ($element instanceof AbstractElement) {
-            $string = $element->toString();
-        }
-
-        return $string;
     }
 
     public function addConstantElement(PhpConstantElement $constant): self
@@ -85,9 +68,8 @@ abstract class AbstractComponent implements GenerateableInterface
     }
 
     /**
-     * @param string $name
      * @param mixed $value
-     * @param PhpClassElement|null $class
+     *
      * @return AbstractComponent
      */
     public function addConstant(string $name, $value = null, ?PhpClassElement $class = null): self
@@ -103,7 +85,8 @@ abstract class AbstractComponent implements GenerateableInterface
     }
 
     /**
-     * @param array|string|PhpAnnotationBlockElement $annotations
+     * @param array|PhpAnnotationBlockElement|string $annotations
+     *
      * @return AbstractComponent
      */
     public function addAnnotationBlock($annotations): self
@@ -111,5 +94,22 @@ abstract class AbstractComponent implements GenerateableInterface
         return $this->addAnnotationBlockElement(new PhpAnnotationBlockElement(is_array($annotations) ? $annotations : [
             $annotations,
         ]));
+    }
+
+    /**
+     * @param AbstractElement|string $element
+     *
+     * @throws InvalidArgumentException
+     */
+    protected function getElementString($element): string
+    {
+        $string = '';
+        if (is_scalar($element)) {
+            $string = $element;
+        } elseif ($element instanceof AbstractElement) {
+            $string = $element->toString();
+        }
+
+        return $string;
     }
 }

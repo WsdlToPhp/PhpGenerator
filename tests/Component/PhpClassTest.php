@@ -5,10 +5,14 @@ declare(strict_types=1);
 namespace WsdlToPhp\PhpGenerator\Tests\Component;
 
 use WsdlToPhp\PhpGenerator\Component\PhpClass as PhpClassComponent;
-use WsdlToPhp\PhpGenerator\Element\PhpFunctionParameter as PhpFunctionParameterElement;
 use WsdlToPhp\PhpGenerator\Element\PhpAnnotation as PhpAnnotationElement;
+use WsdlToPhp\PhpGenerator\Element\PhpFunctionParameter as PhpFunctionParameterElement;
 use WsdlToPhp\PhpGenerator\Element\PhpProperty as PhpPropertyElement;
 
+/**
+ * @internal
+ * @coversDefaultClass
+ */
 class PhpClassTest extends AbstractComponent
 {
     public function testSimpleToString()
@@ -46,7 +50,8 @@ class PhpClassTest extends AbstractComponent
             ->addMethod('uselessMethod', [
                 new PhpFunctionParameterElement('uselessParameter', null),
                 'unusedParameter',
-            ]);
+            ])
+        ;
 
         $this->assertSameContent(__FUNCTION__, $class);
     }
@@ -86,7 +91,8 @@ class PhpClassTest extends AbstractComponent
             ->addMethod('uselessMethod', [
                 new PhpFunctionParameterElement('uselessParameter', null),
                 'unusedParameter',
-            ], 'void');
+            ], 'void')
+        ;
 
         $this->assertSameContent(__FUNCTION__, $class);
     }
@@ -126,7 +132,8 @@ class PhpClassTest extends AbstractComponent
             ->addMethod('uselessMethod', [
                 new PhpFunctionParameterElement('uselessParameter', null),
                 'unusedParameter',
-            ], '?int');
+            ], '?int')
+        ;
 
         $this->assertSameContent(__FUNCTION__, $class);
     }

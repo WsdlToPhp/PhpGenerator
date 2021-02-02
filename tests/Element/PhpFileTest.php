@@ -6,16 +6,20 @@ namespace WsdlToPhp\PhpGenerator\Tests\Element;
 
 use InvalidArgumentException;
 use TypeError;
-use WsdlToPhp\PhpGenerator\Element\PhpClass;
-use WsdlToPhp\PhpGenerator\Element\PhpDeclare;
-use WsdlToPhp\PhpGenerator\Element\PhpFunction;
-use WsdlToPhp\PhpGenerator\Element\PhpVariable;
-use WsdlToPhp\PhpGenerator\Element\PhpMethod;
 use WsdlToPhp\PhpGenerator\Element\PhpAnnotationBlock;
+use WsdlToPhp\PhpGenerator\Element\PhpClass;
 use WsdlToPhp\PhpGenerator\Element\PhpConstant;
+use WsdlToPhp\PhpGenerator\Element\PhpDeclare;
 use WsdlToPhp\PhpGenerator\Element\PhpFile;
+use WsdlToPhp\PhpGenerator\Element\PhpFunction;
+use WsdlToPhp\PhpGenerator\Element\PhpMethod;
+use WsdlToPhp\PhpGenerator\Element\PhpVariable;
 use WsdlToPhp\PhpGenerator\Tests\TestCase;
 
+/**
+ * @internal
+ * @coversDefaultClass
+ */
 class PhpFileTest extends TestCase
 {
     public function testException()

@@ -6,10 +6,14 @@ namespace WsdlToPhp\PhpGenerator\Tests\Element;
 
 use InvalidArgumentException;
 use TypeError;
-use WsdlToPhp\PhpGenerator\Element\PhpVariable;
 use WsdlToPhp\PhpGenerator\Element\PhpProperty;
+use WsdlToPhp\PhpGenerator\Element\PhpVariable;
 use WsdlToPhp\PhpGenerator\Tests\TestCase;
 
+/**
+ * @internal
+ * @coversDefaultClass
+ */
 class PhpPropertyTest extends TestCase
 {
     public function testPublicGetPhpDeclarationNullValue()
@@ -68,7 +72,7 @@ class PhpPropertyTest extends TestCase
     {
         $property = new PhpProperty('foo', 'is_array(1)');
 
-        $this->assertSame("public \$foo = is_array(1);", $property->getPhpDeclaration());
+        $this->assertSame('public $foo = is_array(1);', $property->getPhpDeclaration());
     }
 
     public function testPrivateGetPhpDeclarationNullValue()

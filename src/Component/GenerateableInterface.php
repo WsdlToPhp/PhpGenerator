@@ -8,11 +8,10 @@ interface GenerateableInterface
 {
     const BREAK_LINE_CHAR = "\n";
 
+    public function __toString(): string;
+
     /**
-     * Must return the strict representation for the current element
-     * @return string
+     * Must return the strict representation for the current element.
      */
     public function toString(): string;
-
-    public function __toString(): string;
 }
