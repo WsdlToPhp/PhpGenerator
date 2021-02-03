@@ -24,7 +24,7 @@ abstract class Foo extends stdClass
     /**
      * @var int
      */
-    public $bar = 1;
+    private int $bar = 1;
     
     /**
      * @var bool

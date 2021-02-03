@@ -11,6 +11,7 @@ use WsdlToPhp\PhpGenerator\Component\PhpInterface as PhpInterfaceComponent;
 use WsdlToPhp\PhpGenerator\Element\PhpAnnotation as PhpAnnotationElement;
 use WsdlToPhp\PhpGenerator\Element\PhpDeclare;
 use WsdlToPhp\PhpGenerator\Element\PhpFunctionParameter as PhpFunctionParameterElement;
+use WsdlToPhp\PhpGenerator\Element\PhpProperty;
 use WsdlToPhp\PhpGenerator\Element\PhpProperty as PhpPropertyElement;
 
 /**
@@ -32,7 +33,7 @@ class PhpFileTest extends AbstractComponent
             ->addConstant('BAR', 'theOtherValue')
             ->addString()
             ->addAnnotationBlock(new PhpAnnotationElement('var', 'int'))
-            ->addProperty('bar', 1)
+            ->addProperty('bar', 1, PhpProperty::ACCESS_PRIVATE, PhpProperty::TYPE_INT)
             ->addString()
             ->addAnnotationBlock(new PhpAnnotationElement('var', 'bool'))
             ->addPropertyElement(new PhpPropertyElement('sample', true))
