@@ -15,7 +15,7 @@ trait AssignedValueElementTrait
 
     public function setValue($value): AbstractElement
     {
-        if (false === $this->getAcceptNonScalarValue() && !is_scalar($value) && null !== $value) {
+        if (!$this->getAcceptNonScalarValue() && !is_scalar($value) && !is_null($value)) {
             throw new InvalidArgumentException(sprintf('Value of type "%s" is not a valid scalar value for %s object', gettype($value), $this->getCalledClass()));
         }
         $this->value = $value;
@@ -50,13 +50,27 @@ trait AssignedValueElementTrait
             $this->getAssignmentSign(),
             $this->getPhpValue(),
             $this->getAssignmentFinishing(),
-            true === $this->endsWithSemicolon() ? ';' : '',
+            $this->endsWithSemicolon() ? ';' : '',
         ]);
     }
 
+    abstract public function endsWithSemicolon(): bool;
+
+    abstract public function getAssignmentDeclarator(): string;
+
+    abstract public function getAssignmentSign(): string;
+
+    abstract public function getAssignmentFinishing(): string;
+
+    abstract public function getAcceptNonScalarValue(): bool;
+
+    abstract public function getCalledClass(): string;
+
+    abstract public function getPhpName(): string;
+
     protected function getFinalValue(): ?string
     {
-        if (is_scalar($this->getValue()) && null !== ($scalarValue = $this->getScalarValue($this->getValue()))) {
+        if (is_scalar($this->getValue()) && !is_null($scalarValue = $this->getScalarValue($this->getValue()))) {
             return $scalarValue;
         }
         if (is_null($this->getValue())) {

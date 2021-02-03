@@ -85,10 +85,8 @@ class PhpConstant extends AbstractElement implements AccessRestrictedElementInte
 
     /**
      * Always return null to avoid having a literal string instead of quoted string.
-     *
-     * @param $value
      */
-    protected function getScalarValue($value)
+    protected function getScalarValue()
     {
         return null;
     }

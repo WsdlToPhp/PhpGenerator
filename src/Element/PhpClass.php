@@ -54,12 +54,10 @@ class PhpClass extends AbstractElement
      * @param null|PhpClass|string $extends
      *
      * @throws InvalidArgumentException
-     *
-     * @return PhpClass
      */
     public function setExtends($extends): self
     {
-        if (!self::extendsIsValid($extends)) {
+        if (!static::extendsIsValid($extends)) {
             throw new InvalidArgumentException('Extends must be a string or a PhpClass instance');
         }
         $this->extends = $extends;
@@ -72,7 +70,7 @@ class PhpClass extends AbstractElement
      */
     public static function extendsIsValid($extends): bool
     {
-        return null === $extends || self::stringIsValid($extends, true, true) || $extends instanceof PhpClass;
+        return is_null($extends) || static::stringIsValid($extends, true, true) || $extends instanceof PhpClass;
     }
 
     /**
@@ -87,12 +85,10 @@ class PhpClass extends AbstractElement
      * @param PhpClass[]|string[] $interfaces
      *
      * @throws InvalidArgumentException
-     *
-     * @return PhpClass
      */
     public function setInterfaces(array $interfaces = []): self
     {
-        if (!self::interfacesAreValid($interfaces)) {
+        if (!static::interfacesAreValid($interfaces)) {
             throw new InvalidArgumentException('Interfaces are not valid');
         }
         $this->interfaces = $interfaces;
@@ -107,7 +103,7 @@ class PhpClass extends AbstractElement
     {
         $valid = true;
         foreach ($interfaces as $interface) {
-            $valid &= self::interfaceIsValid($interface);
+            $valid &= static::interfaceIsValid($interface);
         }
 
         return (bool) $valid;
@@ -118,7 +114,7 @@ class PhpClass extends AbstractElement
      */
     public static function interfaceIsValid($interface): bool
     {
-        return self::stringIsValid($interface) || $interface instanceof PhpClass;
+        return static::stringIsValid($interface) || $interface instanceof PhpClass;
     }
 
     /**
@@ -164,7 +160,7 @@ class PhpClass extends AbstractElement
 
     protected function getPhpAbstract(): string
     {
-        return false === $this->getAbstract() ? '' : static::PHP_ABSTRACT_KEYWORD.' ';
+        return !$this->getAbstract() ? '' : static::PHP_ABSTRACT_KEYWORD.' ';
     }
 
     protected function getPhpExtends(): string

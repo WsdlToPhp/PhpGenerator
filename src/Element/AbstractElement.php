@@ -45,7 +45,7 @@ abstract class AbstractElement implements GenerateableInterface
     public static function nameIsValid(string $name, bool $allowBackslash = false): bool
     {
         $pattern = '/[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*/';
-        if (true === $allowBackslash) {
+        if ($allowBackslash) {
             $pattern = '/[a-zA-Z_\x7f-\xff\\\][a-zA-Z0-9_\x7f-\xff\\\]*/';
         }
 
@@ -59,7 +59,7 @@ abstract class AbstractElement implements GenerateableInterface
 
     public static function objectIsValid($object, ?string $checkClass = null): bool
     {
-        return is_object($object) && (null === $checkClass || get_class($object) === $checkClass);
+        return is_object($object) && (is_null($checkClass) || get_class($object) === $checkClass);
     }
 
     public function toString(?int $indentation = null): string
@@ -76,7 +76,7 @@ abstract class AbstractElement implements GenerateableInterface
         }
         $lines[] = $this->getToStringAfterChildren($indentation);
 
-        return implode(self::BREAK_LINE_CHAR, self::cleanArrayToString($lines));
+        return implode(self::BREAK_LINE_CHAR, static::cleanArrayToString($lines));
     }
 
     public function getPhpName(): string
@@ -150,7 +150,7 @@ abstract class AbstractElement implements GenerateableInterface
     public function getBracketBeforeChildren(?int $indentation = null): string
     {
         $line = $this->getIndentedString(self::OPEN_BRACKET, $indentation);
-        $this->setIndentation((null === $indentation ? $this->getIndentation() : $indentation) + 1);
+        $this->setIndentation((is_null($indentation) ? $this->getIndentation() : $indentation) + 1);
 
         return $line;
     }
@@ -160,7 +160,7 @@ abstract class AbstractElement implements GenerateableInterface
      */
     public function getBracketAfterChildren(?int $indentation = null): string
     {
-        $this->setIndentation((null === $indentation ? $this->getIndentation() : $indentation) - 1);
+        $this->setIndentation((is_null($indentation) ? $this->getIndentation() : $indentation) - 1);
 
         return $this->getIndentedString(self::CLOSE_BRACKET, $indentation);
     }
@@ -179,7 +179,7 @@ abstract class AbstractElement implements GenerateableInterface
 
     public function getIndentationString(?int $indentation = null): string
     {
-        return str_repeat(self::INDENTATION_CHAR, null === $indentation ? $this->getIndentation() : $indentation);
+        return str_repeat(self::INDENTATION_CHAR, is_null($indentation) ? $this->getIndentation() : $indentation);
     }
 
     public function getIndentedString(string $string, ?int $indentation = null): string
@@ -203,7 +203,7 @@ abstract class AbstractElement implements GenerateableInterface
         if (is_string($child)) {
             $content = $this->getIndentedString($child, $indentation);
         } elseif ($child instanceof AbstractElement) {
-            $content = $child->toString(null === $indentation ? $this->getIndentation() : $indentation);
+            $content = $child->toString(is_null($indentation) ? $this->getIndentation() : $indentation);
         }
 
         return $content;
@@ -256,9 +256,11 @@ abstract class AbstractElement implements GenerateableInterface
     {
         $newArray = [];
         foreach ($array as $line) {
-            if (null !== $line) {
-                $newArray[] = $line;
+            if (is_null($line)) {
+                continue;
             }
+
+            $newArray[] = $line;
         }
 
         return $newArray;

@@ -51,8 +51,6 @@ abstract class AbstractComponent implements GenerateableInterface
 
     /**
      * @param mixed $value
-     *
-     * @return AbstractComponent
      */
     public function addConstant(string $name, $value = null, ?PhpClassElement $class = null): self
     {

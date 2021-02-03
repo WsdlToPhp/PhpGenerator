@@ -28,7 +28,7 @@ class PhpProperty extends PhpVariable implements AccessRestrictedElementInterfac
             $this->getAssignmentSign(),
             $this->getPhpValue(),
             $this->getAssignmentFinishing(),
-            true === $this->endsWithSemicolon() ? ';' : '',
+            $this->endsWithSemicolon() ? ';' : '',
         ]);
     }
 }

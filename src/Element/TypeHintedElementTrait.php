@@ -17,8 +17,6 @@ trait TypeHintedElementTrait
      * @param PhpClass|string $type
      *
      * @throws InvalidArgumentException
-     *
-     * @return PhpFunctionParameter
      */
     public function setType($type): AbstractElement
     {
@@ -36,11 +34,11 @@ trait TypeHintedElementTrait
     public static function typeIsValid($type): bool
     {
         return
-            null === $type
+            is_null($type)
             || $type instanceof PhpClass
             || (is_string($type) && class_exists($type))
             || in_array($type, TypeHintedElementInterface::TYPES, true)
-            || self::stringIsValid($type, true, true);
+            || static::stringIsValid($type, true, true);
     }
 
     /**

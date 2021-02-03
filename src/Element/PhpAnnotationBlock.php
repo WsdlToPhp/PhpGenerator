@@ -18,10 +18,8 @@ class PhpAnnotationBlock extends AbstractElement
      * @param mixed $child
      *
      * @throws InvalidArgumentException
-     *
-     * @return PhpAnnotationBlock
      */
-    public function addChild($child): AbstractElement
+    public function addChild($child): self
     {
         if (!$this->childIsValid($child)) {
             return parent::addChild($child);
@@ -65,8 +63,6 @@ class PhpAnnotationBlock extends AbstractElement
      * @param array[]|PhpAnnotation[]|string[] $annotations
      *
      * @throws InvalidArgumentException
-     *
-     * @return PhpAnnotationBlock
      */
     protected function setAnnotations(array $annotations): self
     {
@@ -87,7 +83,7 @@ class PhpAnnotationBlock extends AbstractElement
     {
         $finalAnnotations = [];
         foreach ($annotations as $annotation) {
-            $finalAnnotations[] = self::transformAnnotation($annotation);
+            $finalAnnotations[] = static::transformAnnotation($annotation);
         }
 
         return $finalAnnotations;

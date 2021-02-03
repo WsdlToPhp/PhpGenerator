@@ -99,7 +99,7 @@ class PhpMethod extends PhpFunction implements AccessRestrictedElementInterface
      */
     public function getLineBeforeChildren(?int $indentation = null): string
     {
-        if (true === $this->getHasBody()) {
+        if ($this->getHasBody()) {
             return parent::getLineBeforeChildren($indentation);
         }
 
@@ -111,7 +111,7 @@ class PhpMethod extends PhpFunction implements AccessRestrictedElementInterface
      */
     public function getLineAfterChildren(int $indentation = null): string
     {
-        if (true === $this->getHasBody()) {
+        if ($this->getHasBody()) {
             return parent::getLineAfterChildren($indentation);
         }
 
@@ -120,7 +120,7 @@ class PhpMethod extends PhpFunction implements AccessRestrictedElementInterface
 
     public function getChildren(): array
     {
-        if (true === $this->getHasBody()) {
+        if ($this->getHasBody()) {
             return parent::getChildren();
         }
 
@@ -141,17 +141,17 @@ class PhpMethod extends PhpFunction implements AccessRestrictedElementInterface
 
     protected function getPhpAbstract(): string
     {
-        return true === $this->getAbstract() ? 'abstract ' : '';
+        return $this->getAbstract() ? 'abstract ' : '';
     }
 
     protected function getPhpFinal(): string
     {
-        return true === $this->getFinal() ? 'final ' : '';
+        return $this->getFinal() ? 'final ' : '';
     }
 
     protected function getPhpStatic(): string
     {
-        return true === $this->getStatic() ? 'static ' : '';
+        return $this->getStatic() ? 'static ' : '';
     }
 
     protected function getPhpReturnType(): string
@@ -161,6 +161,6 @@ class PhpMethod extends PhpFunction implements AccessRestrictedElementInterface
 
     protected function getPhpDeclarationEnd(): string
     {
-        return (false === $this->getHasBody() || true === $this->getAbstract()) ? ';' : '';
+        return (!$this->getHasBody() || $this->getAbstract()) ? ';' : '';
     }
 }

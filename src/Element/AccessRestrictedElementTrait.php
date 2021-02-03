@@ -27,11 +27,11 @@ trait AccessRestrictedElementTrait
 
     public static function accessIsValid(?string $access): bool
     {
-        return null === $access || in_array($access, AccessRestrictedElementInterface::ACCESSES, true);
+        return '' === $access || in_array($access, AccessRestrictedElementInterface::ACCESSES, true);
     }
 
     protected function getPhpAccess(): string
     {
-        return null === $this->getAccess() ? '' : sprintf('%s ', $this->getAccess());
+        return '' === $this->getAccess() ? '' : sprintf('%s ', $this->getAccess());
     }
 }

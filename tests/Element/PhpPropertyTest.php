@@ -17,6 +17,13 @@ use WsdlToPhp\PhpGenerator\Tests\TestCase;
  */
 class PhpPropertyTest extends TestCase
 {
+    public function testPublicGetPhpDeclarationNoValueEmptyAccess()
+    {
+        $property = new PhpProperty('foo', PhpProperty::NO_VALUE, '');
+
+        $this->assertSame('$foo;', $property->getPhpDeclaration());
+    }
+
     public function testPublicGetPhpDeclarationNoValue()
     {
         $property = new PhpProperty('foo', PhpProperty::NO_VALUE);
