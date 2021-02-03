@@ -13,7 +13,7 @@ trait AccessRestrictedElementTrait
     public function setAccess(?string $access): AbstractElement
     {
         if (!static::accessIsValid($access)) {
-            throw new InvalidArgumentException(sprintf('Access "%s" is invalid, please provide one of these accesses: %s', $access, implode(', ', self::getAccesses())));
+            throw new InvalidArgumentException(sprintf('Access "%s" is invalid, please provide one of these accesses: %s', $access, implode(', ', AccessRestrictedElementInterface::ACCESSES)));
         }
         $this->access = $access;
 
@@ -25,18 +25,9 @@ trait AccessRestrictedElementTrait
         return $this->access;
     }
 
-    public static function getAccesses(): array
-    {
-        return [
-            AccessRestrictedElementInterface::ACCESS_PRIVATE,
-            AccessRestrictedElementInterface::ACCESS_PROTECTED,
-            AccessRestrictedElementInterface::ACCESS_PUBLIC,
-        ];
-    }
-
     public static function accessIsValid(?string $access): bool
     {
-        return null === $access || in_array($access, self::getAccesses(), true);
+        return null === $access || in_array($access, AccessRestrictedElementInterface::ACCESSES, true);
     }
 
     protected function getPhpAccess(): string

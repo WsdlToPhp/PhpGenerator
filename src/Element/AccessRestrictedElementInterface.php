@@ -12,11 +12,15 @@ interface AccessRestrictedElementInterface
 
     const ACCESS_PUBLIC = 'public';
 
+    const ACCESSES = [
+        self::ACCESS_PRIVATE,
+        self::ACCESS_PROTECTED,
+        self::ACCESS_PUBLIC,
+    ];
+
     public function setAccess(?string $access): AbstractElement;
 
     public function getAccess(): string;
-
-    public static function getAccesses(): array;
 
     public static function accessIsValid(?string $access): bool;
 }
