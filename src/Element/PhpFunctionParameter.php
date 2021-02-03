@@ -4,14 +4,9 @@ declare(strict_types=1);
 
 namespace WsdlToPhp\PhpGenerator\Element;
 
-use InvalidArgumentException;
-
-class PhpFunctionParameter extends PhpVariable
+class PhpFunctionParameter extends PhpVariable implements TypeHintedElementInterface
 {
-    /**
-     * @var PhpClass|string
-     */
-    protected $type;
+    use TypeHintedElementTrait;
 
     public function __construct(string $name, $value = null, $type = null)
     {
@@ -19,59 +14,14 @@ class PhpFunctionParameter extends PhpVariable
         $this->setType($type);
     }
 
-    /**
-     * @param PhpClass|string $type
-     *
-     * @throws InvalidArgumentException
-     *
-     * @return PhpFunctionParameter
-     */
-    public function setType($type): self
-    {
-        if (!static::typeIsValid($type)) {
-            throw new InvalidArgumentException(sprintf('Type "%s" is not valid', gettype($type)));
-        }
-        $this->type = $type;
-
-        return $this;
-    }
-
-    /**
-     * @param PhpClass|string $type
-     */
-    public static function typeIsValid($type): bool
-    {
-        return null === $type || static::stringIsValid($type, true, true) || $type instanceof PhpClass;
-    }
-
-    /**
-     * @return PhpClass|string
-     */
-    public function getType()
-    {
-        return $this->type;
-    }
-
     public function getPhpDeclaration(): string
     {
         return sprintf('%s%s', $this->getPhpType(), parent::getPhpDeclaration());
     }
 
-    public function getAssignmentSign(): string
-    {
-        return $this->hasValue() ? ' = ' : '';
-    }
-
     public function endsWithSemicolon(): bool
     {
         return false;
-    }
-
-    protected function getPhpType(): string
-    {
-        $type = $this->getType();
-
-        return empty($type) ? '' : sprintf('%s ', $type instanceof PhpClass ? $type->getPhpName() : $type);
     }
 
     protected function getAnyValue($value): string

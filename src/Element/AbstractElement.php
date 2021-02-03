@@ -13,15 +13,13 @@ abstract class AbstractElement implements GenerateableInterface
     /**
      * @var AbstractElement[]|mixed[]
      */
-    protected array $children;
+    protected array $children = [];
 
-    protected int $indentation;
+    protected int $indentation = 0;
 
     public function __construct(string $name)
     {
         $this->setName($name);
-        $this->children = [];
-        $this->indentation = 0;
     }
 
     public function __toString(): string

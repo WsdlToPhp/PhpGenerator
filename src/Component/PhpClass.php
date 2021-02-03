@@ -38,11 +38,4 @@ class PhpClass extends AbstractComponent
     {
         return $this->addPropertyElement(new PhpPropertyElement($name, $value, $access));
     }
-
-    public function getElements(): array
-    {
-        return [
-            $this->getMainElement(),
-        ];
-    }
 }

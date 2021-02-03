@@ -26,6 +26,6 @@ class AbstractComponent extends TestCase
         // file_put_contents($filename, $component->toString());
 
         $this->assertSame(file_get_contents($filename), $component->toString());
-        $this->assertSame(file_get_contents($filename), (string) $component);
+        $this->assertSame($component->toString(), (string) $component);
     }
 }

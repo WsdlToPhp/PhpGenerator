@@ -4,13 +4,16 @@ declare(strict_types=1);
 
 namespace WsdlToPhp\PhpGenerator\Element;
 
-class PhpConstant extends AbstractAssignedValueElement
+class PhpConstant extends AbstractElement implements AccessRestrictedElementInterface, AssignedValueElementInterface
 {
+    use AccessRestrictedElementTrait;
+    use AssignedValueElementTrait;
+
     protected ?PhpClass $class;
 
     public function __construct(string $name, $value = null, ?PhpClass $class = null)
     {
-        parent::__construct($name, $value);
+        parent::__construct($name);
         $this
             ->setValue($value)
             ->setClass($class)
@@ -70,11 +73,6 @@ class PhpConstant extends AbstractAssignedValueElement
         return false;
     }
 
-    public function hasAccessibilityConstraint(): bool
-    {
-        return false;
-    }
-
     public function endsWithSemicolon(): bool
     {
         return true;
@@ -86,7 +84,7 @@ class PhpConstant extends AbstractAssignedValueElement
     }
 
     /**
-     * Always return null to avoid having value being detected as a potential function/method/variable.
+     * Always return null to avoid having a literal string instead of quoted string.
      *
      * @param $value
      */

@@ -25,6 +25,15 @@ class PhpAnnotationBlockTest extends TestCase
         $this->assertSame("/**\n * This sample annotation is on one line\n */", $annotationBlock->toString());
     }
 
+    public function testGetOneLineToStringMatchesStringCasting()
+    {
+        $annotationBlock = new PhpAnnotationBlock([
+            'This sample annotation is on one line',
+        ]);
+
+        $this->assertSame((string) $annotationBlock, $annotationBlock->toString());
+    }
+
     public function testGetOneLineToStringWithName()
     {
         $annotationBlock = new PhpAnnotationBlock([

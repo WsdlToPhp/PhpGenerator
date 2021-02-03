@@ -237,6 +237,13 @@ class PhpClassTest extends TestCase
         $this->assertSame("class Foo\n{\n}", $class->toString());
     }
 
+    public function testSimpleClassEmptyBodyToStringMatchesStringCaasting()
+    {
+        $class = new PhpClass('Foo');
+
+        $this->assertSame((string) $class, $class->toString());
+    }
+
     public function testSimpleClassEmptyPublicMethodToString()
     {
         $class = new PhpClass('Foo');

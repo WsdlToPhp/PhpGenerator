@@ -4,8 +4,10 @@ declare(strict_types=1);
 
 namespace WsdlToPhp\PhpGenerator\Element;
 
-class PhpMethod extends PhpFunction
+class PhpMethod extends PhpFunction implements AccessRestrictedElementInterface
 {
+    use AccessRestrictedElementTrait;
+
     protected bool $final;
 
     protected bool $static;
@@ -17,7 +19,7 @@ class PhpMethod extends PhpFunction
     /**
      * @param PhpFunctionParameter[]|string[] $parameters
      */
-    public function __construct(string $name, array $parameters = [], ?string $returnType = null, string $access = parent::ACCESS_PUBLIC, bool $abstract = false, bool $static = false, bool $final = false, bool $hasBody = true)
+    public function __construct(string $name, array $parameters = [], ?string $returnType = null, string $access = self::ACCESS_PUBLIC, bool $abstract = false, bool $static = false, bool $final = false, bool $hasBody = true)
     {
         parent::__construct($name, $parameters, $returnType);
         $this
@@ -90,11 +92,6 @@ class PhpMethod extends PhpFunction
             $this->getPhpReturnType(),
             $this->getPhpDeclarationEnd()
         );
-    }
-
-    public function hasAccessibilityConstraint(): bool
-    {
-        return true;
     }
 
     /**

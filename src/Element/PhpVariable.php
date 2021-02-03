@@ -4,8 +4,16 @@ declare(strict_types=1);
 
 namespace WsdlToPhp\PhpGenerator\Element;
 
-class PhpVariable extends AbstractAssignedValueElement
+class PhpVariable extends AbstractElement implements AssignedValueElementInterface
 {
+    use AssignedValueElementTrait;
+
+    public function __construct(string $name, $value = null)
+    {
+        parent::__construct($name);
+        $this->setValue($value);
+    }
+
     public function getAssignmentDeclarator(): string
     {
         return '$';
@@ -24,11 +32,6 @@ class PhpVariable extends AbstractAssignedValueElement
     public function getAcceptNonScalarValue(): bool
     {
         return true;
-    }
-
-    public function hasAccessibilityConstraint(): bool
-    {
-        return false;
     }
 
     public function getChildrenTypes(): array

@@ -27,12 +27,16 @@ class PhpFileTest extends AbstractComponent
         $class
             ->addAnnotationBlock('@var string')
             ->addConstant('FOO', 'theValue')
+            ->addString()
             ->addAnnotationBlock('@var string')
             ->addConstant('BAR', 'theOtherValue')
+            ->addString()
             ->addAnnotationBlock(new PhpAnnotationElement('var', 'int'))
             ->addProperty('bar', 1)
+            ->addString()
             ->addAnnotationBlock(new PhpAnnotationElement('var', 'bool'))
             ->addPropertyElement(new PhpPropertyElement('sample', true))
+            ->addString()
             ->addAnnotationBlock([
                 new PhpAnnotationElement(PhpAnnotationElement::NO_NAME, 'This method is very useful'),
                 new PhpAnnotationElement('date', '2012-03-01'),
