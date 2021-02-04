@@ -10,6 +10,7 @@ use WsdlToPhp\PhpGenerator\Component\PhpFile as PhpFileComponent;
 use WsdlToPhp\PhpGenerator\Component\PhpInterface as PhpInterfaceComponent;
 use WsdlToPhp\PhpGenerator\Element\PhpAnnotation as PhpAnnotationElement;
 use WsdlToPhp\PhpGenerator\Element\PhpDeclare;
+use WsdlToPhp\PhpGenerator\Element\PhpFile;
 use WsdlToPhp\PhpGenerator\Element\PhpFunctionParameter as PhpFunctionParameterElement;
 use WsdlToPhp\PhpGenerator\Element\PhpProperty;
 use WsdlToPhp\PhpGenerator\Element\PhpProperty as PhpPropertyElement;
@@ -20,6 +21,13 @@ use WsdlToPhp\PhpGenerator\Element\PhpProperty as PhpPropertyElement;
  */
 class PhpFileTest extends AbstractComponent
 {
+    public function testGetMainElementMustBeOfPhpFileElement()
+    {
+        $class = new PhpFileComponent('Foo', true, 'stdClass');
+
+        $this->assertInstanceOf(PhpFile::class, $class->getMainElement());
+    }
+
     public function testSimpleClassToString()
     {
         $file = new PhpFileComponent('Foo');
