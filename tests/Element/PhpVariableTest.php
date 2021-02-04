@@ -9,6 +9,10 @@ use TypeError;
 use WsdlToPhp\PhpGenerator\Element\PhpVariable;
 use WsdlToPhp\PhpGenerator\Tests\TestCase;
 
+/**
+ * @internal
+ * @coversDefaultClass
+ */
 class PhpVariableTest extends TestCase
 {
     public function testGetPhpDeclarationNullValue()
@@ -67,21 +71,21 @@ class PhpVariableTest extends TestCase
     {
         $variable = new PhpVariable('foo', 'is_array(1)');
 
-        $this->assertSame("\$foo = is_array(1);", $variable->getPhpDeclaration());
+        $this->assertSame('$foo = is_array(1);', $variable->getPhpDeclaration());
     }
 
     public function testGetPhpDeclarationClassConstant()
     {
         $variable = new PhpVariable('foo', 'stdClass::BAR');
 
-        $this->assertSame("\$foo = stdClass::BAR;", $variable->getPhpDeclaration());
+        $this->assertSame('$foo = stdClass::BAR;', $variable->getPhpDeclaration());
     }
 
     public function testGetPhpDeclarationConstant()
     {
         $variable = new PhpVariable('foo', '::XML_ELEMENT_NODE');
 
-        $this->assertSame("\$foo = XML_ELEMENT_NODE;", $variable->getPhpDeclaration());
+        $this->assertSame('$foo = XML_ELEMENT_NODE;', $variable->getPhpDeclaration());
     }
 
     public function testAddChild()
@@ -100,6 +104,13 @@ class PhpVariableTest extends TestCase
         $this->assertSame('$foo = null;', $variable->toString());
     }
 
+    public function testToStringMatchesStringCasting()
+    {
+        $variable = new PhpVariable('foo');
+
+        $this->assertSame((string) $variable, $variable->toString());
+    }
+
     public function testToStringStringNewsValue()
     {
         $variable = new PhpVariable('foo', 'news');
@@ -112,13 +123,6 @@ class PhpVariableTest extends TestCase
         $variable = new PhpVariable('foo', 0.4);
 
         $this->assertSame('$foo = 0.4;', $variable->toString());
-    }
-
-    public function test__toStringFloatValue()
-    {
-        $variable = new PhpVariable('foo', 0.4);
-
-        $this->assertSame('$foo = 0.4;', (string) $variable);
     }
 
     public function testCyrillic()

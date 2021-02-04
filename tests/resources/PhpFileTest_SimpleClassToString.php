@@ -15,18 +15,22 @@ abstract class Foo extends stdClass
      * @var string
      */
     const FOO = 'theValue';
+    
     /**
      * @var string
      */
     const BAR = 'theOtherValue';
+    
     /**
      * @var int
      */
-    public $bar = 1;
+    private int $bar = 1;
+    
     /**
      * @var bool
      */
     public $sample = true;
+    
     /**
      * This method is very useful
      * @date 2012-03-01

@@ -6,15 +6,15 @@ namespace WsdlToPhp\PhpGenerator\Component;
 
 use InvalidArgumentException;
 use WsdlToPhp\PhpGenerator\Element\AbstractElement;
-use WsdlToPhp\PhpGenerator\Element\PhpFile as PhpFileElement;
+use WsdlToPhp\PhpGenerator\Element\PhpAnnotationBlock as PhpAnnotationBlockElement;
 use WsdlToPhp\PhpGenerator\Element\PhpClass as PhpClassElement;
 use WsdlToPhp\PhpGenerator\Element\PhpConstant as PhpConstantElement;
-use WsdlToPhp\PhpGenerator\Element\PhpAnnotationBlock as PhpAnnotationBlockElement;
+use WsdlToPhp\PhpGenerator\Element\PhpFile as PhpFileElement;
 
 abstract class AbstractComponent implements GenerateableInterface
 {
     /**
-     * @var PhpFileElement|PhpClassElement
+     * @var PhpClassElement|PhpFileElement
      */
     protected $mainElement;
 
@@ -25,18 +25,8 @@ abstract class AbstractComponent implements GenerateableInterface
 
     public function toString(): string
     {
-        $content = [];
-        foreach ($this->getElements() as $element) {
-            $content[] = $this->getElementString($element);
-        }
-
-        return implode('', $content);
+        return (string) $this->mainElement;
     }
-
-    /**
-     * @return AbstractElement[]|string[]
-     */
-    abstract public function getElements(): array;
 
     public function setMainElement(AbstractElement $element): self
     {
@@ -47,31 +37,6 @@ abstract class AbstractComponent implements GenerateableInterface
         }
 
         return $this;
-    }
-
-    /**
-     * @return PhpFileElement|PhpClassElement
-     */
-    public function getMainElement(): AbstractElement
-    {
-        return $this->mainElement;
-    }
-
-    /**
-     * @throws InvalidArgumentException
-     * @param string|AbstractElement $element
-     * @return string
-     */
-    protected function getElementString($element): string
-    {
-        $string = '';
-        if (is_scalar($element)) {
-            $string = $element;
-        } elseif ($element instanceof AbstractElement) {
-            $string = $element->toString();
-        }
-
-        return $string;
     }
 
     public function addConstantElement(PhpConstantElement $constant): self
@@ -85,10 +50,7 @@ abstract class AbstractComponent implements GenerateableInterface
     }
 
     /**
-     * @param string $name
      * @param mixed $value
-     * @param PhpClassElement|null $class
-     * @return AbstractComponent
      */
     public function addConstant(string $name, $value = null, ?PhpClassElement $class = null): self
     {
@@ -103,13 +65,19 @@ abstract class AbstractComponent implements GenerateableInterface
     }
 
     /**
-     * @param array|string|PhpAnnotationBlockElement $annotations
-     * @return AbstractComponent
+     * @param array|PhpAnnotationBlockElement|string $annotations
      */
     public function addAnnotationBlock($annotations): self
     {
         return $this->addAnnotationBlockElement(new PhpAnnotationBlockElement(is_array($annotations) ? $annotations : [
             $annotations,
         ]));
+    }
+
+    public function addString(string $string = ''): self
+    {
+        $this->mainElement->addChild($string);
+
+        return $this;
     }
 }

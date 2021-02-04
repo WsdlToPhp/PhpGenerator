@@ -6,12 +6,16 @@ namespace WsdlToPhp\PhpGenerator\Tests\Element;
 
 use InvalidArgumentException;
 use TypeError;
-use WsdlToPhp\PhpGenerator\Element\PhpVariable;
-use WsdlToPhp\PhpGenerator\Element\PhpProperty;
-use WsdlToPhp\PhpGenerator\Element\PhpFunctionParameter;
 use WsdlToPhp\PhpGenerator\Element\PhpFunction;
+use WsdlToPhp\PhpGenerator\Element\PhpFunctionParameter;
+use WsdlToPhp\PhpGenerator\Element\PhpProperty;
+use WsdlToPhp\PhpGenerator\Element\PhpVariable;
 use WsdlToPhp\PhpGenerator\Tests\TestCase;
 
+/**
+ * @internal
+ * @coversDefaultClass
+ */
 class PhpFunctionTest extends TestCase
 {
     public function testGetPhpDeclaration()
@@ -141,7 +145,8 @@ class PhpFunctionTest extends TestCase
 
         $function
             ->addChild(new PhpVariable('bar', 1))
-            ->addChild('return $bar;');
+            ->addChild('return $bar;')
+        ;
 
         $this->assertSame("function foo(\$bar, \$demo = 1, \$sample = null, \$deamon = true)\n{\n    \$bar = 1;\n    return \$bar;\n}", $function->toString());
     }
@@ -163,7 +168,8 @@ class PhpFunctionTest extends TestCase
 
         $function
             ->addChild(new PhpVariable('bar', 1))
-            ->addChild('return $bar;');
+            ->addChild('return $bar;')
+        ;
 
         $this->assertSame("function foo(\$bar, \$demo = 1, \$sample = null, \$deamon = true): int\n{\n    \$bar = 1;\n    return \$bar;\n}", $function->toString());
     }
@@ -185,7 +191,8 @@ class PhpFunctionTest extends TestCase
 
         $function
             ->addChild(new PhpVariable('bar', 1))
-            ->addChild('return $bar;');
+            ->addChild('return $bar;')
+        ;
 
         $this->assertSame("function foo(\$bar, \$demo = 1, \$sample = null, \$deamon = true): ?int\n{\n    \$bar = 1;\n    return \$bar;\n}", $function->toString());
     }

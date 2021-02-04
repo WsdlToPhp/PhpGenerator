@@ -23,7 +23,7 @@ class PhpDeclare extends AbstractElement
     ];
 
     /**
-     * @var string|int
+     * @var int|string
      */
     private $value;
 
@@ -35,7 +35,6 @@ class PhpDeclare extends AbstractElement
 
     /**
      * @param int|string $value
-     * @return PhpDeclare
      */
     public function setValue($value): self
     {
@@ -78,17 +77,6 @@ class PhpDeclare extends AbstractElement
         return empty($strings) ? '' : sprintf(self::STATEMENT, implode(', ', $strings));
     }
 
-    /**
-     * Children are handled before in getPhpDeclaration in order to have one line per declare directive
-     * @param $child
-     * @param int|null $indentation
-     * @return string
-     */
-    protected function getChildContent($child, int $indentation = null): string
-    {
-        return '';
-    }
-
     public function addChild($child): AbstractElement
     {
         /** @var AbstractElement $child */
@@ -104,5 +92,15 @@ class PhpDeclare extends AbstractElement
         return [
             PhpDeclare::class,
         ];
+    }
+
+    /**
+     * Children are handled before in getPhpDeclaration in order to have one line per declare directive.
+     *
+     * @param $child
+     */
+    protected function getChildContent($child, int $indentation = null): string
+    {
+        return '';
     }
 }

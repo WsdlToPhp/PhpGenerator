@@ -5,11 +5,15 @@ declare(strict_types=1);
 namespace WsdlToPhp\PhpGenerator\Tests\Component;
 
 use WsdlToPhp\PhpGenerator\Component\PhpInterface as PhpInterfaceComponent;
-use WsdlToPhp\PhpGenerator\Element\PhpFunctionParameter as PhpFunctionParameterElement;
 use WsdlToPhp\PhpGenerator\Element\PhpAnnotation as PhpAnnotationElement;
-use WsdlToPhp\PhpGenerator\Element\PhpProperty as PhpPropertyElement;
+use WsdlToPhp\PhpGenerator\Element\PhpFunctionParameter as PhpFunctionParameterElement;
 use WsdlToPhp\PhpGenerator\Element\PhpMethod;
+use WsdlToPhp\PhpGenerator\Element\PhpProperty as PhpPropertyElement;
 
+/**
+ * @internal
+ * @coversDefaultClass
+ */
 class PhpInterfaceTest extends AbstractComponent
 {
     public function testSimpleToString()
@@ -44,7 +48,8 @@ class PhpInterfaceTest extends AbstractComponent
             ->addMethod('uselessMethod', [
                 new PhpFunctionParameterElement('uselessParameter', null),
                 'unusedParameter',
-            ]);
+            ])
+        ;
 
         $this->assertSameContent(__FUNCTION__, $interface);
     }
@@ -81,7 +86,8 @@ class PhpInterfaceTest extends AbstractComponent
             ->addMethod('uselessMethod', [
                 new PhpFunctionParameterElement('uselessParameter', null),
                 'unusedParameter',
-            ], 'void');
+            ], 'void')
+        ;
 
         $this->assertSameContent(__FUNCTION__, $interface);
     }

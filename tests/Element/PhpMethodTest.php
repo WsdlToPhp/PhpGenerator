@@ -6,12 +6,16 @@ namespace WsdlToPhp\PhpGenerator\Tests\Element;
 
 use InvalidArgumentException;
 use TypeError;
-use WsdlToPhp\PhpGenerator\Element\PhpVariable;
-use WsdlToPhp\PhpGenerator\Element\PhpInterface;
 use WsdlToPhp\PhpGenerator\Element\PhpFunctionParameter;
+use WsdlToPhp\PhpGenerator\Element\PhpInterface;
 use WsdlToPhp\PhpGenerator\Element\PhpMethod;
+use WsdlToPhp\PhpGenerator\Element\PhpVariable;
 use WsdlToPhp\PhpGenerator\Tests\TestCase;
 
+/**
+ * @internal
+ * @coversDefaultClass
+ */
 class PhpMethodTest extends TestCase
 {
     public function testPublicGetPhpDeclaration()
@@ -31,6 +35,7 @@ class PhpMethodTest extends TestCase
 
         $this->assertSame('public function foo($bar, $demo = 1, $sample = null, $deamon = true)', $method->getPhpDeclaration());
     }
+
     public function testPublicGetPhpDeclarationWithReturnType()
     {
         $method = new PhpMethod('foo', [
@@ -231,7 +236,8 @@ class PhpMethodTest extends TestCase
 
         $method
             ->addChild(new PhpVariable('bar', 1))
-            ->addChild('return $bar;');
+            ->addChild('return $bar;')
+        ;
 
         $this->assertSame("public function foo(\$bar, \$demo = 1, \$sample = null, \$deamon = true)\n{\n    \$bar = 1;\n    return \$bar;\n}", $method->toString());
     }

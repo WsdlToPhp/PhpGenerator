@@ -4,14 +4,33 @@ declare(strict_types=1);
 
 namespace WsdlToPhp\PhpGenerator\Tests\Element;
 
+use DateTime;
 use InvalidArgumentException;
 use TypeError;
-use WsdlToPhp\PhpGenerator\Element\PhpVariable;
 use WsdlToPhp\PhpGenerator\Element\PhpProperty;
+use WsdlToPhp\PhpGenerator\Element\PhpVariable;
 use WsdlToPhp\PhpGenerator\Tests\TestCase;
 
+/**
+ * @internal
+ * @coversDefaultClass
+ */
 class PhpPropertyTest extends TestCase
 {
+    public function testPublicGetPhpDeclarationNoValueEmptyAccess()
+    {
+        $property = new PhpProperty('foo', PhpProperty::NO_VALUE, '');
+
+        $this->assertSame('$foo;', $property->getPhpDeclaration());
+    }
+
+    public function testPublicGetPhpDeclarationNoValue()
+    {
+        $property = new PhpProperty('foo', PhpProperty::NO_VALUE);
+
+        $this->assertSame('public $foo;', $property->getPhpDeclaration());
+    }
+
     public function testPublicGetPhpDeclarationNullValue()
     {
         $property = new PhpProperty('foo');
@@ -19,7 +38,21 @@ class PhpPropertyTest extends TestCase
         $this->assertSame('public $foo = null;', $property->getPhpDeclaration());
     }
 
-    public function testPublicGetPhpDeclarationTrueValue()
+    public function testPublicGetPhpDeclarationBoolTypeNoValue()
+    {
+        $property = new PhpProperty('foo', PhpProperty::NO_VALUE, PhpProperty::ACCESS_PUBLIC, PhpProperty::TYPE_BOOL);
+
+        $this->assertSame('public bool $foo;', $property->getPhpDeclaration());
+    }
+
+    public function testPublicGetPhpDeclarationDateTimeProperty()
+    {
+        $property = new PhpProperty('date', PhpProperty::NO_VALUE, PhpProperty::ACCESS_PUBLIC, DateTime::class);
+
+        $this->assertSame('public DateTime $date;', $property->getPhpDeclaration());
+    }
+
+    public function testPublicGetPhpDeclarationNoTypeTrueValue()
     {
         $property = new PhpProperty('foo', true);
 
@@ -68,7 +101,7 @@ class PhpPropertyTest extends TestCase
     {
         $property = new PhpProperty('foo', 'is_array(1)');
 
-        $this->assertSame("public \$foo = is_array(1);", $property->getPhpDeclaration());
+        $this->assertSame('public $foo = is_array(1);', $property->getPhpDeclaration());
     }
 
     public function testPrivateGetPhpDeclarationNullValue()

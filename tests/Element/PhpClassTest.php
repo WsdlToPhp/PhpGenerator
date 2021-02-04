@@ -6,15 +6,19 @@ namespace WsdlToPhp\PhpGenerator\Tests\Element;
 
 use InvalidArgumentException;
 use TypeError;
-use WsdlToPhp\PhpGenerator\Element\PhpVariable;
-use WsdlToPhp\PhpGenerator\Element\PhpProperty;
 use WsdlToPhp\PhpGenerator\Element\PhpAnnotationBlock;
-use WsdlToPhp\PhpGenerator\Element\PhpConstant;
-use WsdlToPhp\PhpGenerator\Element\PhpMethod;
-use WsdlToPhp\PhpGenerator\Element\PhpInterface;
 use WsdlToPhp\PhpGenerator\Element\PhpClass;
+use WsdlToPhp\PhpGenerator\Element\PhpConstant;
+use WsdlToPhp\PhpGenerator\Element\PhpInterface;
+use WsdlToPhp\PhpGenerator\Element\PhpMethod;
+use WsdlToPhp\PhpGenerator\Element\PhpProperty;
+use WsdlToPhp\PhpGenerator\Element\PhpVariable;
 use WsdlToPhp\PhpGenerator\Tests\TestCase;
 
+/**
+ * @internal
+ * @coversDefaultClass
+ */
 class PhpClassTest extends TestCase
 {
     public function testGetPhpDeclarationSimpleClass()
@@ -231,6 +235,13 @@ class PhpClassTest extends TestCase
         $class = new PhpClass('Foo');
 
         $this->assertSame("class Foo\n{\n}", $class->toString());
+    }
+
+    public function testSimpleClassEmptyBodyToStringMatchesStringCaasting()
+    {
+        $class = new PhpClass('Foo');
+
+        $this->assertSame((string) $class, $class->toString());
     }
 
     public function testSimpleClassEmptyPublicMethodToString()

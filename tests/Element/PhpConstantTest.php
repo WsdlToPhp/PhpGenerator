@@ -6,11 +6,15 @@ namespace WsdlToPhp\PhpGenerator\Tests\Element;
 
 use InvalidArgumentException;
 use TypeError;
-use WsdlToPhp\PhpGenerator\Element\PhpVariable;
 use WsdlToPhp\PhpGenerator\Element\PhpClass;
 use WsdlToPhp\PhpGenerator\Element\PhpConstant;
+use WsdlToPhp\PhpGenerator\Element\PhpVariable;
 use WsdlToPhp\PhpGenerator\Tests\TestCase;
 
+/**
+ * @internal
+ * @coversDefaultClass
+ */
 class PhpConstantTest extends TestCase
 {
     public function testGetPhpDeclarationNullValue()
@@ -118,6 +122,13 @@ class PhpConstantTest extends TestCase
         $constant = new PhpConstant('foo');
 
         $this->assertSame('define(\'foo\', null);', $constant->toString());
+    }
+
+    public function testToStringNullValueMatchesStringCasting()
+    {
+        $constant = new PhpConstant('foo');
+
+        $this->assertSame((string) $constant, $constant->toString());
     }
 
     public function testToStringNullValueForClass()

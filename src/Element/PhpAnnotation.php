@@ -6,7 +6,7 @@ namespace WsdlToPhp\PhpGenerator\Element;
 
 class PhpAnnotation extends AbstractElement
 {
-    const NO_NAME = "__NO_NAME__";
+    const NO_NAME = '__NO_NAME__';
 
     const MAX_LENGTH = 80;
 
@@ -19,7 +19,8 @@ class PhpAnnotation extends AbstractElement
         parent::__construct($name);
         $this
             ->setContent($content)
-            ->setMaxLength($maxLength);
+            ->setMaxLength($maxLength)
+        ;
     }
 
     public function setContent(string $content): self
@@ -37,21 +38,6 @@ class PhpAnnotation extends AbstractElement
     public function hasContent(): bool
     {
         return !empty($this->content);
-    }
-
-    protected function getPhpContent(): array
-    {
-        $fullContent = trim(sprintf('%s %s', $this->getPhpName(), $this->getContent()));
-        $content = [
-            $fullContent,
-        ];
-        if ($this->getPhpName() === '' && strlen($fullContent) > $this->getMaxLength()) {
-            $content = explode(self::BREAK_LINE_CHAR, wordwrap($fullContent, $this->getMaxLength(), self::BREAK_LINE_CHAR, true));
-        }
-
-        return array_map(function ($element) {
-            return sprintf(' %s', $element);
-        }, $content);
     }
 
     public function getPhpName(): string
@@ -79,5 +65,20 @@ class PhpAnnotation extends AbstractElement
     public function getMaxLength(): int
     {
         return $this->maxLength;
+    }
+
+    protected function getPhpContent(): array
+    {
+        $fullContent = trim(sprintf('%s %s', $this->getPhpName(), $this->getContent()));
+        $content = [
+            $fullContent,
+        ];
+        if ('' === $this->getPhpName() && strlen($fullContent) > $this->getMaxLength()) {
+            $content = explode(self::BREAK_LINE_CHAR, wordwrap($fullContent, $this->getMaxLength(), self::BREAK_LINE_CHAR, true));
+        }
+
+        return array_map(function ($element) {
+            return sprintf(' %s', $element);
+        }, $content);
     }
 }
