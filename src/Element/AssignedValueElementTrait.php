@@ -6,32 +6,16 @@ namespace WsdlToPhp\PhpGenerator\Element;
 
 use InvalidArgumentException;
 
-abstract class AbstractAssignedValueElement extends AbstractAccessRestrictedElement
+trait AssignedValueElementTrait
 {
-    /**
-     * Use this constant as value to ensure element has not assigned value.
-     */
-    const NO_VALUE = '##NO_VALUE##';
-
     /**
      * @var mixed
      */
     protected $value;
 
-    public function __construct(string $name, $value = null, string $access = parent::ACCESS_PUBLIC)
+    public function setValue($value): AbstractElement
     {
-        parent::__construct($name, $access);
-        $this->setValue($value);
-    }
-
-    /**
-     * @param mixed $value
-     *
-     * @throws InvalidArgumentException
-     */
-    public function setValue($value): AbstractAssignedValueElement
-    {
-        if (false === $this->getAcceptNonScalarValue() && !is_scalar($value) && null !== $value) {
+        if (!$this->getAcceptNonScalarValue() && !is_scalar($value) && !is_null($value)) {
             throw new InvalidArgumentException(sprintf('Value of type "%s" is not a valid scalar value for %s object', gettype($value), $this->getCalledClass()));
         }
         $this->value = $value;
@@ -39,9 +23,6 @@ abstract class AbstractAssignedValueElement extends AbstractAccessRestrictedElem
         return $this;
     }
 
-    /**
-     * @return mixed
-     */
     public function getValue()
     {
         return $this->value;
@@ -49,7 +30,7 @@ abstract class AbstractAssignedValueElement extends AbstractAccessRestrictedElem
 
     public function hasValue(): bool
     {
-        return self::NO_VALUE !== $this->getValue();
+        return AssignedValueElementInterface::NO_VALUE !== $this->getValue();
     }
 
     public function getPhpValue(): ?string
@@ -63,39 +44,33 @@ abstract class AbstractAssignedValueElement extends AbstractAccessRestrictedElem
 
     public function getPhpDeclaration(): string
     {
-        return sprintf('%s%s%s%s%s%s%s', $this->getPhpAccess(), $this->getAssignmentDeclarator(), $this->getPhpName(), $this->getAssignmentSign(), $this->getPhpValue(), $this->getAssignmentFinishing(), true === $this->endsWithSemicolon() ? ';' : '');
+        return implode('', [
+            $this->getAssignmentDeclarator(),
+            $this->getPhpName(),
+            $this->getAssignmentSign(),
+            $this->getPhpValue(),
+            $this->getAssignmentFinishing(),
+            $this->endsWithSemicolon() ? ';' : '',
+        ]);
     }
 
-    /**
-     * returns the way the assignment is declared.
-     */
+    abstract public function endsWithSemicolon(): bool;
+
     abstract public function getAssignmentDeclarator(): string;
 
-    /**
-     * returns the way the value is assigned to the element.
-     *
-     * @returns string
-     */
     abstract public function getAssignmentSign(): string;
 
-    /**
-     * returns the way the assignment is finished.
-     */
     abstract public function getAssignmentFinishing(): string;
 
-    /**
-     * indicates if the element accepts non scalar value.
-     */
     abstract public function getAcceptNonScalarValue(): bool;
 
-    /**
-     * indicates if the element finishes with a semicolon or not.
-     */
-    abstract public function endsWithSemicolon(): bool;
+    abstract public function getCalledClass(): string;
+
+    abstract public function getPhpName(): string;
 
     protected function getFinalValue(): ?string
     {
-        if (is_scalar($this->getValue()) && ($scalarValue = $this->getScalarValue($this->getValue())) !== null) {
+        if (is_scalar($this->getValue()) && !is_null($scalarValue = $this->getScalarValue($this->getValue()))) {
             return $scalarValue;
         }
         if (is_null($this->getValue())) {
@@ -122,15 +97,12 @@ abstract class AbstractAssignedValueElement extends AbstractAccessRestrictedElem
         return $scalarValue;
     }
 
-    /**
-     * @param mixed $value
-     */
     protected function getAnyValue($value): string
     {
         $exportedValue = var_export($value, true);
         // work around for known bug https://bugs.php.net/bug.php?id=66866
         if (is_float($value) && strlen((string) $value) !== strlen((string) $exportedValue)) {
-            $exportedValue = substr($exportedValue, 0, strlen($value));
+            $exportedValue = (string) $value;
         }
 
         return $exportedValue;

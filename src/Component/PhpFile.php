@@ -18,16 +18,6 @@ class PhpFile extends AbstractComponent
         $this->setMainElement(new PhpFileElement($name));
     }
 
-    /**
-     * @return PhpFileElement[]
-     */
-    public function getElements(): array
-    {
-        return [
-            $this->getMainElement(),
-        ];
-    }
-
     public function addClassComponent(PhpClassComponent $class): self
     {
         $this->mainElement->addChild($class->toString());

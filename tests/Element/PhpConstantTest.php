@@ -124,6 +124,13 @@ class PhpConstantTest extends TestCase
         $this->assertSame('define(\'foo\', null);', $constant->toString());
     }
 
+    public function testToStringNullValueMatchesStringCasting()
+    {
+        $constant = new PhpConstant('foo');
+
+        $this->assertSame((string) $constant, $constant->toString());
+    }
+
     public function testToStringNullValueForClass()
     {
         $constant = new PhpConstant('foo', null, new PhpClass('bar'));

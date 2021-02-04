@@ -35,8 +35,6 @@ class PhpDeclare extends AbstractElement
 
     /**
      * @param int|string $value
-     *
-     * @return PhpDeclare
      */
     public function setValue($value): self
     {

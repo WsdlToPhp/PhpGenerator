@@ -6,7 +6,7 @@ namespace WsdlToPhp\PhpGenerator\Element;
 
 use InvalidArgumentException;
 
-class PhpFunction extends AbstractAccessRestrictedElement
+class PhpFunction extends AbstractElement
 {
     /**
      * @var PhpFunctionParameter[]|string[]
@@ -98,17 +98,11 @@ class PhpFunction extends AbstractAccessRestrictedElement
     public function getPhpDeclaration(): string
     {
         return sprintf(
-            '%sfunction %s(%s)%s',
-            $this->getPhpAccess(),
+            'function %s(%s)%s',
             $this->getPhpName(),
             $this->getPhpParameters(),
             $this->returnType ? sprintf(': %s', $this->returnType) : ''
         );
-    }
-
-    public function hasAccessibilityConstraint(): bool
-    {
-        return false;
     }
 
     public function getChildrenTypes(): array

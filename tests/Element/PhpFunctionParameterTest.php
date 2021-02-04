@@ -29,7 +29,7 @@ class PhpFunctionParameterTest extends TestCase
     {
         $functionParameter = new PhpFunctionParameter('foo', true);
 
-        $this->assertInstanceOf('\\WsdlTophp\\PhpGenerator\\Element\\PhpFunctionParameter', $functionParameter->setType('string'));
+        $this->assertInstanceOf(PhpFunctionParameter::class, $functionParameter->setType('string'));
     }
 
     public function testTypeIsValid()
@@ -45,6 +45,18 @@ class PhpFunctionParameterTest extends TestCase
     public function testTypeIsValidAccentuated()
     {
         $this->assertTrue(PhpFunctionParameter::typeIsValid('Partagé'));
+    }
+
+    public function testFloatValueForDeclaration()
+    {
+        $initialSerializePrecision = ini_get('serialize_precision');
+        ini_set('serialize_precision', '2');
+
+        $functionParameter = new PhpFunctionParameter('foo', 1.101, 'float');
+
+        $this->assertSame('float $foo = 1.101', $functionParameter->toString());
+
+        ini_set('serialize_precision', $initialSerializePrecision);
     }
 
     public function testSetTypeForDeclaration()

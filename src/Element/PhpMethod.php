@@ -4,8 +4,10 @@ declare(strict_types=1);
 
 namespace WsdlToPhp\PhpGenerator\Element;
 
-class PhpMethod extends PhpFunction
+class PhpMethod extends PhpFunction implements AccessRestrictedElementInterface
 {
+    use AccessRestrictedElementTrait;
+
     protected bool $final;
 
     protected bool $static;
@@ -17,7 +19,7 @@ class PhpMethod extends PhpFunction
     /**
      * @param PhpFunctionParameter[]|string[] $parameters
      */
-    public function __construct(string $name, array $parameters = [], ?string $returnType = null, string $access = parent::ACCESS_PUBLIC, bool $abstract = false, bool $static = false, bool $final = false, bool $hasBody = true)
+    public function __construct(string $name, array $parameters = [], ?string $returnType = null, string $access = self::ACCESS_PUBLIC, bool $abstract = false, bool $static = false, bool $final = false, bool $hasBody = true)
     {
         parent::__construct($name, $parameters, $returnType);
         $this
@@ -92,17 +94,12 @@ class PhpMethod extends PhpFunction
         );
     }
 
-    public function hasAccessibilityConstraint(): bool
-    {
-        return true;
-    }
-
     /**
      * Allows to generate content before children content is generated.
      */
     public function getLineBeforeChildren(?int $indentation = null): string
     {
-        if (true === $this->getHasBody()) {
+        if ($this->getHasBody()) {
             return parent::getLineBeforeChildren($indentation);
         }
 
@@ -114,7 +111,7 @@ class PhpMethod extends PhpFunction
      */
     public function getLineAfterChildren(int $indentation = null): string
     {
-        if (true === $this->getHasBody()) {
+        if ($this->getHasBody()) {
             return parent::getLineAfterChildren($indentation);
         }
 
@@ -123,7 +120,7 @@ class PhpMethod extends PhpFunction
 
     public function getChildren(): array
     {
-        if (true === $this->getHasBody()) {
+        if ($this->getHasBody()) {
             return parent::getChildren();
         }
 
@@ -144,17 +141,17 @@ class PhpMethod extends PhpFunction
 
     protected function getPhpAbstract(): string
     {
-        return true === $this->getAbstract() ? 'abstract ' : '';
+        return $this->getAbstract() ? 'abstract ' : '';
     }
 
     protected function getPhpFinal(): string
     {
-        return true === $this->getFinal() ? 'final ' : '';
+        return $this->getFinal() ? 'final ' : '';
     }
 
     protected function getPhpStatic(): string
     {
-        return true === $this->getStatic() ? 'static ' : '';
+        return $this->getStatic() ? 'static ' : '';
     }
 
     protected function getPhpReturnType(): string
@@ -164,6 +161,6 @@ class PhpMethod extends PhpFunction
 
     protected function getPhpDeclarationEnd(): string
     {
-        return (false === $this->getHasBody() || true === $this->getAbstract()) ? ';' : '';
+        return (!$this->getHasBody() || $this->getAbstract()) ? ';' : '';
     }
 }

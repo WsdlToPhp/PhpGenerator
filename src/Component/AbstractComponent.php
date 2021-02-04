@@ -25,18 +25,8 @@ abstract class AbstractComponent implements GenerateableInterface
 
     public function toString(): string
     {
-        $content = [];
-        foreach ($this->getElements() as $element) {
-            $content[] = $this->getElementString($element);
-        }
-
-        return implode('', $content);
+        return (string) $this->mainElement;
     }
-
-    /**
-     * @return AbstractElement[]|string[]
-     */
-    abstract public function getElements(): array;
 
     public function setMainElement(AbstractElement $element): self
     {
@@ -47,14 +37,6 @@ abstract class AbstractComponent implements GenerateableInterface
         }
 
         return $this;
-    }
-
-    /**
-     * @return PhpClassElement|PhpFileElement
-     */
-    public function getMainElement(): AbstractElement
-    {
-        return $this->mainElement;
     }
 
     public function addConstantElement(PhpConstantElement $constant): self
@@ -69,8 +51,6 @@ abstract class AbstractComponent implements GenerateableInterface
 
     /**
      * @param mixed $value
-     *
-     * @return AbstractComponent
      */
     public function addConstant(string $name, $value = null, ?PhpClassElement $class = null): self
     {
@@ -86,8 +66,6 @@ abstract class AbstractComponent implements GenerateableInterface
 
     /**
      * @param array|PhpAnnotationBlockElement|string $annotations
-     *
-     * @return AbstractComponent
      */
     public function addAnnotationBlock($annotations): self
     {
@@ -96,20 +74,10 @@ abstract class AbstractComponent implements GenerateableInterface
         ]));
     }
 
-    /**
-     * @param AbstractElement|string $element
-     *
-     * @throws InvalidArgumentException
-     */
-    protected function getElementString($element): string
+    public function addString(string $string = ''): self
     {
-        $string = '';
-        if (is_scalar($element)) {
-            $string = $element;
-        } elseif ($element instanceof AbstractElement) {
-            $string = $element->toString();
-        }
+        $this->mainElement->addChild($string);
 
-        return $string;
+        return $this;
     }
 }

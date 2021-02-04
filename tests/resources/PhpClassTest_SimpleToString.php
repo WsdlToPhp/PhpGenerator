@@ -11,7 +11,7 @@ abstract class Foo extends stdClass
     /**
      * @var int
      */
-    public $bar = 1;
+    private int $bar = 1;
     /**
      * - documentation: The ID of the contact that performed the action, if available.
      * May be blank for anonymous activity.
