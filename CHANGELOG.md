@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## 4.0.1 - 2021/02/04
+- Add back `getMainElement` method to `AbstractComponent`
+
 ## 4.0.0 - 2021/02/04
 - issue #11 - Allow class property to be typed
 - Clear, refactor and review code
