@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## 4.0.0 - 2021/02/xx
+## 4.0.0 - 2021/02/04
 - issue #11 - Allow class property to be typed
 - Clear, refactor and review code
 - Introduce `AccessRestrictedElementInterface`, `AssignedValueElementInterface` and `TypeHintedElementInterface`
