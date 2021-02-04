@@ -39,6 +39,14 @@ abstract class AbstractComponent implements GenerateableInterface
         return $this;
     }
 
+    /**
+     * @return PhpClassElement|PhpFileElement
+     */
+    public function getMainElement()
+    {
+        return $this->mainElement;
+    }
+
     public function addConstantElement(PhpConstantElement $constant): self
     {
         if (!$constant->getClass() instanceof PhpClassElement && $this->mainElement instanceof PhpClassElement) {

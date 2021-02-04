@@ -6,6 +6,7 @@ namespace WsdlToPhp\PhpGenerator\Tests\Component;
 
 use WsdlToPhp\PhpGenerator\Component\PhpClass as PhpClassComponent;
 use WsdlToPhp\PhpGenerator\Element\PhpAnnotation as PhpAnnotationElement;
+use WsdlToPhp\PhpGenerator\Element\PhpClass;
 use WsdlToPhp\PhpGenerator\Element\PhpFunctionParameter as PhpFunctionParameterElement;
 use WsdlToPhp\PhpGenerator\Element\PhpProperty;
 use WsdlToPhp\PhpGenerator\Element\PhpProperty as PhpPropertyElement;
@@ -16,6 +17,13 @@ use WsdlToPhp\PhpGenerator\Element\PhpProperty as PhpPropertyElement;
  */
 class PhpClassTest extends AbstractComponent
 {
+    public function testGetMainElementMustBeOfPhpClassElement()
+    {
+        $class = new PhpClassComponent('Foo', true, 'stdClass');
+
+        $this->assertInstanceOf(PhpClass::class, $class->getMainElement());
+    }
+
     public function testSimpleToString()
     {
         $class = new PhpClassComponent('Foo', true, 'stdClass');
