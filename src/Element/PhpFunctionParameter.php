@@ -27,7 +27,7 @@ class PhpFunctionParameter extends PhpVariable implements TypeHintedElementInter
     protected function getAnyValue($value): string
     {
         if (is_array($value)) {
-            return str_replace([self::BREAK_LINE_CHAR, ' '], '', var_export($value, true));
+            return str_replace([self::BREAK_LINE_CHAR, ' '], '', parent::getAnyValue($value));
         }
 
         return parent::getAnyValue($value);

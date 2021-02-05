@@ -70,7 +70,7 @@ class PhpFunctionParameterTest extends TestCase
     {
         $functionParameter = new PhpFunctionParameter('foo', [], 'array');
 
-        $this->assertSame('array $foo = array()', $functionParameter->toString());
+        $this->assertSame('array $foo = []', $functionParameter->toString());
     }
 
     public function testToStringWithNamespace()
