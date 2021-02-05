@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## 4.1.1 - 2021/02/05
+- issue #12 - Use array short notation
+
 ## 4.0.1 - 2021/02/04
 - Add back `getMainElement` method to `AbstractComponent`
 
