@@ -99,7 +99,14 @@ trait AssignedValueElementTrait
 
     protected function getAnyValue($value): string
     {
-        $exportedValue = var_export($value, true);
+        if (is_array($value)) {
+            $exportedValue = empty($value) ? '[]' : implode("\n", array_map(function ($line) {
+                return 'array (' === $line ? '[' : (')' === $line ? ']' : $line);
+            }, explode("\n", var_export($value, true))));
+        } else {
+            $exportedValue = var_export($value, true);
+        }
+
         // work around for known bug https://bugs.php.net/bug.php?id=66866
         if (is_float($value) && strlen((string) $value) !== strlen((string) $exportedValue)) {
             $exportedValue = (string) $value;

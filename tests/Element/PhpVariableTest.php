@@ -50,6 +50,13 @@ class PhpVariableTest extends TestCase
         $this->assertSame('$foo = 1;', $variable->getPhpDeclaration());
     }
 
+    public function testGetPhpDeclarationEmptyArrayValue()
+    {
+        $variable = new PhpVariable('foo', []);
+
+        $this->assertSame("\$foo = [];", $variable->getPhpDeclaration());
+    }
+
     public function testGetPhpDeclarationArray()
     {
         $variable = new PhpVariable('foo', [
@@ -57,7 +64,7 @@ class PhpVariableTest extends TestCase
             1,
         ]);
 
-        $this->assertSame("\$foo = array (\n  0 => '0',\n  1 => 1,\n);", $variable->getPhpDeclaration());
+        $this->assertSame("\$foo = [\n  0 => '0',\n  1 => 1,\n];", $variable->getPhpDeclaration());
     }
 
     public function testGetPhpDeclarationNewInstance()

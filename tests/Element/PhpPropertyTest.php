@@ -87,7 +87,7 @@ class PhpPropertyTest extends TestCase
             1,
         ]);
 
-        $this->assertSame("public \$foo = array (\n  0 => '0',\n  1 => 1,\n);", $property->getPhpDeclaration());
+        $this->assertSame("public \$foo = [\n  0 => '0',\n  1 => 1,\n];", $property->getPhpDeclaration());
     }
 
     public function testPublicGetPhpDeclarationNewInstance()
