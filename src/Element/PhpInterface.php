@@ -6,9 +6,9 @@ namespace WsdlToPhp\PhpGenerator\Element;
 
 class PhpInterface extends PhpClass
 {
-    const PHP_DECLARATION = 'interface';
+    public const PHP_DECLARATION = 'interface';
 
-    const PHP_IMPLEMENTS_KEYWORD = 'extends';
+    public const PHP_IMPLEMENTS_KEYWORD = 'extends';
 
     public function getAbstract(): bool
     {

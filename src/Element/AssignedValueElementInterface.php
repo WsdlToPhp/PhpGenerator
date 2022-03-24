@@ -9,7 +9,7 @@ interface AssignedValueElementInterface
     /**
      * Use this constant as value to ensure element has not assigned value.
      */
-    const NO_VALUE = '##NO_VALUE##';
+    public const NO_VALUE = '##NO_VALUE##';
 
     public function setValue($value): AbstractElement;
 

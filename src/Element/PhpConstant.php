@@ -14,10 +14,8 @@ class PhpConstant extends AbstractElement implements AccessRestrictedElementInte
     public function __construct(string $name, $value = null, ?PhpClass $class = null)
     {
         parent::__construct($name);
-        $this
-            ->setValue($value)
-            ->setClass($class)
-        ;
+        $this->setValue($value);
+        $this->setClass($class);
     }
 
     public function getPhpName(): string
@@ -85,8 +83,10 @@ class PhpConstant extends AbstractElement implements AccessRestrictedElementInte
 
     /**
      * Always return null to avoid having a literal string instead of quoted string.
+     *
+     * @param mixed $value
      */
-    protected function getScalarValue()
+    protected function getScalarValue($value)
     {
         return null;
     }

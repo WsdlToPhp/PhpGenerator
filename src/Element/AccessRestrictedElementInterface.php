@@ -6,13 +6,13 @@ namespace WsdlToPhp\PhpGenerator\Element;
 
 interface AccessRestrictedElementInterface
 {
-    const ACCESS_PRIVATE = 'private';
+    public const ACCESS_PRIVATE = 'private';
 
-    const ACCESS_PROTECTED = 'protected';
+    public const ACCESS_PROTECTED = 'protected';
 
-    const ACCESS_PUBLIC = 'public';
+    public const ACCESS_PUBLIC = 'public';
 
-    const ACCESSES = [
+    public const ACCESSES = [
         self::ACCESS_PRIVATE,
         self::ACCESS_PROTECTED,
         self::ACCESS_PUBLIC,

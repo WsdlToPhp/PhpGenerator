@@ -6,16 +6,16 @@ namespace WsdlToPhp\PhpGenerator\Element;
 
 interface TypeHintedElementInterface
 {
-    const TYPE_ARRAY = 'array';
-    const TYPE_CALLABLE = 'callable';
-    const TYPE_BOOL = 'bool';
-    const TYPE_INT = 'int';
-    const TYPE_ITERABLE = 'iterable';
-    const TYPE_FLOAT = 'float';
-    const TYPE_OBJECT = 'object';
-    const TYPE_STRING = 'string';
+    public const TYPE_ARRAY = 'array';
+    public const TYPE_CALLABLE = 'callable';
+    public const TYPE_BOOL = 'bool';
+    public const TYPE_INT = 'int';
+    public const TYPE_ITERABLE = 'iterable';
+    public const TYPE_FLOAT = 'float';
+    public const TYPE_OBJECT = 'object';
+    public const TYPE_STRING = 'string';
 
-    const TYPES = [
+    public const TYPES = [
         self::TYPE_ARRAY,
         self::TYPE_CALLABLE,
         self::TYPE_BOOL,

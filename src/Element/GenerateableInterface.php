@@ -6,29 +6,29 @@ namespace WsdlToPhp\PhpGenerator\Element;
 
 interface GenerateableInterface
 {
-    const INDENTATION_CHAR = '    ';
+    public const INDENTATION_CHAR = '    ';
 
-    const BREAK_LINE_CHAR = "\n";
+    public const BREAK_LINE_CHAR = "\n";
 
     /**
      * opening a function/class.
      */
-    const OPEN_BRACKET = '{';
+    public const OPEN_BRACKET = '{';
 
     /**
      * closing a function/class.
      */
-    const CLOSE_BRACKET = '}';
+    public const CLOSE_BRACKET = '}';
 
     /**
      * opening an annotation.
      */
-    const OPEN_ANNOTATION = '/**';
+    public const OPEN_ANNOTATION = '/**';
 
     /**
      * closing an annotation.
      */
-    const CLOSE_ANNOTATION = ' */';
+    public const CLOSE_ANNOTATION = ' */';
 
     public function __toString(): string;
 
@@ -39,20 +39,16 @@ interface GenerateableInterface
 
     /**
      * stores current indentation.
-     *
-     * @param int
      */
     public function setIndentation(int $indentation);
 
     /**
-     * returns current identation.
+     * Returns current indentation.
      */
     public function getIndentation(): int;
 
     /**
      * returns current indentation string to be used.
-     *
-     * @param int $indentation
      */
     public function getIndentationString(?int $indentation = null): string;
 }

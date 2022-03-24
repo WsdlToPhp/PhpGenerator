@@ -8,13 +8,13 @@ use InvalidArgumentException;
 
 class PhpClass extends AbstractElement
 {
-    const PHP_DECLARATION = 'class';
+    public const PHP_DECLARATION = 'class';
 
-    const PHP_ABSTRACT_KEYWORD = 'abstract';
+    public const PHP_ABSTRACT_KEYWORD = 'abstract';
 
-    const PHP_IMPLEMENTS_KEYWORD = 'implements';
+    public const PHP_IMPLEMENTS_KEYWORD = 'implements';
 
-    const PHP_EXTENDS_KEYWORD = 'extends';
+    public const PHP_EXTENDS_KEYWORD = 'extends';
 
     protected bool $abstract;
 
@@ -74,7 +74,7 @@ class PhpClass extends AbstractElement
     }
 
     /**
-     * @return PhpClass|string
+     * @return null|PhpClass|string
      */
     public function getExtends()
     {
