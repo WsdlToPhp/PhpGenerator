@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## 4.1.1 - 2022/03/24
+- Update PHP CS Fixer and corresponding setting file
+- Add PHPStan
+- Update badges
+
 ## 4.1.0 - 2021/02/05
 - issue #12 - Use array short notation
 
