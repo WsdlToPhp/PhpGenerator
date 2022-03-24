@@ -22,7 +22,9 @@ class PhpAnnotationBlock extends AbstractElement
     public function addChild($child): self
     {
         if (!$this->childIsValid($child)) {
-            return parent::addChild($child);
+            parent::addChild($child);
+
+            return $this;
         }
         $this->children[] = $this->transformAnnotation($child);
 

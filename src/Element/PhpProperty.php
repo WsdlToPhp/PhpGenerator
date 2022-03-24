@@ -12,10 +12,8 @@ class PhpProperty extends PhpVariable implements AccessRestrictedElementInterfac
     public function __construct(string $name, $value = null, string $access = self::ACCESS_PUBLIC, $type = null)
     {
         parent::__construct($name, $value);
-        $this
-            ->setAccess($access)
-            ->setType($type)
-        ;
+        $this->setType($type);
+        $this->setAccess($access);
     }
 
     public function getPhpDeclaration(): string

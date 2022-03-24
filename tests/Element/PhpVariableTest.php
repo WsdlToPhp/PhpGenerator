@@ -54,7 +54,7 @@ class PhpVariableTest extends TestCase
     {
         $variable = new PhpVariable('foo', []);
 
-        $this->assertSame("\$foo = [];", $variable->getPhpDeclaration());
+        $this->assertSame('$foo = [];', $variable->getPhpDeclaration());
     }
 
     public function testGetPhpDeclarationArray()

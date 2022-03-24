@@ -76,7 +76,7 @@ abstract class AbstractElement implements GenerateableInterface
         }
         $lines[] = $this->getToStringAfterChildren($indentation);
 
-        return implode(self::BREAK_LINE_CHAR, static::cleanArrayToString($lines));
+        return implode(self::BREAK_LINE_CHAR, self::cleanArrayToString($lines));
     }
 
     public function getPhpName(): string

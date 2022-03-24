@@ -8,15 +8,15 @@ use InvalidArgumentException;
 
 class PhpDeclare extends AbstractElement
 {
-    const STATEMENT = 'declare(%s);';
+    public const STATEMENT = 'declare(%s);';
 
-    const DIRECTIVE_ENCODING = 'encoding';
+    public const DIRECTIVE_ENCODING = 'encoding';
 
-    const DIRECTIVE_STRICT_TYPES = 'strict_types';
+    public const DIRECTIVE_STRICT_TYPES = 'strict_types';
 
-    const DIRECTIVE_TICKS = 'ticks';
+    public const DIRECTIVE_TICKS = 'ticks';
 
-    const ALLOWED_DIRECTIVES = [
+    public const ALLOWED_DIRECTIVES = [
         self::DIRECTIVE_ENCODING,
         self::DIRECTIVE_STRICT_TYPES,
         self::DIRECTIVE_TICKS,
@@ -65,6 +65,7 @@ class PhpDeclare extends AbstractElement
         $directives = array_merge([$this], $this->getChildren());
 
         $strings = [];
+
         /** @var PhpDeclare $directive */
         foreach ($directives as $directive) {
             if (is_null($directive->getValue())) {
@@ -74,7 +75,7 @@ class PhpDeclare extends AbstractElement
             $strings[] = sprintf('%s=%s', $directive->getName(), var_export($directive->getValue(), true));
         }
 
-        return empty($strings) ? '' : sprintf(self::STATEMENT, implode(', ', $strings));
+        return 0 === count($strings) ? '' : sprintf(self::STATEMENT, implode(', ', $strings));
     }
 
     public function addChild($child): AbstractElement
@@ -97,7 +98,7 @@ class PhpDeclare extends AbstractElement
     /**
      * Children are handled before in getPhpDeclaration in order to have one line per declare directive.
      *
-     * @param $child
+     * @param mixed $child
      */
     protected function getChildContent($child, int $indentation = null): string
     {

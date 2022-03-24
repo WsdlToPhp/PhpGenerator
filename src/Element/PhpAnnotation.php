@@ -6,9 +6,9 @@ namespace WsdlToPhp\PhpGenerator\Element;
 
 class PhpAnnotation extends AbstractElement
 {
-    const NO_NAME = '__NO_NAME__';
+    public const NO_NAME = '__NO_NAME__';
 
-    const MAX_LENGTH = 80;
+    public const MAX_LENGTH = 80;
 
     protected string $content;
 

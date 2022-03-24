@@ -6,7 +6,7 @@ namespace WsdlToPhp\PhpGenerator\Element;
 
 class PhpFile extends AbstractElement
 {
-    const START_FILE = '<?php';
+    public const START_FILE = '<?php';
 
     public function getPhpDeclaration(): string
     {

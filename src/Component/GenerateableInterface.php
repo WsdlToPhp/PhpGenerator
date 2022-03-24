@@ -6,7 +6,7 @@ namespace WsdlToPhp\PhpGenerator\Component;
 
 interface GenerateableInterface
 {
-    const BREAK_LINE_CHAR = "\n";
+    public const BREAK_LINE_CHAR = "\n";
 
     public function __toString(): string;
 

@@ -21,7 +21,9 @@ class PhpInterface extends PhpClass
             $method->setHasBody(false);
         }
 
-        return parent::addMethodElement($method);
+        parent::addMethodElement($method);
+
+        return $this;
     }
 
     public function addMethod(string $name, array $parameters = [], ?string $returnType = null, string $access = PhpMethodElement::ACCESS_PUBLIC, bool $abstract = false, bool $static = false, bool $final = false, bool $hasBody = true): self
