@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## 4.1.2 - 2025/05/02
+- pr #13 - Move phpstan to dev requirements
+
 ## 4.1.1 - 2022/03/24
 - Update PHP CS Fixer and corresponding setting file
 - Add PHPStan
