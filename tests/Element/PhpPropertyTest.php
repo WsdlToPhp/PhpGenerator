@@ -4,15 +4,13 @@ declare(strict_types=1);
 
 namespace WsdlToPhp\PhpGenerator\Tests\Element;
 
-use DateTime;
-use InvalidArgumentException;
-use TypeError;
 use WsdlToPhp\PhpGenerator\Element\PhpProperty;
 use WsdlToPhp\PhpGenerator\Element\PhpVariable;
 use WsdlToPhp\PhpGenerator\Tests\TestCase;
 
 /**
  * @internal
+ *
  * @coversDefaultClass
  */
 class PhpPropertyTest extends TestCase
@@ -47,7 +45,7 @@ class PhpPropertyTest extends TestCase
 
     public function testPublicGetPhpDeclarationDateTimeProperty()
     {
-        $property = new PhpProperty('date', PhpProperty::NO_VALUE, PhpProperty::ACCESS_PUBLIC, DateTime::class);
+        $property = new PhpProperty('date', PhpProperty::NO_VALUE, PhpProperty::ACCESS_PUBLIC, \DateTime::class);
 
         $this->assertSame('public DateTime $date;', $property->getPhpDeclaration());
     }
@@ -120,7 +118,7 @@ class PhpPropertyTest extends TestCase
 
     public function testAddChild()
     {
-        $this->expectException(InvalidArgumentException::class);
+        $this->expectException(\InvalidArgumentException::class);
 
         $property = new PhpProperty('Foo');
 
@@ -129,7 +127,7 @@ class PhpPropertyTest extends TestCase
 
     public function testSetAccess()
     {
-        $this->expectException(InvalidArgumentException::class);
+        $this->expectException(\InvalidArgumentException::class);
 
         $property = new PhpProperty('Foo');
 
@@ -138,7 +136,7 @@ class PhpPropertyTest extends TestCase
 
     public function testExceptionMessageOnName()
     {
-        $this->expectException(TypeError::class);
+        $this->expectException(\TypeError::class);
 
         new PhpProperty(0);
     }

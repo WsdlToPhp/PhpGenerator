@@ -12,6 +12,7 @@ use WsdlToPhp\PhpGenerator\Element\PhpProperty as PhpPropertyElement;
 
 /**
  * @internal
+ *
  * @coversDefaultClass
  */
 class PhpInterfaceTest extends AbstractComponent

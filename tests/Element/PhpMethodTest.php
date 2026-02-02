@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace WsdlToPhp\PhpGenerator\Tests\Element;
 
-use InvalidArgumentException;
-use TypeError;
 use WsdlToPhp\PhpGenerator\Element\PhpFunctionParameter;
 use WsdlToPhp\PhpGenerator\Element\PhpInterface;
 use WsdlToPhp\PhpGenerator\Element\PhpMethod;
@@ -14,6 +12,7 @@ use WsdlToPhp\PhpGenerator\Tests\TestCase;
 
 /**
  * @internal
+ *
  * @coversDefaultClass
  */
 class PhpMethodTest extends TestCase
@@ -119,7 +118,7 @@ class PhpMethodTest extends TestCase
 
     public function testAddChildWithException()
     {
-        $this->expectException(InvalidArgumentException::class);
+        $this->expectException(\InvalidArgumentException::class);
         $this->expectExceptionMessage('Element of type "object:WsdlToPhp\PhpGenerator\Element\PhpInterface" is not authorized, please provide one of these types: string, WsdlToPhp\PhpGenerator\Element\PhpAnnotationBlock, WsdlToPhp\PhpGenerator\Element\PhpVariable');
 
         $method = new PhpMethod('Foo');
@@ -196,7 +195,7 @@ class PhpMethodTest extends TestCase
                 'value' => null,
             ],
             new PhpFunctionParameter('deamon', true),
-        ], 'App\\Entity');
+        ], 'App\Entity');
 
         $this->assertSame("public function foo(\$bar, \$demo = 1, \$sample = null, \$deamon = true): App\\Entity\n{\n}", $method->toString());
     }
@@ -214,7 +213,7 @@ class PhpMethodTest extends TestCase
                 'value' => null,
             ],
             new PhpFunctionParameter('deamon', true),
-        ], '?App\\Entity');
+        ], '?App\Entity');
 
         $this->assertSame("public function foo(\$bar, \$demo = 1, \$sample = null, \$deamon = true): ?App\\Entity\n{\n}", $method->toString());
     }
@@ -244,7 +243,7 @@ class PhpMethodTest extends TestCase
 
     public function testExceptionMessageOnName()
     {
-        $this->expectException(TypeError::class);
+        $this->expectException(\TypeError::class);
 
         new PhpMethod(0);
     }

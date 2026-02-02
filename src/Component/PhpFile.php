@@ -56,7 +56,7 @@ class PhpFile extends AbstractComponent
         return $this->addFunctionElement(new PhpFunctionElement($name, $parameters));
     }
 
-    public function addUse(string $use, string $as = null, bool $last = false): self
+    public function addUse(string $use, ?string $as = null, bool $last = false): self
     {
         $expression = empty($as) ? 'use %1$s;%3$s' : 'use %1$s as %2$s;%3$s';
         $this->mainElement->addChild(sprintf($expression, $use, $as, $last ? self::BREAK_LINE_CHAR : ''));

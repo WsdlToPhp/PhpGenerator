@@ -77,8 +77,6 @@ class PhpAnnotation extends AbstractElement
             $content = explode(self::BREAK_LINE_CHAR, wordwrap($fullContent, $this->getMaxLength(), self::BREAK_LINE_CHAR, true));
         }
 
-        return array_map(function ($element) {
-            return sprintf(' %s', $element);
-        }, $content);
+        return array_map(fn ($element): string => sprintf(' %s', $element), $content);
     }
 }
