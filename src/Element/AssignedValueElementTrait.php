@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace WsdlToPhp\PhpGenerator\Element;
 
-use InvalidArgumentException;
-
 trait AssignedValueElementTrait
 {
     /**
@@ -16,7 +14,7 @@ trait AssignedValueElementTrait
     public function setValue($value): AbstractElement
     {
         if (!$this->getAcceptNonScalarValue() && !is_scalar($value) && !is_null($value)) {
-            throw new InvalidArgumentException(sprintf('Value of type "%s" is not a valid scalar value for %s object', gettype($value), $this->getCalledClass()));
+            throw new \InvalidArgumentException(sprintf('Value of type "%s" is not a valid scalar value for %s object', gettype($value), $this->getCalledClass()));
         }
         $this->value = $value;
 
@@ -100,9 +98,7 @@ trait AssignedValueElementTrait
     protected function getAnyValue($value): string
     {
         if (is_array($value)) {
-            $exportedValue = empty($value) ? '[]' : implode("\n", array_map(function ($line) {
-                return 'array (' === $line ? '[' : (')' === $line ? ']' : $line);
-            }, explode("\n", var_export($value, true))));
+            $exportedValue = empty($value) ? '[]' : implode("\n", array_map(fn ($line): string => 'array (' === $line ? '[' : (')' === $line ? ']' : $line), explode("\n", var_export($value, true))));
         } else {
             $exportedValue = var_export($value, true);
         }

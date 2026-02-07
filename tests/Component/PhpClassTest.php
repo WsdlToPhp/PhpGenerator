@@ -8,11 +8,11 @@ use WsdlToPhp\PhpGenerator\Component\PhpClass as PhpClassComponent;
 use WsdlToPhp\PhpGenerator\Element\PhpAnnotation as PhpAnnotationElement;
 use WsdlToPhp\PhpGenerator\Element\PhpClass;
 use WsdlToPhp\PhpGenerator\Element\PhpFunctionParameter as PhpFunctionParameterElement;
-use WsdlToPhp\PhpGenerator\Element\PhpProperty;
 use WsdlToPhp\PhpGenerator\Element\PhpProperty as PhpPropertyElement;
 
 /**
  * @internal
+ *
  * @coversDefaultClass
  */
 class PhpClassTest extends AbstractComponent
@@ -34,7 +34,7 @@ class PhpClassTest extends AbstractComponent
             ->addAnnotationBlock('@var string')
             ->addConstant('BAR', 'theOtherValue')
             ->addAnnotationBlock(new PhpAnnotationElement('var', 'int'))
-            ->addProperty('bar', 1, PhpProperty::ACCESS_PRIVATE, PhpProperty::TYPE_INT)
+            ->addProperty('bar', 1, PhpPropertyElement::ACCESS_PRIVATE, PhpPropertyElement::TYPE_INT)
             ->addAnnotationBlock([
                 '- documentation: The ID of the contact that performed the action, if available. May be blank for anonymous activity.',
                 new PhpAnnotationElement('var', 'bool'),
@@ -57,7 +57,7 @@ class PhpClassTest extends AbstractComponent
                 '@return void',
             ])
             ->addMethod('uselessMethod', [
-                new PhpFunctionParameterElement('uselessParameter', null),
+                new PhpFunctionParameterElement('uselessParameter', null, 'string'),
                 'unusedParameter',
             ])
         ;

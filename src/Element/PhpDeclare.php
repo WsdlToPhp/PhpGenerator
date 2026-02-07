@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace WsdlToPhp\PhpGenerator\Element;
 
-use InvalidArgumentException;
-
 class PhpDeclare extends AbstractElement
 {
     public const STATEMENT = 'declare(%s);';
@@ -39,7 +37,7 @@ class PhpDeclare extends AbstractElement
     public function setValue($value): self
     {
         if (!is_null($value) && !is_scalar($value)) {
-            throw new InvalidArgumentException(sprintf('Value must be a scalar value, %s given', var_export($value, true)));
+            throw new \InvalidArgumentException(sprintf('Value must be a scalar value, %s given', var_export($value, true)));
         }
 
         $this->value = $value;
@@ -82,7 +80,7 @@ class PhpDeclare extends AbstractElement
     {
         /** @var AbstractElement $child */
         if ($this->childIsValid($child) && $child->getName() === $this->getName()) {
-            throw new InvalidArgumentException(sprintf('The current directive named %s can\'t contain a child of same directive name', $this->getName()));
+            throw new \InvalidArgumentException(sprintf('The current directive named %s can\'t contain a child of same directive name', $this->getName()));
         }
 
         return parent::addChild($child);
@@ -100,7 +98,7 @@ class PhpDeclare extends AbstractElement
      *
      * @param mixed $child
      */
-    protected function getChildContent($child, int $indentation = null): string
+    protected function getChildContent($child, ?int $indentation = null): string
     {
         return '';
     }

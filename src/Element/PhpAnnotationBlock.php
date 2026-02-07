@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace WsdlToPhp\PhpGenerator\Element;
 
-use InvalidArgumentException;
-
 class PhpAnnotationBlock extends AbstractElement
 {
     public function __construct(array $annotations = [])
@@ -17,7 +15,7 @@ class PhpAnnotationBlock extends AbstractElement
     /**
      * @param mixed $child
      *
-     * @throws InvalidArgumentException
+     * @throws \InvalidArgumentException
      */
     public function addChild($child): self
     {
@@ -26,7 +24,7 @@ class PhpAnnotationBlock extends AbstractElement
 
             return $this;
         }
-        $this->children[] = $this->transformAnnotation($child);
+        $this->children[] = static::transformAnnotation($child);
 
         return $this;
     }
@@ -64,12 +62,12 @@ class PhpAnnotationBlock extends AbstractElement
     /**
      * @param array[]|PhpAnnotation[]|string[] $annotations
      *
-     * @throws InvalidArgumentException
+     * @throws \InvalidArgumentException
      */
     protected function setAnnotations(array $annotations): self
     {
         if (!static::annotationsAreValid($annotations)) {
-            throw new InvalidArgumentException('Annotations are not valid');
+            throw new \InvalidArgumentException('Annotations are not valid');
         }
         $this->children = static::transformAnnotations($annotations);
 
@@ -94,7 +92,7 @@ class PhpAnnotationBlock extends AbstractElement
     /**
      * @param array|PhpAnnotation|string $annotation
      *
-     * @throws InvalidArgumentException
+     * @throws \InvalidArgumentException
      */
     protected static function transformAnnotation($annotation): PhpAnnotation
     {
@@ -108,7 +106,7 @@ class PhpAnnotationBlock extends AbstractElement
             return new PhpAnnotation(array_key_exists('name', $annotation) ? $annotation['name'] : PhpAnnotation::NO_NAME, $annotation['content']);
         }
 
-        throw new InvalidArgumentException(sprintf('Annotation parameter "%s" is invalid', gettype($annotation)));
+        throw new \InvalidArgumentException(sprintf('Annotation parameter "%s" is invalid', gettype($annotation)));
     }
 
     /**

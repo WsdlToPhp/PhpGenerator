@@ -4,42 +4,41 @@ declare(strict_types=1);
 
 namespace WsdlToPhp\PhpGenerator\Tests\Element;
 
-use InvalidArgumentException;
-use TypeError;
 use WsdlToPhp\PhpGenerator\Element\PhpClass;
 use WsdlToPhp\PhpGenerator\Element\PhpDeclare;
 use WsdlToPhp\PhpGenerator\Tests\TestCase;
 
 /**
  * @internal
+ *
  * @coversDefaultClass
  */
 class PhpDeclareTest extends TestCase
 {
     public function testConstructWithInvalidStringNameMustThrowAnException()
     {
-        $this->expectException(InvalidArgumentException::class);
+        $this->expectException(\InvalidArgumentException::class);
 
         new PhpDeclare('my_directive');
     }
 
     public function testConstructWithInvalidIntNameMustThrowAnException()
     {
-        $this->expectException(TypeError::class);
+        $this->expectException(\TypeError::class);
 
         new PhpDeclare(0);
     }
 
     public function testConstructWithInvalidValueMustThrowAnException()
     {
-        $this->expectException(InvalidArgumentException::class);
+        $this->expectException(\InvalidArgumentException::class);
 
         new PhpDeclare(PhpDeclare::DIRECTIVE_STRICT_TYPES, []);
     }
 
     public function testAddChildMustThrowAnExceptionForInvalidChildType()
     {
-        $this->expectException(InvalidArgumentException::class);
+        $this->expectException(\InvalidArgumentException::class);
 
         $phpDeclare = new PhpDeclare(PhpDeclare::DIRECTIVE_STRICT_TYPES);
 
@@ -48,7 +47,7 @@ class PhpDeclareTest extends TestCase
 
     public function testAddChildMustThrowAnExceptionForSameDirectiveNameChild()
     {
-        $this->expectException(InvalidArgumentException::class);
+        $this->expectException(\InvalidArgumentException::class);
 
         $phpDeclare = new PhpDeclare(PhpDeclare::DIRECTIVE_STRICT_TYPES);
 

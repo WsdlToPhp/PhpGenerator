@@ -1,5 +1,16 @@
 # CHANGELOG
 
+## 4.1.3 - 2026/02/07
+- issue #15 - PHP 8.4: Implicitly nullable parameter deprecated on nullable array type
+- pr #14 - Refactor docker container to be able to run any PHP version from 7.4
+- Thanks AI for 😄:
+  - update Dockerfile
+  - update docker-compose
+  - create Makefile
+- Update code with:
+  - CS Fixer
+  - Rector
+
 ## 4.1.2 - 2025/05/02
 - pr #13 - Move phpstan to dev requirements
 

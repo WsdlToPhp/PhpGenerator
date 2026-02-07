@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace WsdlToPhp\PhpGenerator\Element;
 
-use InvalidArgumentException;
-
 class PhpClass extends AbstractElement
 {
     public const PHP_DECLARATION = 'class';
@@ -53,12 +51,12 @@ class PhpClass extends AbstractElement
     /**
      * @param null|PhpClass|string $extends
      *
-     * @throws InvalidArgumentException
+     * @throws \InvalidArgumentException
      */
     public function setExtends($extends): self
     {
         if (!static::extendsIsValid($extends)) {
-            throw new InvalidArgumentException('Extends must be a string or a PhpClass instance');
+            throw new \InvalidArgumentException('Extends must be a string or a PhpClass instance');
         }
         $this->extends = $extends;
 
@@ -84,12 +82,12 @@ class PhpClass extends AbstractElement
     /**
      * @param PhpClass[]|string[] $interfaces
      *
-     * @throws InvalidArgumentException
+     * @throws \InvalidArgumentException
      */
     public function setInterfaces(array $interfaces = []): self
     {
         if (!static::interfacesAreValid($interfaces)) {
-            throw new InvalidArgumentException('Interfaces are not valid');
+            throw new \InvalidArgumentException('Interfaces are not valid');
         }
         $this->interfaces = $interfaces;
 
@@ -167,7 +165,7 @@ class PhpClass extends AbstractElement
     {
         $extends = $this->getExtends();
 
-        return empty($extends) ? '' : sprintf(' %s %s', static::PHP_EXTENDS_KEYWORD, ($extends instanceof PhpClass ? $extends->getName() : $extends));
+        return empty($extends) ? '' : sprintf(' %s %s', static::PHP_EXTENDS_KEYWORD, $extends instanceof PhpClass ? $extends->getName() : $extends);
     }
 
     protected function getPhpInterfaces(): string

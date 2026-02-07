@@ -9,5 +9,7 @@ return (new PhpCsFixer\Config())
     ->setUsingCache(false)
     ->setRules(array(
         '@PhpCsFixer' => true,
+        'phpdoc_separation' => false,
+        'single_line_empty_body' => false,
     ))
     ->setFinder($finder);

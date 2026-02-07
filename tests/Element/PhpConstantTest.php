@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace WsdlToPhp\PhpGenerator\Tests\Element;
 
-use InvalidArgumentException;
-use TypeError;
 use WsdlToPhp\PhpGenerator\Element\PhpClass;
 use WsdlToPhp\PhpGenerator\Element\PhpConstant;
 use WsdlToPhp\PhpGenerator\Element\PhpVariable;
@@ -13,6 +11,7 @@ use WsdlToPhp\PhpGenerator\Tests\TestCase;
 
 /**
  * @internal
+ *
  * @coversDefaultClass
  */
 class PhpConstantTest extends TestCase
@@ -61,7 +60,7 @@ class PhpConstantTest extends TestCase
 
     public function testExceptionForNonScalerValue()
     {
-        $this->expectException(InvalidArgumentException::class);
+        $this->expectException(\InvalidArgumentException::class);
 
         new PhpConstant('Foo', []);
     }
@@ -110,7 +109,7 @@ class PhpConstantTest extends TestCase
 
     public function testAddChild()
     {
-        $this->expectException(InvalidArgumentException::class);
+        $this->expectException(\InvalidArgumentException::class);
 
         $constant = new PhpVariable('Foo', 'bar');
 
@@ -147,14 +146,14 @@ class PhpConstantTest extends TestCase
 
     public function testExceptionMessageOnName()
     {
-        $this->expectException(TypeError::class);
+        $this->expectException(\TypeError::class);
 
         new PhpConstant(0);
     }
 
     public function testExceptionMessageOnValue()
     {
-        $this->expectException(InvalidArgumentException::class);
+        $this->expectException(\InvalidArgumentException::class);
         $this->expectExceptionMessage('Value of type "object" is not a valid scalar value for PhpConstant object');
 
         new PhpConstant('Foo', new \stdClass());

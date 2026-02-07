@@ -4,13 +4,12 @@ declare(strict_types=1);
 
 namespace WsdlToPhp\PhpGenerator\Tests\Element;
 
-use InvalidArgumentException;
-use TypeError;
 use WsdlToPhp\PhpGenerator\Element\PhpAnnotation;
 use WsdlToPhp\PhpGenerator\Tests\TestCase;
 
 /**
  * @internal
+ *
  * @coversDefaultClass
  */
 class PhpAnnotationTest extends TestCase
@@ -33,10 +32,10 @@ class PhpAnnotationTest extends TestCase
     {
         $annotation = new PhpAnnotation(PhpAnnotation::NO_NAME, str_repeat('This sample annotation is on one line ', 7));
 
-        $this->assertSame(" * This sample annotation is on one line This sample annotation is on one line This\n".
-                          " * sample annotation is on one line This sample annotation is on one line This\n".
-                          " * sample annotation is on one line This sample annotation is on one line This\n".
-                          ' * sample annotation is on one line', $annotation->getPhpDeclaration());
+        $this->assertSame(" * This sample annotation is on one line This sample annotation is on one line This\n"
+                          ." * sample annotation is on one line This sample annotation is on one line This\n"
+                          ." * sample annotation is on one line This sample annotation is on one line This\n"
+                          .' * sample annotation is on one line', $annotation->getPhpDeclaration());
     }
 
     public function testGetSeveralLinesWithNamePhpDeclaration()
@@ -55,7 +54,7 @@ class PhpAnnotationTest extends TestCase
 
     public function testAddChildWithException()
     {
-        $this->expectException(InvalidArgumentException::class);
+        $this->expectException(\InvalidArgumentException::class);
 
         $annotation = new PhpAnnotation('date', '2015-06-02');
 
@@ -85,7 +84,7 @@ class PhpAnnotationTest extends TestCase
 
     public function testExceptionMessageOnName()
     {
-        $this->expectException(TypeError::class);
+        $this->expectException(\TypeError::class);
 
         new PhpAnnotation(0, '');
     }

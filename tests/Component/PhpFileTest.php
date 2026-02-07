@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace WsdlToPhp\PhpGenerator\Tests\Component;
 
-use InvalidArgumentException;
 use WsdlToPhp\PhpGenerator\Component\PhpClass as PhpClassComponent;
 use WsdlToPhp\PhpGenerator\Component\PhpFile as PhpFileComponent;
 use WsdlToPhp\PhpGenerator\Component\PhpInterface as PhpInterfaceComponent;
@@ -12,11 +11,11 @@ use WsdlToPhp\PhpGenerator\Element\PhpAnnotation as PhpAnnotationElement;
 use WsdlToPhp\PhpGenerator\Element\PhpDeclare;
 use WsdlToPhp\PhpGenerator\Element\PhpFile;
 use WsdlToPhp\PhpGenerator\Element\PhpFunctionParameter as PhpFunctionParameterElement;
-use WsdlToPhp\PhpGenerator\Element\PhpProperty;
 use WsdlToPhp\PhpGenerator\Element\PhpProperty as PhpPropertyElement;
 
 /**
  * @internal
+ *
  * @coversDefaultClass
  */
 class PhpFileTest extends AbstractComponent
@@ -41,7 +40,7 @@ class PhpFileTest extends AbstractComponent
             ->addConstant('BAR', 'theOtherValue')
             ->addString()
             ->addAnnotationBlock(new PhpAnnotationElement('var', 'int'))
-            ->addProperty('bar', 1, PhpProperty::ACCESS_PRIVATE, PhpProperty::TYPE_INT)
+            ->addProperty('bar', 1, PhpPropertyElement::ACCESS_PRIVATE, PhpPropertyElement::TYPE_INT)
             ->addString()
             ->addAnnotationBlock(new PhpAnnotationElement('var', 'bool'))
             ->addPropertyElement(new PhpPropertyElement('sample', true))
@@ -72,11 +71,11 @@ class PhpFileTest extends AbstractComponent
 
         $file
             ->setDeclareElement($declare)
-            ->setNamespace('My\\Testing\\NamespaceName')
-            ->addUse('My\\Testing\\ParentNamespace\\Model')
-            ->addUse('My\\Testing\\ParentNamespace\\Repository')
-            ->addUse('My\\Testing\\ParentNamespace\\Generator')
-            ->addUse('My\\Testing\\ParentNamespace\\Foo', 'FooType', true)
+            ->setNamespace('My\Testing\NamespaceName')
+            ->addUse('My\Testing\ParentNamespace\Model')
+            ->addUse('My\Testing\ParentNamespace\Repository')
+            ->addUse('My\Testing\ParentNamespace\Generator')
+            ->addUse('My\Testing\ParentNamespace\Foo', 'FooType', true)
             ->addClassComponent($class)
         ;
 
@@ -117,7 +116,7 @@ class PhpFileTest extends AbstractComponent
             ], 'void')
             ->addMethod('getMyEntity', [
                 new PhpFunctionParameterElement('entityId', PhpFunctionParameterElement::NO_VALUE, 'string'),
-            ], 'My\\Testing\\ParentNamespace\\Entity')
+            ], 'My\Testing\ParentNamespace\Entity')
         ;
 
         $declare = (new PhpDeclare(PhpDeclare::DIRECTIVE_STRICT_TYPES, 1))
@@ -126,12 +125,12 @@ class PhpFileTest extends AbstractComponent
 
         $file
             ->setDeclareElement($declare)
-            ->setNamespace('My\\Testing\\NamespaceName')
-            ->addUse('My\\Testing\\ParentNamespace\\Model')
-            ->addUse('My\\Testing\\ParentNamespace\\Repository')
-            ->addUse('My\\Testing\\ParentNamespace\\Entity')
-            ->addUse('My\\Testing\\ParentNamespace\\Generator')
-            ->addUse('My\\Testing\\ParentNamespace\\Foo', 'FooType', true)
+            ->setNamespace('My\Testing\NamespaceName')
+            ->addUse('My\Testing\ParentNamespace\Model')
+            ->addUse('My\Testing\ParentNamespace\Repository')
+            ->addUse('My\Testing\ParentNamespace\Entity')
+            ->addUse('My\Testing\ParentNamespace\Generator')
+            ->addUse('My\Testing\ParentNamespace\Foo', 'FooType', true)
             ->addClassComponent($class)
         ;
 
@@ -140,7 +139,7 @@ class PhpFileTest extends AbstractComponent
 
     public function testSetMainElementWithException()
     {
-        $this->expectException(InvalidArgumentException::class);
+        $this->expectException(\InvalidArgumentException::class);
 
         $file = new PhpFileComponent('Foo');
 
@@ -205,11 +204,11 @@ class PhpFileTest extends AbstractComponent
 
         $file
             ->setDeclare(PhpDeclare::DIRECTIVE_STRICT_TYPES, 1)
-            ->setNamespace('My\\Testing\\NamespaceName')
-            ->addUse('My\\Testing\\ParentNamespace\\Model')
-            ->addUse('My\\Testing\\ParentNamespace\\Repository')
-            ->addUse('My\\Testing\\ParentNamespace\\Generator')
-            ->addUse('My\\Testing\\ParentNamespace\\Foo', 'FooType', true)
+            ->setNamespace('My\Testing\NamespaceName')
+            ->addUse('My\Testing\ParentNamespace\Model')
+            ->addUse('My\Testing\ParentNamespace\Repository')
+            ->addUse('My\Testing\ParentNamespace\Generator')
+            ->addUse('My\Testing\ParentNamespace\Foo', 'FooType', true)
             ->addInterfaceComponent($interface)
         ;
 

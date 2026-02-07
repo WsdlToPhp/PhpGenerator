@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace WsdlToPhp\PhpGenerator\Element;
 
-use InvalidArgumentException;
-
 class PhpFunction extends AbstractElement
 {
     /**
@@ -27,7 +25,7 @@ class PhpFunction extends AbstractElement
     public function setParameters(array $parameters): self
     {
         if (!static::parametersAreValid($parameters)) {
-            throw new InvalidArgumentException('Parameters are invalid');
+            throw new \InvalidArgumentException('Parameters are invalid');
         }
 
         $this->parameters = static::transformParameters($parameters);
