@@ -16,7 +16,9 @@ class PhpFunctionParameter extends PhpVariable implements TypeHintedElementInter
 
     public function getPhpDeclaration(): string
     {
-        return sprintf('%s%s', $this->getPhpType(), parent::getPhpDeclaration());
+        $phpType = $this->getPhpType();
+        $hasNullValue = $this->hasValue() && null === $this->getValue();
+        return sprintf('%s%s%s', $hasNullValue && $phpType ? '?' : '', $phpType, parent::getPhpDeclaration());
     }
 
     public function endsWithSemicolon(): bool

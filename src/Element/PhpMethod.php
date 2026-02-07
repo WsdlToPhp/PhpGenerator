@@ -109,7 +109,7 @@ class PhpMethod extends PhpFunction implements AccessRestrictedElementInterface
     /**
      * Allows to generate content after children content is generated.
      */
-    public function getLineAfterChildren(int $indentation = null): string
+    public function getLineAfterChildren(?int $indentation = null): string
     {
         if ($this->getHasBody()) {
             return parent::getLineAfterChildren($indentation);

@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace WsdlToPhp\PhpGenerator\Tests\Element;
 
-use InvalidArgumentException;
-use TypeError;
 use WsdlToPhp\PhpGenerator\Element\PhpAnnotationBlock;
 use WsdlToPhp\PhpGenerator\Element\PhpClass;
 use WsdlToPhp\PhpGenerator\Element\PhpConstant;
@@ -17,6 +15,7 @@ use WsdlToPhp\PhpGenerator\Tests\TestCase;
 
 /**
  * @internal
+ *
  * @coversDefaultClass
  */
 class PhpClassTest extends TestCase
@@ -127,7 +126,7 @@ class PhpClassTest extends TestCase
 
     public function testAddChildWithException()
     {
-        $this->expectException(InvalidArgumentException::class);
+        $this->expectException(\InvalidArgumentException::class);
 
         $class = new PhpClass('Foo');
 
@@ -136,7 +135,7 @@ class PhpClassTest extends TestCase
 
     public function testSetAbstract()
     {
-        $this->expectException(TypeError::class);
+        $this->expectException(\TypeError::class);
 
         $class = new PhpClass('Foo');
 
@@ -145,7 +144,7 @@ class PhpClassTest extends TestCase
 
     public function testSetExtendsWithException()
     {
-        $this->expectException(InvalidArgumentException::class);
+        $this->expectException(\InvalidArgumentException::class);
 
         $class = new PhpClass('Foo');
 
@@ -163,7 +162,7 @@ class PhpClassTest extends TestCase
 
     public function testSetInterfacesWithException()
     {
-        $this->expectException(InvalidArgumentException::class);
+        $this->expectException(\InvalidArgumentException::class);
 
         $class = new PhpClass('Foo');
 
@@ -288,14 +287,14 @@ class PhpClassTest extends TestCase
 
     public function testExtendsFromNamespace()
     {
-        $class = new PhpClass('Foo', false, '\\DOMDocument');
+        $class = new PhpClass('Foo', false, '\DOMDocument');
 
         $this->assertSame("class Foo extends \\DOMDocument\n{\n}", $class->toString());
     }
 
     public function testExceptionMessageOnName()
     {
-        $this->expectException(TypeError::class);
+        $this->expectException(\TypeError::class);
 
         new PhpClass(0);
     }

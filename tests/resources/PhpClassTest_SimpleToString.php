@@ -35,7 +35,7 @@ abstract class Foo extends stdClass
      * @date 2012-03-01
      * @return void
      */
-    public function uselessMethod($uselessParameter = null, $unusedParameter)
+    public function uselessMethod(?string $uselessParameter = null, $unusedParameter)
     {
     }
 }

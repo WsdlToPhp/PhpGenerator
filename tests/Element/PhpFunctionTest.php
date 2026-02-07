@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace WsdlToPhp\PhpGenerator\Tests\Element;
 
-use InvalidArgumentException;
-use TypeError;
 use WsdlToPhp\PhpGenerator\Element\PhpFunction;
 use WsdlToPhp\PhpGenerator\Element\PhpFunctionParameter;
 use WsdlToPhp\PhpGenerator\Element\PhpProperty;
@@ -14,6 +12,7 @@ use WsdlToPhp\PhpGenerator\Tests\TestCase;
 
 /**
  * @internal
+ *
  * @coversDefaultClass
  */
 class PhpFunctionTest extends TestCase
@@ -56,7 +55,7 @@ class PhpFunctionTest extends TestCase
 
     public function testAddChild()
     {
-        $this->expectException(InvalidArgumentException::class);
+        $this->expectException(\InvalidArgumentException::class);
 
         $function = new PhpFunction('foo', []);
 
@@ -65,7 +64,7 @@ class PhpFunctionTest extends TestCase
 
     public function testSetParameters()
     {
-        $this->expectException(InvalidArgumentException::class);
+        $this->expectException(\InvalidArgumentException::class);
 
         $function = new PhpFunction('foo', []);
 
@@ -199,7 +198,7 @@ class PhpFunctionTest extends TestCase
 
     public function testExceptionMessageOnName()
     {
-        $this->expectException(TypeError::class);
+        $this->expectException(\TypeError::class);
 
         new PhpFunction(0);
     }

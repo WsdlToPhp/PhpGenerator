@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace WsdlToPhp\PhpGenerator\Component;
 
-use InvalidArgumentException;
 use WsdlToPhp\PhpGenerator\Element\AbstractElement;
 use WsdlToPhp\PhpGenerator\Element\PhpAnnotationBlock as PhpAnnotationBlockElement;
 use WsdlToPhp\PhpGenerator\Element\PhpClass as PhpClassElement;
@@ -33,7 +32,7 @@ abstract class AbstractComponent implements GenerateableInterface
         if ($element instanceof PhpFileElement || $element instanceof PhpClassElement) {
             $this->mainElement = $element;
         } else {
-            throw new InvalidArgumentException(sprintf('Element of type "%s" must be of type Element\PhpClass or Element\PhpFile', get_class($element)));
+            throw new \InvalidArgumentException(sprintf('Element of type "%s" must be of type Element\PhpClass or Element\PhpFile', get_class($element)));
         }
 
         return $this;

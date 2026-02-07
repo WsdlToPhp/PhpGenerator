@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace WsdlToPhp\PhpGenerator\Tests\Element;
 
-use InvalidArgumentException;
-use TypeError;
 use WsdlToPhp\PhpGenerator\Element\PhpAnnotationBlock;
 use WsdlToPhp\PhpGenerator\Element\PhpConstant;
 use WsdlToPhp\PhpGenerator\Element\PhpInterface;
@@ -15,6 +13,7 @@ use WsdlToPhp\PhpGenerator\Tests\TestCase;
 
 /**
  * @internal
+ *
  * @coversDefaultClass
  */
 class PhpInterfaceTest extends TestCase
@@ -51,7 +50,7 @@ class PhpInterfaceTest extends TestCase
 
     public function testAddChildWithException()
     {
-        $this->expectException(InvalidArgumentException::class);
+        $this->expectException(\InvalidArgumentException::class);
 
         $interface = new PhpInterface('Foo');
 
@@ -107,7 +106,7 @@ class PhpInterfaceTest extends TestCase
 
     public function testExceptionMessageOnName()
     {
-        $this->expectException(TypeError::class);
+        $this->expectException(\TypeError::class);
 
         new PhpInterface(0);
     }

@@ -4,13 +4,12 @@ declare(strict_types=1);
 
 namespace WsdlToPhp\PhpGenerator\Tests\Element;
 
-use InvalidArgumentException;
-use TypeError;
 use WsdlToPhp\PhpGenerator\Element\PhpVariable;
 use WsdlToPhp\PhpGenerator\Tests\TestCase;
 
 /**
  * @internal
+ *
  * @coversDefaultClass
  */
 class PhpVariableTest extends TestCase
@@ -97,7 +96,7 @@ class PhpVariableTest extends TestCase
 
     public function testAddChild()
     {
-        $this->expectException(InvalidArgumentException::class);
+        $this->expectException(\InvalidArgumentException::class);
 
         $variable = new PhpVariable('Foo', 'bar');
 
@@ -147,7 +146,7 @@ class PhpVariableTest extends TestCase
 
     public function testExceptionMessageOnName()
     {
-        $this->expectException(TypeError::class);
+        $this->expectException(\TypeError::class);
 
         new PhpVariable(0);
     }

@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace WsdlToPhp\PhpGenerator\Element;
 
-use InvalidArgumentException;
-
 abstract class AbstractElement implements GenerateableInterface
 {
     protected string $name;
@@ -30,7 +28,7 @@ abstract class AbstractElement implements GenerateableInterface
     public function setName(string $name): self
     {
         if (!static::nameIsValid($name)) {
-            throw new InvalidArgumentException(sprintf('Name "%s" is invalid when instantiating %s object', $name, $this->getCalledClass()));
+            throw new \InvalidArgumentException(sprintf('Name "%s" is invalid when instantiating %s object', $name, $this->getCalledClass()));
         }
         $this->name = $name;
 
@@ -89,10 +87,10 @@ abstract class AbstractElement implements GenerateableInterface
         if (!$this->childIsValid($child)) {
             $types = $this->getChildrenTypes();
             if (empty($types)) {
-                throw new InvalidArgumentException('This element does not accept any child element');
+                throw new \InvalidArgumentException('This element does not accept any child element');
             }
 
-            throw new InvalidArgumentException(sprintf('Element of type "%s:%s" is not authorized, please provide one of these types: %s', gettype($child), is_object($child) ? get_class($child) : 'unknown', implode(', ', $this->getChildrenTypes())));
+            throw new \InvalidArgumentException(sprintf('Element of type "%s:%s" is not authorized, please provide one of these types: %s', gettype($child), is_object($child) ? get_class($child) : 'unknown', implode(', ', $this->getChildrenTypes())));
         }
         $this->children[] = $child;
 
@@ -194,10 +192,10 @@ abstract class AbstractElement implements GenerateableInterface
 
     final public function getCalledClass(): string
     {
-        return substr(get_called_class(), strrpos(get_called_class(), '\\') + 1);
+        return substr(static::class, strrpos(static::class, '\\') + 1);
     }
 
-    protected function getChildContent($child, int $indentation = null): string
+    protected function getChildContent($child, ?int $indentation = null): string
     {
         $content = '';
         if (is_string($child)) {
@@ -222,7 +220,7 @@ abstract class AbstractElement implements GenerateableInterface
         return (bool) $valid;
     }
 
-    private function getToStringDeclaration(int $indentation = null): ?string
+    private function getToStringDeclaration(?int $indentation = null): ?string
     {
         $declaration = $this->getPhpDeclaration();
         if (!empty($declaration)) {
@@ -232,7 +230,7 @@ abstract class AbstractElement implements GenerateableInterface
         return null;
     }
 
-    private function getToStringBeforeChildren(int $indentation = null): ?string
+    private function getToStringBeforeChildren(?int $indentation = null): ?string
     {
         $before = $this->getContextualLineBeforeChildren($indentation);
         if (!empty($before)) {
@@ -242,7 +240,7 @@ abstract class AbstractElement implements GenerateableInterface
         return null;
     }
 
-    private function getToStringAfterChildren(int $indentation = null): ?string
+    private function getToStringAfterChildren(?int $indentation = null): ?string
     {
         $after = $this->getContextualLineAfterChildren($indentation);
         if (!empty($after)) {
@@ -266,7 +264,7 @@ abstract class AbstractElement implements GenerateableInterface
         return $newArray;
     }
 
-    private function getContextualLineBeforeChildren(int $indentation = null): string
+    private function getContextualLineBeforeChildren(?int $indentation = null): string
     {
         if ($this->useBracketsForChildren()) {
             $line = $this->getBracketBeforeChildren($indentation);
@@ -277,7 +275,7 @@ abstract class AbstractElement implements GenerateableInterface
         return $line;
     }
 
-    private function getContextualLineAfterChildren(int $indentation = null): string
+    private function getContextualLineAfterChildren(?int $indentation = null): string
     {
         if ($this->useBracketsForChildren()) {
             $line = $this->getBracketAfterChildren($indentation);

@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace WsdlToPhp\PhpGenerator\Element;
 
-use InvalidArgumentException;
-
 trait TypeHintedElementTrait
 {
     /**
@@ -16,12 +14,12 @@ trait TypeHintedElementTrait
     /**
      * @param PhpClass|string $type
      *
-     * @throws InvalidArgumentException
+     * @throws \InvalidArgumentException
      */
     public function setType($type): AbstractElement
     {
         if (!static::typeIsValid($type)) {
-            throw new InvalidArgumentException(sprintf('Type "%s" is not valid', gettype($type)));
+            throw new \InvalidArgumentException(sprintf('Type "%s" is not valid', gettype($type)));
         }
         $this->type = $type;
 

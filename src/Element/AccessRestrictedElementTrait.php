@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace WsdlToPhp\PhpGenerator\Element;
 
-use InvalidArgumentException;
-
 trait AccessRestrictedElementTrait
 {
     protected string $access;
@@ -13,7 +11,7 @@ trait AccessRestrictedElementTrait
     public function setAccess(?string $access): AbstractElement
     {
         if (!static::accessIsValid($access)) {
-            throw new InvalidArgumentException(sprintf('Access "%s" is invalid, please provide one of these accesses: %s', $access, implode(', ', AccessRestrictedElementInterface::ACCESSES)));
+            throw new \InvalidArgumentException(sprintf('Access "%s" is invalid, please provide one of these accesses: %s', $access, implode(', ', AccessRestrictedElementInterface::ACCESSES)));
         }
         $this->access = $access;
 
