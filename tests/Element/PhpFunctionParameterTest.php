@@ -46,6 +46,11 @@ class PhpFunctionParameterTest extends TestCase
         $this->assertTrue(PhpFunctionParameter::typeIsValid('Partagé'));
     }
 
+    public function testTypeIsValidWithUnloadedFullyQualifiedClassName()
+    {
+        $this->assertTrue(PhpFunctionParameter::typeIsValid('\\Some\\Namespace\\NonExistentClass'));
+    }
+
     public function testFloatValueForDeclaration()
     {
         $initialSerializePrecision = ini_get('serialize_precision');
