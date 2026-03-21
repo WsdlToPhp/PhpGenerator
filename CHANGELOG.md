@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 4.1.4 - 2026/03/21
+- pr #16 - fix: disable autoloading in typeIsValid to prevent fatal errors during generation
+- update contributors
+
 ## 4.1.3 - 2026/02/07
 - issue #15 - PHP 8.4: Implicitly nullable parameter deprecated on nullable array type
 - pr #14 - Refactor docker container to be able to run any PHP version from 7.4
