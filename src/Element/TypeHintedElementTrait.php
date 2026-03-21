@@ -34,7 +34,7 @@ trait TypeHintedElementTrait
         return
             is_null($type)
             || $type instanceof PhpClass
-            || (is_string($type) && class_exists($type))
+            || (is_string($type) && class_exists($type, false))
             || in_array($type, TypeHintedElementInterface::TYPES, true)
             || static::stringIsValid($type, true, true);
     }
